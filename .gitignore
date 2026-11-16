@@ -1,0 +1,14 @@
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+# Kotlin 2.x 的项目内缓存（transformed metadata klib 等），几十 MB 且随时重建
+.kotlin/
+.idea/
+*.iml
+local.properties
+.DS_Store
+kotlin-js-store/
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+*.log

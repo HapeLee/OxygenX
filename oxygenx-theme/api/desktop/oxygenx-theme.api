@@ -1,0 +1,643 @@
+public final class io/oxygenx/theme/ColorSchemeKt {
+	public static final fun contentColorFor-4WTKRHQ (Lio/oxygenx/theme/OxygenColorScheme;J)J
+	public static final fun darkColorScheme--OWjLjI (JJ)Lio/oxygenx/theme/OxygenColorScheme;
+	public static synthetic fun darkColorScheme--OWjLjI$default (JJILjava/lang/Object;)Lio/oxygenx/theme/OxygenColorScheme;
+	public static final fun lightColorScheme--OWjLjI (JJ)Lio/oxygenx/theme/OxygenColorScheme;
+	public static synthetic fun lightColorScheme--OWjLjI$default (JJILjava/lang/Object;)Lio/oxygenx/theme/OxygenColorScheme;
+}
+
+public final class io/oxygenx/theme/OverscrollKt {
+	public static final fun OverscrollProvider (Lio/oxygenx/theme/OxygenSpacing;Lio/oxygenx/theme/OxygenInteraction;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/oxygenx/theme/OxygenColorScheme {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component10-0d7_KjU ()J
+	public final fun component11-0d7_KjU ()J
+	public final fun component12-0d7_KjU ()J
+	public final fun component13-0d7_KjU ()J
+	public final fun component14-0d7_KjU ()J
+	public final fun component15-0d7_KjU ()J
+	public final fun component16-0d7_KjU ()J
+	public final fun component17-0d7_KjU ()J
+	public final fun component18-0d7_KjU ()J
+	public final fun component19-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun component20-0d7_KjU ()J
+	public final fun component21-0d7_KjU ()J
+	public final fun component22-0d7_KjU ()J
+	public final fun component23-0d7_KjU ()J
+	public final fun component24-0d7_KjU ()J
+	public final fun component25-0d7_KjU ()J
+	public final fun component26-0d7_KjU ()J
+	public final fun component27-0d7_KjU ()J
+	public final fun component28-0d7_KjU ()J
+	public final fun component29-0d7_KjU ()J
+	public final fun component3-0d7_KjU ()J
+	public final fun component30-0d7_KjU ()J
+	public final fun component31-0d7_KjU ()J
+	public final fun component32-0d7_KjU ()J
+	public final fun component33-0d7_KjU ()J
+	public final fun component34-0d7_KjU ()J
+	public final fun component35-0d7_KjU ()J
+	public final fun component36-0d7_KjU ()J
+	public final fun component37-0d7_KjU ()J
+	public final fun component38 ()Z
+	public final fun component4-0d7_KjU ()J
+	public final fun component5-0d7_KjU ()J
+	public final fun component6-0d7_KjU ()J
+	public final fun component7-0d7_KjU ()J
+	public final fun component8-0d7_KjU ()J
+	public final fun component9-0d7_KjU ()J
+	public final fun copy-WGGFGZc (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZ)Lio/oxygenx/theme/OxygenColorScheme;
+	public static synthetic fun copy-WGGFGZc$default (Lio/oxygenx/theme/OxygenColorScheme;JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZIILjava/lang/Object;)Lio/oxygenx/theme/OxygenColorScheme;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getControlDot-0d7_KjU ()J
+	public final fun getError-0d7_KjU ()J
+	public final fun getErrorContainer-0d7_KjU ()J
+	public final fun getInputIndicatorUnfocused-0d7_KjU ()J
+	public final fun getInverseOnSurface-0d7_KjU ()J
+	public final fun getInversePrimary-0d7_KjU ()J
+	public final fun getInverseSurface-0d7_KjU ()J
+	public final fun getOnError-0d7_KjU ()J
+	public final fun getOnErrorContainer-0d7_KjU ()J
+	public final fun getOnPrimary-0d7_KjU ()J
+	public final fun getOnPrimaryContainer-0d7_KjU ()J
+	public final fun getOnSecondary-0d7_KjU ()J
+	public final fun getOnSecondaryContainer-0d7_KjU ()J
+	public final fun getOnSurface-0d7_KjU ()J
+	public final fun getOnSurfaceDisabled-0d7_KjU ()J
+	public final fun getOnSurfaceVariant-0d7_KjU ()J
+	public final fun getOutline-0d7_KjU ()J
+	public final fun getOutlineVariant-0d7_KjU ()J
+	public final fun getPrimary-0d7_KjU ()J
+	public final fun getPrimaryContainer-0d7_KjU ()J
+	public final fun getScrim-0d7_KjU ()J
+	public final fun getSecondary-0d7_KjU ()J
+	public final fun getSecondaryContainer-0d7_KjU ()J
+	public final fun getStatePressed-0d7_KjU ()J
+	public final fun getSurface-0d7_KjU ()J
+	public final fun getSurfaceBright-0d7_KjU ()J
+	public final fun getSurfaceContainer-0d7_KjU ()J
+	public final fun getSurfaceContainerHigh-0d7_KjU ()J
+	public final fun getSurfaceContainerHighest-0d7_KjU ()J
+	public final fun getSurfaceContainerLow-0d7_KjU ()J
+	public final fun getSurfaceContainerLowest-0d7_KjU ()J
+	public final fun getSurfaceDim-0d7_KjU ()J
+	public final fun getSurfaceDisabled-0d7_KjU ()J
+	public final fun getSwitchThumbDisabled-0d7_KjU ()J
+	public final fun getSwitchThumbOff-0d7_KjU ()J
+	public final fun getSwitchTrackDisabled-0d7_KjU ()J
+	public final fun getSwitchTrackOn-0d7_KjU ()J
+	public fun hashCode ()I
+	public final fun isDark ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenIconMetrics {
+	public static final field $stable I
+	public synthetic fun <init> (FFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-D9Ej5fM ()F
+	public final fun component2-D9Ej5fM ()F
+	public final fun component3-D9Ej5fM ()F
+	public final fun copy-2z7ARbQ (FFF)Lio/oxygenx/theme/OxygenIconMetrics;
+	public static synthetic fun copy-2z7ARbQ$default (Lio/oxygenx/theme/OxygenIconMetrics;FFFILjava/lang/Object;)Lio/oxygenx/theme/OxygenIconMetrics;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLarge-D9Ej5fM ()F
+	public final fun getMedium-D9Ej5fM ()F
+	public final fun getSmall-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenInteraction {
+	public static final field $stable I
+	public fun <init> (FFF)V
+	public final fun component1 ()F
+	public final fun component2 ()F
+	public final fun component3 ()F
+	public final fun copy (FFF)Lio/oxygenx/theme/OxygenInteraction;
+	public static synthetic fun copy$default (Lio/oxygenx/theme/OxygenInteraction;FFFILjava/lang/Object;)Lio/oxygenx/theme/OxygenInteraction;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDismissThreshold ()F
+	public final fun getOverscrollDragScale ()F
+	public final fun getRefreshDragScale ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenLayout {
+	public static final field $stable I
+	public synthetic fun <init> (FLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-D9Ej5fM ()F
+	public final fun copy-0680j_4 (F)Lio/oxygenx/theme/OxygenLayout;
+	public static synthetic fun copy-0680j_4$default (Lio/oxygenx/theme/OxygenLayout;FILjava/lang/Object;)Lio/oxygenx/theme/OxygenLayout;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAppBarLargeHeight-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenShapes {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)V
+	public final fun component1 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun component2 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun component3 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun component4 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun copy (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)Lio/oxygenx/theme/OxygenShapes;
+	public static synthetic fun copy$default (Lio/oxygenx/theme/OxygenShapes;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILjava/lang/Object;)Lio/oxygenx/theme/OxygenShapes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCornerButton ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun getCornerCard ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun getCornerInput ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun getPill ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenSpacing {
+	public static final field $stable I
+	public synthetic fun <init> (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-D9Ej5fM ()F
+	public final fun component10-D9Ej5fM ()F
+	public final fun component11-D9Ej5fM ()F
+	public final fun component12-D9Ej5fM ()F
+	public final fun component13-D9Ej5fM ()F
+	public final fun component14-D9Ej5fM ()F
+	public final fun component15-D9Ej5fM ()F
+	public final fun component16-D9Ej5fM ()F
+	public final fun component17-D9Ej5fM ()F
+	public final fun component18-D9Ej5fM ()F
+	public final fun component19-D9Ej5fM ()F
+	public final fun component2-D9Ej5fM ()F
+	public final fun component20-D9Ej5fM ()F
+	public final fun component21-D9Ej5fM ()F
+	public final fun component22-D9Ej5fM ()F
+	public final fun component23-D9Ej5fM ()F
+	public final fun component24-D9Ej5fM ()F
+	public final fun component25-D9Ej5fM ()F
+	public final fun component26-D9Ej5fM ()F
+	public final fun component27-D9Ej5fM ()F
+	public final fun component28-D9Ej5fM ()F
+	public final fun component29-D9Ej5fM ()F
+	public final fun component3-D9Ej5fM ()F
+	public final fun component30-D9Ej5fM ()F
+	public final fun component31-D9Ej5fM ()F
+	public final fun component32-D9Ej5fM ()F
+	public final fun component33-D9Ej5fM ()F
+	public final fun component34-D9Ej5fM ()F
+	public final fun component35-D9Ej5fM ()F
+	public final fun component36-D9Ej5fM ()F
+	public final fun component37-D9Ej5fM ()F
+	public final fun component38-D9Ej5fM ()F
+	public final fun component39-D9Ej5fM ()F
+	public final fun component4-D9Ej5fM ()F
+	public final fun component40-D9Ej5fM ()F
+	public final fun component41-D9Ej5fM ()F
+	public final fun component42-D9Ej5fM ()F
+	public final fun component43-D9Ej5fM ()F
+	public final fun component44-D9Ej5fM ()F
+	public final fun component45-D9Ej5fM ()F
+	public final fun component46-D9Ej5fM ()F
+	public final fun component47-D9Ej5fM ()F
+	public final fun component48-D9Ej5fM ()F
+	public final fun component49-D9Ej5fM ()F
+	public final fun component5-D9Ej5fM ()F
+	public final fun component50-D9Ej5fM ()F
+	public final fun component51-D9Ej5fM ()F
+	public final fun component52-D9Ej5fM ()F
+	public final fun component53-D9Ej5fM ()F
+	public final fun component54-D9Ej5fM ()F
+	public final fun component55-D9Ej5fM ()F
+	public final fun component56-D9Ej5fM ()F
+	public final fun component57-D9Ej5fM ()F
+	public final fun component58-D9Ej5fM ()F
+	public final fun component59-D9Ej5fM ()F
+	public final fun component6-D9Ej5fM ()F
+	public final fun component60-D9Ej5fM ()F
+	public final fun component61-D9Ej5fM ()F
+	public final fun component62-D9Ej5fM ()F
+	public final fun component63-D9Ej5fM ()F
+	public final fun component64-D9Ej5fM ()F
+	public final fun component65-D9Ej5fM ()F
+	public final fun component66-D9Ej5fM ()F
+	public final fun component67-D9Ej5fM ()F
+	public final fun component68-D9Ej5fM ()F
+	public final fun component69-D9Ej5fM ()F
+	public final fun component7-D9Ej5fM ()F
+	public final fun component70-D9Ej5fM ()F
+	public final fun component71-D9Ej5fM ()F
+	public final fun component72-D9Ej5fM ()F
+	public final fun component73-D9Ej5fM ()F
+	public final fun component74-D9Ej5fM ()F
+	public final fun component75-D9Ej5fM ()F
+	public final fun component76-D9Ej5fM ()F
+	public final fun component77-D9Ej5fM ()F
+	public final fun component78-D9Ej5fM ()F
+	public final fun component79-D9Ej5fM ()F
+	public final fun component8-D9Ej5fM ()F
+	public final fun component9-D9Ej5fM ()F
+	public final fun copy-nib15kg (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)Lio/oxygenx/theme/OxygenSpacing;
+	public static synthetic fun copy-nib15kg$default (Lio/oxygenx/theme/OxygenSpacing;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIIILjava/lang/Object;)Lio/oxygenx/theme/OxygenSpacing;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAppBarActionRippleRadius-D9Ej5fM ()F
+	public final fun getAppBarCollapseDistance-D9Ej5fM ()F
+	public final fun getAppBarCollapsedHeight-D9Ej5fM ()F
+	public final fun getAppBarHeight-D9Ej5fM ()F
+	public final fun getAppBarPagerCollapsedHeight-D9Ej5fM ()F
+	public final fun getAppBarPagerIndicatorHeight-D9Ej5fM ()F
+	public final fun getAppBarPagerTitleGap-D9Ej5fM ()F
+	public final fun getAppBarPagerTop-D9Ej5fM ()F
+	public final fun getAppBarSubtitleTighten-D9Ej5fM ()F
+	public final fun getAppBarTitleInset-D9Ej5fM ()F
+	public final fun getBadgeDot-D9Ej5fM ()F
+	public final fun getBadgeHeight-D9Ej5fM ()F
+	public final fun getBadgePaddingHorizontal-D9Ej5fM ()F
+	public final fun getBottomBarHeight-D9Ej5fM ()F
+	public final fun getButtonHeight-D9Ej5fM ()F
+	public final fun getButtonHorizontalPadding-D9Ej5fM ()F
+	public final fun getCardPadding-D9Ej5fM ()F
+	public final fun getChipBorderWidth-D9Ej5fM ()F
+	public final fun getChipHeight-D9Ej5fM ()F
+	public final fun getControlBorderWidth-D9Ej5fM ()F
+	public final fun getControlCheckboxSize-D9Ej5fM ()F
+	public final fun getControlCornerRadius-D9Ej5fM ()F
+	public final fun getControlDotSize-D9Ej5fM ()F
+	public final fun getControlMinWidth-D9Ej5fM ()F
+	public final fun getControlRadioSize-D9Ej5fM ()F
+	public final fun getDialogInset-D9Ej5fM ()F
+	public final fun getDialogPadding-D9Ej5fM ()F
+	public final fun getDividerThickness-D9Ej5fM ()F
+	public final fun getDrawerWidth-D9Ej5fM ()F
+	public final fun getFabLarge-D9Ej5fM ()F
+	public final fun getFabSize-D9Ej5fM ()F
+	public final fun getFabSmall-D9Ej5fM ()F
+	public final fun getGapLarge-D9Ej5fM ()F
+	public final fun getGapSmall-D9Ej5fM ()F
+	public final fun getGapXs-D9Ej5fM ()F
+	public final fun getGutter-D9Ej5fM ()F
+	public final fun getInputHeight-D9Ej5fM ()F
+	public final fun getInputIndicatorThickness-D9Ej5fM ()F
+	public final fun getInputIndicatorThicknessFocused-D9Ej5fM ()F
+	public final fun getListGroupGap-D9Ej5fM ()F
+	public final fun getListItemInset-D9Ej5fM ()F
+	public final fun getListRowMinHeight-D9Ej5fM ()F
+	public final fun getListTopInset-D9Ej5fM ()F
+	public final fun getMenuItemHeight-D9Ej5fM ()F
+	public final fun getMenuItemPaddingHorizontal-D9Ej5fM ()F
+	public final fun getMenuMinWidth-D9Ej5fM ()F
+	public final fun getMenuPaddingVertical-D9Ej5fM ()F
+	public final fun getOverscrollMax-D9Ej5fM ()F
+	public final fun getProgressCircularSize-D9Ej5fM ()F
+	public final fun getProgressCircularStroke-D9Ej5fM ()F
+	public final fun getProgressLinearHeight-D9Ej5fM ()F
+	public final fun getRailItemHeight-D9Ej5fM ()F
+	public final fun getRailWidth-D9Ej5fM ()F
+	public final fun getRefreshMaxDistance-D9Ej5fM ()F
+	public final fun getRefreshThreshold-D9Ej5fM ()F
+	public final fun getSearchBarHeight-D9Ej5fM ()F
+	public final fun getSettingsDividerGap-D9Ej5fM ()F
+	public final fun getSettingsDividerHeight-D9Ej5fM ()F
+	public final fun getSettingsSwitchCell-D9Ej5fM ()F
+	public final fun getSettingsSwitchInset-D9Ej5fM ()F
+	public final fun getSheetHandleHeight-D9Ej5fM ()F
+	public final fun getSheetHandleInset-D9Ej5fM ()F
+	public final fun getSheetHandleWidth-D9Ej5fM ()F
+	public final fun getSliderRippleRadius-D9Ej5fM ()F
+	public final fun getSliderThumbSize-D9Ej5fM ()F
+	public final fun getSliderTickSize-D9Ej5fM ()F
+	public final fun getSliderTrackHeight-D9Ej5fM ()F
+	public final fun getSwitchRippleRadius-D9Ej5fM ()F
+	public final fun getSwitchThumbSize-D9Ej5fM ()F
+	public final fun getSwitchTrackHeight-D9Ej5fM ()F
+	public final fun getSwitchTrackWidth-D9Ej5fM ()F
+	public final fun getTabIndicatorHeight-D9Ej5fM ()F
+	public final fun getTabInset-D9Ej5fM ()F
+	public final fun getTabMinWidth-D9Ej5fM ()F
+	public final fun getTabRowHeight-D9Ej5fM ()F
+	public final fun getTooltipMaxWidth-D9Ej5fM ()F
+	public final fun getTooltipPaddingHorizontal-D9Ej5fM ()F
+	public final fun getTooltipPaddingVertical-D9Ej5fM ()F
+	public final fun getTouchTargetMin-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenTheme {
+	public static final field $stable I
+	public static final field INSTANCE Lio/oxygenx/theme/OxygenTheme;
+	public final fun getColorScheme (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenColorScheme;
+	public final fun getContentColor (Landroidx/compose/runtime/Composer;I)J
+	public final fun getIcons (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenIconMetrics;
+	public final fun getInteraction (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenInteraction;
+	public final fun getLayout (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenLayout;
+	public final fun getShapes (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenShapes;
+	public final fun getSpacing (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenSpacing;
+	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun getTypography (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/theme/OxygenTypography;
+}
+
+public final class io/oxygenx/theme/OxygenThemeKt {
+	public static final fun OxygenTheme (ZLio/oxygenx/theme/OxygenColorScheme;Lio/oxygenx/theme/OxygenSpacing;Lio/oxygenx/theme/OxygenShapes;Lio/oxygenx/theme/OxygenTypography;Lio/oxygenx/theme/OxygenIconMetrics;Lio/oxygenx/theme/OxygenLayout;Lio/oxygenx/theme/OxygenInteraction;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProvideTextStyle (Landroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun getLocalContentColor ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalTextStyle ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public final class io/oxygenx/theme/OxygenTypography {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V
+	public final fun component1 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component10 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component11 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component12 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component13 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component2 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component3 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component4 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component5 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component6 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component7 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component8 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component9 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Lio/oxygenx/theme/OxygenTypography;
+	public static synthetic fun copy$default (Lio/oxygenx/theme/OxygenTypography;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Lio/oxygenx/theme/OxygenTypography;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAppBarSubtitle ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getAppbarTitle ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getBodyLarge ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getBodyMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getCaption ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getClockTime ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getDialogAction ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getDialogTitle ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getDisplayLarge ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getInputText ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getLabelMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getListItemTitle ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getTitleMedium ()Landroidx/compose/ui/text/TextStyle;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/generated/GeneratedTokens {
+	public static final field $stable I
+	public static final field COLOR_CONTROL_DOT_DARK J
+	public static final field COLOR_CONTROL_DOT_LIGHT J
+	public static final field COLOR_ERROR_CONTAINER_DARK J
+	public static final field COLOR_ERROR_CONTAINER_LIGHT J
+	public static final field COLOR_ERROR_DARK J
+	public static final field COLOR_ERROR_LIGHT J
+	public static final field COLOR_INPUT_INDICATOR_UNFOCUSED_DARK J
+	public static final field COLOR_INPUT_INDICATOR_UNFOCUSED_LIGHT J
+	public static final field COLOR_INVERSE_ON_SURFACE_DARK J
+	public static final field COLOR_INVERSE_ON_SURFACE_LIGHT J
+	public static final field COLOR_INVERSE_PRIMARY_DARK J
+	public static final field COLOR_INVERSE_PRIMARY_LIGHT J
+	public static final field COLOR_INVERSE_SURFACE_DARK J
+	public static final field COLOR_INVERSE_SURFACE_LIGHT J
+	public static final field COLOR_ON_ERROR_CONTAINER_DARK J
+	public static final field COLOR_ON_ERROR_CONTAINER_LIGHT J
+	public static final field COLOR_ON_ERROR_DARK J
+	public static final field COLOR_ON_ERROR_LIGHT J
+	public static final field COLOR_ON_PRIMARY_CONTAINER_DARK J
+	public static final field COLOR_ON_PRIMARY_CONTAINER_LIGHT J
+	public static final field COLOR_ON_PRIMARY_DARK J
+	public static final field COLOR_ON_PRIMARY_LIGHT J
+	public static final field COLOR_ON_SECONDARY_CONTAINER_DARK J
+	public static final field COLOR_ON_SECONDARY_CONTAINER_LIGHT J
+	public static final field COLOR_ON_SECONDARY_DARK J
+	public static final field COLOR_ON_SECONDARY_LIGHT J
+	public static final field COLOR_ON_SURFACE_DARK J
+	public static final field COLOR_ON_SURFACE_DISABLED_DARK J
+	public static final field COLOR_ON_SURFACE_DISABLED_LIGHT J
+	public static final field COLOR_ON_SURFACE_LIGHT J
+	public static final field COLOR_ON_SURFACE_VARIANT_DARK J
+	public static final field COLOR_ON_SURFACE_VARIANT_LIGHT J
+	public static final field COLOR_OUTLINE_DARK J
+	public static final field COLOR_OUTLINE_LIGHT J
+	public static final field COLOR_OUTLINE_VARIANT_DARK J
+	public static final field COLOR_OUTLINE_VARIANT_LIGHT J
+	public static final field COLOR_PRIMARY_CONTAINER_DARK J
+	public static final field COLOR_PRIMARY_CONTAINER_LIGHT J
+	public static final field COLOR_PRIMARY_DARK J
+	public static final field COLOR_PRIMARY_LIGHT J
+	public static final field COLOR_SCRIM_DARK J
+	public static final field COLOR_SCRIM_LIGHT J
+	public static final field COLOR_SECONDARY_CONTAINER_DARK J
+	public static final field COLOR_SECONDARY_CONTAINER_LIGHT J
+	public static final field COLOR_SECONDARY_DARK J
+	public static final field COLOR_SECONDARY_LIGHT J
+	public static final field COLOR_STATE_PRESSED_DARK J
+	public static final field COLOR_STATE_PRESSED_LIGHT J
+	public static final field COLOR_SURFACE_BRIGHT_DARK J
+	public static final field COLOR_SURFACE_BRIGHT_LIGHT J
+	public static final field COLOR_SURFACE_CONTAINER_DARK J
+	public static final field COLOR_SURFACE_CONTAINER_HIGHEST_DARK J
+	public static final field COLOR_SURFACE_CONTAINER_HIGHEST_LIGHT J
+	public static final field COLOR_SURFACE_CONTAINER_HIGH_DARK J
+	public static final field COLOR_SURFACE_CONTAINER_HIGH_LIGHT J
+	public static final field COLOR_SURFACE_CONTAINER_LIGHT J
+	public static final field COLOR_SURFACE_CONTAINER_LOWEST_DARK J
+	public static final field COLOR_SURFACE_CONTAINER_LOWEST_LIGHT J
+	public static final field COLOR_SURFACE_CONTAINER_LOW_DARK J
+	public static final field COLOR_SURFACE_CONTAINER_LOW_LIGHT J
+	public static final field COLOR_SURFACE_DARK J
+	public static final field COLOR_SURFACE_DIM_DARK J
+	public static final field COLOR_SURFACE_DIM_LIGHT J
+	public static final field COLOR_SURFACE_DISABLED_DARK J
+	public static final field COLOR_SURFACE_DISABLED_LIGHT J
+	public static final field COLOR_SURFACE_LIGHT J
+	public static final field COLOR_SWITCH_THUMB_DISABLED_DARK J
+	public static final field COLOR_SWITCH_THUMB_DISABLED_LIGHT J
+	public static final field COLOR_SWITCH_THUMB_OFF_DARK J
+	public static final field COLOR_SWITCH_THUMB_OFF_LIGHT J
+	public static final field COLOR_SWITCH_TRACK_DISABLED_DARK J
+	public static final field COLOR_SWITCH_TRACK_DISABLED_LIGHT J
+	public static final field COLOR_SWITCH_TRACK_ON_DARK J
+	public static final field COLOR_SWITCH_TRACK_ON_LIGHT J
+	public static final field DURATION_MEDIUM_MILLIS J
+	public static final field DURATION_PROGRESS_CIRCULAR_ROTATION_MILLIS J
+	public static final field DURATION_PROGRESS_LINEAR_CYCLE_MILLIS J
+	public static final field DURATION_SHORT_MILLIS J
+	public static final field EASING_STANDARD_CURVE Ljava/lang/String;
+	public static final field EFFECT_DISMISS_THRESHOLD F
+	public static final field EFFECT_OVERSCROLL_DRAG_SCALE F
+	public static final field EFFECT_REFRESH_DRAG_SCALE F
+	public static final field ICON_SIZE_LARGE F
+	public static final field ICON_SIZE_MEDIUM F
+	public static final field ICON_SIZE_SMALL F
+	public static final field INSTANCE Lio/oxygenx/theme/generated/GeneratedTokens;
+	public static final field SHAPE_CORNER_BUTTON F
+	public static final field SHAPE_CORNER_CARD F
+	public static final field SHAPE_CORNER_INPUT F
+	public static final field SIZE_APPBAR_ACTION_RIPPLE F
+	public static final field SIZE_APPBAR_COLLAPSED_HEIGHT F
+	public static final field SIZE_APPBAR_COLLAPSE_DISTANCE F
+	public static final field SIZE_APPBAR_HEIGHT F
+	public static final field SIZE_APPBAR_LARGE_HEIGHT F
+	public static final field SIZE_APPBAR_PAGER_COLLAPSED_HEIGHT F
+	public static final field SIZE_APPBAR_PAGER_INDICATOR_HEIGHT F
+	public static final field SIZE_BADGE_DOT F
+	public static final field SIZE_BADGE_HEIGHT F
+	public static final field SIZE_BOTTOM_BAR_HEIGHT F
+	public static final field SIZE_BUTTON_HEIGHT F
+	public static final field SIZE_BUTTON_PADDING_HORIZONTAL F
+	public static final field SIZE_CHIP_BORDER_WIDTH F
+	public static final field SIZE_CHIP_HEIGHT F
+	public static final field SIZE_CONTROL_BORDER F
+	public static final field SIZE_CONTROL_CHECKBOX F
+	public static final field SIZE_CONTROL_CHECKBOX_CORNER F
+	public static final field SIZE_CONTROL_DOT F
+	public static final field SIZE_CONTROL_RADIO F
+	public static final field SIZE_DIALOG_INSET F
+	public static final field SIZE_DIALOG_PADDING F
+	public static final field SIZE_DIVIDER_THICKNESS F
+	public static final field SIZE_DRAWER_WIDTH F
+	public static final field SIZE_FAB F
+	public static final field SIZE_FAB_LARGE F
+	public static final field SIZE_FAB_SMALL F
+	public static final field SIZE_INPUT_HEIGHT F
+	public static final field SIZE_INPUT_INDICATOR_THICKNESS F
+	public static final field SIZE_INPUT_INDICATOR_THICKNESS_FOCUSED F
+	public static final field SIZE_LIST_ROW_MIN_HEIGHT F
+	public static final field SIZE_MENU_ITEM_HEIGHT F
+	public static final field SIZE_MENU_MIN_WIDTH F
+	public static final field SIZE_PROGRESS_CIRCULAR_SIZE F
+	public static final field SIZE_PROGRESS_CIRCULAR_STROKE F
+	public static final field SIZE_PROGRESS_LINEAR_HEIGHT F
+	public static final field SIZE_RAIL_ITEM_HEIGHT F
+	public static final field SIZE_RAIL_WIDTH F
+	public static final field SIZE_SEARCH_BAR_HEIGHT F
+	public static final field SIZE_SETTINGS_DIVIDER_HEIGHT F
+	public static final field SIZE_SETTINGS_SWITCH_CELL F
+	public static final field SIZE_SHEET_HANDLE_HEIGHT F
+	public static final field SIZE_SHEET_HANDLE_WIDTH F
+	public static final field SIZE_SLIDER_RIPPLE_RADIUS F
+	public static final field SIZE_SLIDER_THUMB F
+	public static final field SIZE_SLIDER_TICK F
+	public static final field SIZE_SLIDER_TRACK_HEIGHT F
+	public static final field SIZE_SWITCH_RIPPLE_RADIUS F
+	public static final field SIZE_SWITCH_THUMB F
+	public static final field SIZE_SWITCH_TRACK_HEIGHT F
+	public static final field SIZE_SWITCH_TRACK_WIDTH F
+	public static final field SIZE_TAB_INDICATOR_HEIGHT F
+	public static final field SIZE_TAB_MIN_WIDTH F
+	public static final field SIZE_TAB_ROW_HEIGHT F
+	public static final field SIZE_TOOLTIP_MAX_WIDTH F
+	public static final field SPACE_APPBAR_PAGER_TITLE_GAP F
+	public static final field SPACE_APPBAR_PAGER_TOP F
+	public static final field SPACE_APPBAR_SUBTITLE_TIGHTEN F
+	public static final field SPACE_APPBAR_TITLE_INSET F
+	public static final field SPACE_BADGE_PADDING_HORIZONTAL F
+	public static final field SPACE_CARD_PADDING F
+	public static final field SPACE_CONTROL_MIN_WIDTH F
+	public static final field SPACE_GAP_LARGE F
+	public static final field SPACE_GAP_SMALL F
+	public static final field SPACE_GAP_XS F
+	public static final field SPACE_GUTTER F
+	public static final field SPACE_LIST_GROUP_GAP F
+	public static final field SPACE_LIST_ITEM_INSET F
+	public static final field SPACE_LIST_TOP F
+	public static final field SPACE_MENU_ITEM_PADDING_HORIZONTAL F
+	public static final field SPACE_MENU_PADDING_VERTICAL F
+	public static final field SPACE_OVERSCROLL_MAX F
+	public static final field SPACE_REFRESH_MAX F
+	public static final field SPACE_REFRESH_THRESHOLD F
+	public static final field SPACE_SETTINGS_DIVIDER_GAP F
+	public static final field SPACE_SETTINGS_SWITCH_INSET F
+	public static final field SPACE_SHEET_HANDLE_INSET F
+	public static final field SPACE_TAB_INSET F
+	public static final field SPACE_TOOLTIP_PADDING_HORIZONTAL F
+	public static final field SPACE_TOOLTIP_PADDING_VERTICAL F
+	public static final field SPACE_TOUCH_TARGET_MIN F
+	public static final field SPEC_APPBAR_COLLAPSE_ENTER Ljava/lang/String;
+	public static final field SPEC_APPBAR_COLLAPSE_EXIT Ljava/lang/String;
+	public static final field SPEC_DIALOG_SLIDE_ENTER Ljava/lang/String;
+	public static final field SPEC_DIALOG_SLIDE_EXIT Ljava/lang/String;
+	public static final field SPEC_SCROLL_OVERSCROLL_ENTER Ljava/lang/String;
+	public static final field SPEC_SCROLL_OVERSCROLL_EXIT Ljava/lang/String;
+	public static final field SPEC_SWITCH_TOGGLE_ENTER Ljava/lang/String;
+	public static final field SPEC_SWITCH_TOGGLE_EXIT Ljava/lang/String;
+	public static final field SPEC_TAB_SWITCH_ENTER Ljava/lang/String;
+	public static final field SPEC_TAB_SWITCH_EXIT Ljava/lang/String;
+	public static final field SPRING_DIALOG_DAMPING_RATIO F
+	public static final field SPRING_DIALOG_STIFFNESS F
+	public static final field SPRING_DIALOG_VISIBILITY_THRESHOLD F
+	public static final field SPRING_OVERSCROLL_DAMPING_RATIO F
+	public static final field SPRING_OVERSCROLL_STIFFNESS F
+	public static final field SPRING_OVERSCROLL_VISIBILITY_THRESHOLD F
+	public static final field SPRING_SNAPPY_DAMPING_RATIO F
+	public static final field SPRING_SNAPPY_STIFFNESS F
+	public static final field SPRING_SNAPPY_VISIBILITY_THRESHOLD F
+	public static final field STAGGER_LIST_DELAY_MILLIS J
+	public static final field TYPE_APPBAR_SUBTITLE_FAMILY Ljava/lang/String;
+	public static final field TYPE_APPBAR_SUBTITLE_LETTER_SPACING F
+	public static final field TYPE_APPBAR_SUBTITLE_LINE_HEIGHT F
+	public static final field TYPE_APPBAR_SUBTITLE_SIZE F
+	public static final field TYPE_APPBAR_SUBTITLE_WEIGHT I
+	public static final field TYPE_APPBAR_TITLE_FAMILY Ljava/lang/String;
+	public static final field TYPE_APPBAR_TITLE_LETTER_SPACING F
+	public static final field TYPE_APPBAR_TITLE_LINE_HEIGHT F
+	public static final field TYPE_APPBAR_TITLE_SIZE F
+	public static final field TYPE_APPBAR_TITLE_WEIGHT I
+	public static final field TYPE_BODY_LARGE_FAMILY Ljava/lang/String;
+	public static final field TYPE_BODY_LARGE_LETTER_SPACING F
+	public static final field TYPE_BODY_LARGE_LINE_HEIGHT F
+	public static final field TYPE_BODY_LARGE_SIZE F
+	public static final field TYPE_BODY_LARGE_WEIGHT I
+	public static final field TYPE_BODY_MEDIUM_FAMILY Ljava/lang/String;
+	public static final field TYPE_BODY_MEDIUM_LETTER_SPACING F
+	public static final field TYPE_BODY_MEDIUM_LINE_HEIGHT F
+	public static final field TYPE_BODY_MEDIUM_SIZE F
+	public static final field TYPE_BODY_MEDIUM_WEIGHT I
+	public static final field TYPE_CAPTION_FAMILY Ljava/lang/String;
+	public static final field TYPE_CAPTION_LETTER_SPACING F
+	public static final field TYPE_CAPTION_LINE_HEIGHT F
+	public static final field TYPE_CAPTION_SIZE F
+	public static final field TYPE_CAPTION_WEIGHT I
+	public static final field TYPE_CLOCK_TIME_FAMILY Ljava/lang/String;
+	public static final field TYPE_CLOCK_TIME_LETTER_SPACING F
+	public static final field TYPE_CLOCK_TIME_LINE_HEIGHT F
+	public static final field TYPE_CLOCK_TIME_SIZE F
+	public static final field TYPE_CLOCK_TIME_WEIGHT I
+	public static final field TYPE_DIALOG_ACTION_FAMILY Ljava/lang/String;
+	public static final field TYPE_DIALOG_ACTION_LETTER_SPACING F
+	public static final field TYPE_DIALOG_ACTION_LINE_HEIGHT F
+	public static final field TYPE_DIALOG_ACTION_SIZE F
+	public static final field TYPE_DIALOG_ACTION_WEIGHT I
+	public static final field TYPE_DIALOG_TITLE_FAMILY Ljava/lang/String;
+	public static final field TYPE_DIALOG_TITLE_LETTER_SPACING F
+	public static final field TYPE_DIALOG_TITLE_LINE_HEIGHT F
+	public static final field TYPE_DIALOG_TITLE_SIZE F
+	public static final field TYPE_DIALOG_TITLE_WEIGHT I
+	public static final field TYPE_DISPLAY_LARGE_FAMILY Ljava/lang/String;
+	public static final field TYPE_DISPLAY_LARGE_LETTER_SPACING F
+	public static final field TYPE_DISPLAY_LARGE_LINE_HEIGHT F
+	public static final field TYPE_DISPLAY_LARGE_SIZE F
+	public static final field TYPE_DISPLAY_LARGE_WEIGHT I
+	public static final field TYPE_INPUT_TEXT_FAMILY Ljava/lang/String;
+	public static final field TYPE_INPUT_TEXT_LETTER_SPACING F
+	public static final field TYPE_INPUT_TEXT_LINE_HEIGHT F
+	public static final field TYPE_INPUT_TEXT_SIZE F
+	public static final field TYPE_INPUT_TEXT_WEIGHT I
+	public static final field TYPE_LABEL_MEDIUM_FAMILY Ljava/lang/String;
+	public static final field TYPE_LABEL_MEDIUM_LETTER_SPACING F
+	public static final field TYPE_LABEL_MEDIUM_LINE_HEIGHT F
+	public static final field TYPE_LABEL_MEDIUM_SIZE F
+	public static final field TYPE_LABEL_MEDIUM_WEIGHT I
+	public static final field TYPE_LIST_ITEM_TITLE_FAMILY Ljava/lang/String;
+	public static final field TYPE_LIST_ITEM_TITLE_LETTER_SPACING F
+	public static final field TYPE_LIST_ITEM_TITLE_LINE_HEIGHT F
+	public static final field TYPE_LIST_ITEM_TITLE_SIZE F
+	public static final field TYPE_LIST_ITEM_TITLE_WEIGHT I
+	public static final field TYPE_TITLE_MEDIUM_FAMILY Ljava/lang/String;
+	public static final field TYPE_TITLE_MEDIUM_LETTER_SPACING F
+	public static final field TYPE_TITLE_MEDIUM_LINE_HEIGHT F
+	public static final field TYPE_TITLE_MEDIUM_SIZE F
+	public static final field TYPE_TITLE_MEDIUM_WEIGHT I
+}
+

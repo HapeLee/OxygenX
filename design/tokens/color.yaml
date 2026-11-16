@@ -1,0 +1,344 @@
+# OxygenX 设计令牌真源 — 颜色
+# P1 管线自检用：以下取值全部是 E0 占位，不是 OxygenOS 的复刻值。
+# 取得 reference 后按 docs/spec/README.md 的证据等级升级，并把 status 改为 verified。
+# 格式：扁平 `key: value`；值中不得出现 `: `；以 # 开头的行为注释。
+tokens:
+  - id: color.surface
+    kind: color
+    light: 0xFFFAFAFA
+    dark: 0xFF101012
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 页面背景
+  - id: color.surface.container
+    kind: color
+    light: 0xFFFFFFFF
+    dark: 0xFF1C1C1F
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 卡片与容器背景
+  - id: color.on.surface
+    kind: color
+    light: 0xFF18181B
+    dark: 0xFFF4F4F5
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 主要文字与图标
+  - id: color.on.surface.variant
+    kind: color
+    light: 0xFF6B6B73
+    dark: 0xFFA1A1AA
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 次要文字与图标
+  - id: color.primary
+    kind: color
+    light: 0xFFC41442
+    dark: 0xFFFF6B85
+    overridable: true
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 主色（对齐 M3 primary 角色，原名 color.accent.primary；真机取色：FAB 与选中分栏 #C41442，属一加品红而非系统蓝），可被主题覆盖
+  - id: color.on.primary
+    kind: color
+    light: 0xFFFFFFFF
+    dark: 0xFF101012
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 主色之上的文字与图标（对齐 M3 onPrimary 角色，原名 color.content.on.accent），也用于滑块拇指与开关开启态文案
+  - id: color.surface.disabled
+    kind: color
+    light: 0xFFEAEAEF
+    dark: 0xFF2A2A2F
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 禁用态容器与轨道
+  - id: color.on.surface.disabled
+    kind: color
+    light: 0xFFA5A5AE
+    dark: 0xFF6C6C75
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 禁用态文字与图标
+  - id: color.switch.track.on
+    kind: color
+    light: 0x29C41442
+    dark: 0x59FF6B85
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关开启态轨道的强调色叠加比例（资源真值 colorAccent @16% 浅色 / @35% 深色）。对齐 M3 primary 派生：运行时只取本令牌的 alpha 与当前 primary 的色相合成 switchTrackOn，RGB 仅是 E3 取色基线记录、不参与渲染，这样动态取色时开关会跟随主色
+  - id: color.switch.thumb.off
+    kind: color
+    light: 0x2D000000
+    dark: 0x4CFFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关关闭态拇指（18% 黑 / 30% 白，叠加白底即 #D1D1D1）
+  - id: color.switch.track.disabled
+    kind: color
+    light: 0x0A000000
+    dark: 0x14FFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关禁用态轨道（4% 黑 / 8% 白）
+  - id: color.switch.thumb.disabled
+    kind: color
+    light: 0x0C000000
+    dark: 0x1EFFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关禁用态拇指（5% 黑 / 12% 白）
+  - id: color.surface.container.highest
+    kind: color
+    light: 0x1E000000
+    dark: 0x1FFFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 未激活轨道/容器最高层（对齐 M3 surfaceContainerHighest，原名 color.track.inactive）：分段指示器底轨、滑块与进度空轨、开关关闭态轨道共用。资源值 op_seek_bar_disabled_color_light = #1E000000 约 12% 黑，真机取色 #DDDDDD 叠页面底；与 outlineVariant 的 8% 分割线是两个不同真值，不合并
+  - id: color.outline
+    kind: color
+    light: 0xFF969696
+    dark: 0x66FFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 单选/复选框未选中态描边（真机取色 #969696，约 40% 黑叠白底）
+  - id: color.control.dot
+    kind: color
+    light: 0xFFFFFFFF
+    dark: 0xFFFFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 单选选中态内点 / 复选对勾（画在强调色实心块上，深浅色都用白）
+  - id: color.outline.variant
+    kind: color
+    light: 0x14000000
+    dark: 0x19FFFFFF
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 分割线（资源真值 op_control_divider_color：8% 黑 / 10% 白）
+  - id: color.state.pressed
+    kind: color
+    light: 0x1F000000
+    dark: 0x29FFFFFF
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 统一按压状态层
+  - id: color.input.indicator.unfocused
+    kind: color
+    light: 0x1F000000
+    dark: 0x1FFFFFFF
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 输入框未聚焦指示线（真机「设备名称」编辑框未聚焦时约 #E0E0E0，即 12% 黑叠白底）
+  - id: color.error
+    kind: color
+    light: 0xFFB3261E
+    dark: 0xFFF2B8B5
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 错误态（对齐 M3 error，用于输入框 isError 与提示文字）
+  - id: color.secondary
+    kind: color
+    light: 0xFF18181B
+    dark: 0xFFF4F4F5
+    overridable: true
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 次要强调色（对齐 M3 secondary 角色）：取页面墨色而不是第二品牌色，用于次级按钮、二级页签指示器这类「不该跟主色抢焦点」的强调；可被动态取色覆盖
+  - id: color.on.secondary
+    kind: color
+    light: 0xFFFAFAFA
+    dark: 0xFF101012
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 次要强调色之上的文字与图标（对齐 M3 onSecondary）
+  - id: color.secondary.container
+    kind: color
+    light: 0x14000000
+    dark: 0x1FFFFFFF
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 次要强调色的浅底（对齐 M3 secondaryContainer）：页签按压底、chip tonal 变体的选中底，后续 segmented / tonal 按钮；8% / 10% 墨色叠加
+  - id: color.on.secondary.container
+    kind: color
+    light: 0xFF18181B
+    dark: 0xFFF4F4F5
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 次要强调浅底之上的文字（对齐 M3 onSecondaryContainer），与 color.secondary 同值以保证浅底上的墨色对比；由 chip tonal 变体消费
+  - id: color.inverse.surface
+    kind: color
+    light: 0xFF18181B
+    dark: 0xFFF4F4F5
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 反白容器（对齐 M3 inverseSurface；secondary 按钮、Snackbar、Toast 的底色）。取值沿用页面前景墨色，与 color.on.surface 当前同值但语义独立——色值可各自演化
+  - id: color.inverse.on.surface
+    kind: color
+    light: 0xFFFAFAFA
+    dark: 0xFF101012
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 反白容器之上的文字与图标（对齐 M3 inverseOnSurface，取值沿用页面底色）
+  - id: color.scrim
+    kind: color
+    light: 0x52000000
+    dark: 0x52000000
+    baseline: Material 3 scrim（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 模态遮罩（底部面板 / 侧边抽屉之外自绘的暗层）；32% 黑与 M3 scrim 同值，Dialog 的遮罩由平台提供、不走这里
+  # ---- M3 桥接角色（:oxygenx-material3）----
+  # 这批角色的第一个消费者是 M3 桥接：外部 App 已有一整套 M3 ColorScheme，
+  # 映射进来时必须有地方落，否则只能拿 primary / secondary 凑近似。
+  # 取值仍是 E0 占位，按 Material 3 基线色调关系给出，不是 OxygenOS 实测。
+  - id: color.primary.container
+    kind: color
+    light: 0xFFFFD9E0
+    dark: 0xFF8E1036
+    baseline: Material 3 tonal palette（primaryContainer 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 主色浅底（对齐 M3 primaryContainer）：填充色调按钮、选中容器
+  - id: color.on.primary.container
+    kind: color
+    light: 0xFF40001A
+    dark: 0xFFFFD9E0
+    baseline: Material 3 tonal palette（onPrimaryContainer 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 主色浅底之上的内容（对齐 M3 onPrimaryContainer）
+  - id: color.inverse.primary
+    kind: color
+    light: 0xFFFFB1C1
+    dark: 0xFFC41442
+    baseline: Material 3 tonal palette（inversePrimary 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 反白容器里的主色（对齐 M3 inversePrimary，取另一侧明暗的主色）
+  - id: color.on.error
+    kind: color
+    light: 0xFFFFFFFF
+    dark: 0xFF690005
+    baseline: Material 3 tonal palette（onError 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 错误色之上的内容（对齐 M3 onError）；error 本身目前只当文字与指示线用
+  - id: color.error.container
+    kind: color
+    light: 0xFFF9DEDC
+    dark: 0xFF93000A
+    baseline: Material 3 tonal palette（errorContainer 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 错误浅底（对齐 M3 errorContainer）：错误摘要、错误提示条
+  - id: color.on.error.container
+    kind: color
+    light: 0xFF410E0B
+    dark: 0xFFFFDAD6
+    baseline: Material 3 tonal palette（onErrorContainer 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 错误浅底之上的内容（对齐 M3 onErrorContainer）
+  - id: color.surface.container.low
+    kind: color
+    light: 0xFFF7F7F8
+    dark: 0xFF161618
+    baseline: Material 3 tonal palette（surfaceContainerLow 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 容器层级最低档（对齐 M3 surfaceContainerLow）：页面内的分区底，比 surface 略亮 / 略暗一档
+  - id: color.surface.container.high
+    kind: color
+    light: 0xFFEFEFF2
+    dark: 0xFF26262A
+    baseline: Material 3 tonal palette（surfaceContainerHigh 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 容器层级高档（对齐 M3 surfaceContainerHigh）：叠加在卡片之上的浮层底
+  - id: color.surface.container.lowest
+    kind: color
+    light: 0xFFFFFFFF
+    dark: 0xFF0B0B0D
+    baseline: Material 3 tonal palette（surfaceContainerLowest 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 容器层级最低档（对齐 M3 surfaceContainerLowest）：最贴近底层的白 / 黑
+  - id: color.surface.bright
+    kind: color
+    light: 0xFFFFFFFF
+    dark: 0xFF37373B
+    baseline: Material 3 tonal palette（surfaceBright 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 亮侧表面（对齐 M3 surfaceBright）：深色主题里比 surface 更亮的容器
+  - id: color.surface.dim
+    kind: color
+    light: 0xFFEAEAEC
+    dark: 0xFF0C0C0E
+    baseline: Material 3 tonal palette（surfaceDim 类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 暗侧表面（对齐 M3 surfaceDim）：浅色主题里比 surface 更暗的容器

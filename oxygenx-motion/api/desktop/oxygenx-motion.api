@@ -1,0 +1,52 @@
+public final class io/oxygenx/motion/OxygenAnimation {
+	public static final field $stable I
+	public final fun animateTo (FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getValue ()F
+	public final fun isRunning ()Z
+	public final fun snapTo (FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/oxygenx/motion/OxygenLoopSpec {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;JLandroidx/compose/animation/core/Easing;)V
+	public final fun getDurationMillis ()J
+	public final fun getEasing ()Landroidx/compose/animation/core/Easing;
+	public final fun getSpecId ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/motion/OxygenMotion {
+	public static final field $stable I
+	public static final field INSTANCE Lio/oxygenx/motion/OxygenMotion;
+	public final fun cubicBezier (Ljava/lang/String;)Landroidx/compose/animation/core/Easing;
+	public final fun fade (JLjava/lang/String;)Landroidx/compose/animation/core/TweenSpec;
+	public static synthetic fun fade$default (Lio/oxygenx/motion/OxygenMotion;JLjava/lang/String;ILjava/lang/Object;)Landroidx/compose/animation/core/TweenSpec;
+	public final fun spring (FFF)Landroidx/compose/animation/core/SpringSpec;
+	public static synthetic fun spring$default (Lio/oxygenx/motion/OxygenMotion;FFFILjava/lang/Object;)Landroidx/compose/animation/core/SpringSpec;
+}
+
+public final class io/oxygenx/motion/OxygenMotionDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/oxygenx/motion/OxygenMotionDefaults;
+	public final fun appBarCollapse ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun dialogSlide ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun progressCircularLoop ()Lio/oxygenx/motion/OxygenLoopSpec;
+	public final fun progressLinearLoop ()Lio/oxygenx/motion/OxygenLoopSpec;
+	public final fun pullRefresh ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun scrollOverscroll ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun switchToggle ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun tabSwitch ()Lio/oxygenx/motion/OxygenMotionSpec;
+}
+
+public final class io/oxygenx/motion/OxygenMotionKt {
+	public static final fun rememberOxygenAnimation (Lio/oxygenx/motion/OxygenMotionSpec;FLandroidx/compose/runtime/Composer;II)Lio/oxygenx/motion/OxygenAnimation;
+	public static final fun rememberOxygenLoop (Lio/oxygenx/motion/OxygenLoopSpec;Landroidx/compose/runtime/Composer;I)F
+}
+
+public final class io/oxygenx/motion/OxygenMotionSpec {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Landroidx/compose/animation/core/AnimationSpec;Landroidx/compose/animation/core/AnimationSpec;)V
+	public final fun getEnter ()Landroidx/compose/animation/core/AnimationSpec;
+	public final fun getExit ()Landroidx/compose/animation/core/AnimationSpec;
+	public final fun getSpecId ()Ljava/lang/String;
+}
+

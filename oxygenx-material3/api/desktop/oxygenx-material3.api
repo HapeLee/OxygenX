@@ -1,0 +1,4 @@
+public final class io/oxygenx/material3/Material3ColorSchemeKt {
+	public static final fun toOxygenColorScheme (Landroidx/compose/material3/ColorScheme;)Lio/oxygenx/theme/OxygenColorScheme;
+}
+

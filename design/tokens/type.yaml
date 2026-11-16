@@ -1,0 +1,161 @@
+# OxygenX 设计令牌真源 — 排版
+# P3 组件渲染所需；以下取值全部是 E0 占位，不是 OxygenOS 的复刻值。
+# 字段：size / lineHeight（sp）、weight（1..1000）、letterSpacing（sp）、family（通用字族名）。
+# family 只允许通用字族，不引用任何厂商专有字体文件。
+tokens:
+  - id: type.display.large
+    kind: typography
+    size: 46
+    lineHeight: 54
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 页面大标题（大顶栏展开态与横划顶栏共用；真机设置首页「设置」墨迹 244×114px @450dpi、图库「照片」245×117px，44sp 只有 232×113px，折合 46sp；字重为常规）
+  - id: type.title.medium
+    kind: typography
+    size: 20
+    lineHeight: 28
+    weight: 600
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 顶栏与卡片标题
+  - id: type.dialog.title
+    kind: typography
+    size: 18
+    lineHeight: 24
+    weight: 500
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 弹窗标题（真机「设备名称」弹窗：4 字墨迹 198px 宽 / 46px 高 @450dpi，与 20sp 的 220px / 53px 相比折合 18sp）
+  - id: type.appbar.title
+    kind: typography
+    size: 18
+    lineHeight: 24
+    weight: 500
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 标准顶栏与「大顶栏」收拢态的标题
+  - id: type.body.large
+    kind: typography
+    size: 16
+    lineHeight: 24
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 正文
+  - id: type.body.medium
+    kind: typography
+    size: 13
+    lineHeight: 18
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 次要正文与设置行说明（APK 资源 dump：op_text_size_body1 13sp）
+  - id: type.list.item.title
+    kind: typography
+    size: 16
+    lineHeight: 22
+    weight: 500
+    letterSpacing: 0
+    family: sans-serif
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 设置行标题（APK 资源 dump：op_text_size_h6 16sp，OnePlus.TextAppearance.List.Title）
+  - id: type.clock.time
+    kind: typography
+    size: 32
+    lineHeight: 40
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 时钟列表时间的大字号（真机目测约 32sp、常规字重）
+  - id: type.input.text
+    kind: typography
+    size: 16
+    lineHeight: 24
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 输入框正文（真机「设备名称」输入行墨迹 230×34px @450dpi，16sp 且无额外字距；0.5sp 字距会宽出 12px）
+  - id: type.label.medium
+    kind: typography
+    size: 14
+    lineHeight: 20
+    weight: 500
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 按钮与设置行标题
+  - id: type.appbar.subtitle
+    kind: typography
+    size: 14
+    lineHeight: 17
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 顶栏标题下方的副标题，标准 / 大 / 横划顶栏共用（字号：真机图库副标题墨迹 36px 高 @450dpi，按 46sp 大标题的墨迹/em 比 0.905 折合 14.1sp，13sp 只有 33px；行高：收拢态「标题墨迹底 275 → 副标题墨迹顶 291」= 16px，20sp 行高会撑到 20px，17sp 恰好 16px）
+  - id: type.dialog.action
+    kind: typography
+    size: 14
+    lineHeight: 20
+    weight: 700
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 弹窗通栏文字按钮（「确定 / 取消」墨迹 76×36px @450dpi、实心像素约 900 个，比 500 字重厚近一倍，折合 14sp / 700）
+  - id: type.caption
+    kind: typography
+    size: 12
+    lineHeight: 16
+    weight: 400
+    letterSpacing: 0
+    family: sans-serif
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 说明与状态标记

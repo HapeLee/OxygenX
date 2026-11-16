@@ -1,0 +1,128 @@
+# OxygenX 动效令牌真源
+# P1 管线自检用：以下取值全部是 E0 占位，不是 OxygenOS 的复刻值。
+# motionSpec 只引用其他令牌 ID，不直接写字面量参数。
+tokens:
+  - id: duration.short
+    kind: duration
+    millis: 120
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 短反馈时长占位
+  - id: duration.medium
+    kind: duration
+    millis: 200
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 状态切换时长占位
+  - id: easing.standard
+    kind: easing
+    curve: 0.2,0.0,0.0,1.0
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 标准曲线占位
+  - id: spring.snappy
+    kind: spring
+    stiffness: 400
+    dampingRatio: 0.85
+    visibilityThreshold: 0.001
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 快速弹簧占位
+  - id: spring.dialog
+    kind: spring
+    stiffness: 2400
+    dampingRatio: 0.95
+    visibilityThreshold: 0.006
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 弹窗进出场用的快弹簧，约 150ms 走完、基本不回弹；原来复用 spring.snappy（400 / 阈值 0.001），尾巴要拖到 600ms 量级，看起来拖沓
+  - id: spring.overscroll
+    kind: spring
+    stiffness: 900
+    dampingRatio: 0.6
+    visibilityThreshold: 0.5
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 滚动过冲回弹用的紧凑弹簧：刚度高、阻尼 0.6，松手后约 300ms 归位并只越界回弹一次（阈值单位是 px，因为位移量单位是像素）
+  - id: stagger.list
+    kind: stagger
+    delayMillis: 24
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 列表错峰占位
+  - id: spec.switch.toggle
+    kind: motionSpec
+    enterSpec: spring.snappy
+    exitSpec: spring.snappy
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 开关与滑块状态切换动效规格占位
+  - id: spec.appbar.collapse
+    kind: motionSpec
+    enterSpec: spring.snappy
+    exitSpec: spring.snappy
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 大顶栏收拢/展开的收尾动效规格占位
+
+  - id: spec.dialog.slide
+    kind: motionSpec
+    enterSpec: spring.dialog
+    exitSpec: spring.dialog
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 弹窗下滑入场 / 下滑（居中态叠渐隐）退场，进出场同一条快弹簧
+  - id: spec.tab.switch
+    kind: motionSpec
+    enterSpec: spring.snappy
+    exitSpec: spring.snappy
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: Tab 指示器的滑动与文字颜色过渡，进出同一条快弹簧
+  - id: spec.scroll.overscroll
+    kind: motionSpec
+    enterSpec: spring.overscroll
+    exitSpec: spring.overscroll
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 滚动到边界松手后的过冲回弹（同一条紧凑弹簧，过零后弹回一次即静止）。横向与纵向各自独立回弹；甩动时把抬手速度作为初速度喂给弹簧，反向甩动保留一部分惯性给内容（1 / 2.13333），fling 的剩余速度再打 1 / 1.53333 喂回
+  - id: duration.progress.linear.cycle
+    kind: duration
+    millis: 1750
+    baseline: Material 3 indeterminate 线性进度（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 线性不确定态一轮循环的时长（对齐 M3 / MDC indeterminate 的 1750ms 周期：条从左侧长出、整体右移、尾部追到右端消失）
+  - id: duration.progress.circular.rotation
+    kind: duration
+    millis: 1332
+    baseline: Material 3 indeterminate 圆环进度（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 圆环不确定态旋转一圈的时长（对齐 M3 / MDC 的 1332ms 旋转周期；弧长在同一周期内往返伸缩）

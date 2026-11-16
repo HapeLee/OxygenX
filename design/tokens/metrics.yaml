@@ -1,0 +1,807 @@
+# OxygenX 设计令牌真源 — 间距 / 尺寸 / 形状
+# P1 管线自检用：以下取值全部是 E0 占位，不是 OxygenOS 的复刻值。
+# touch.target.min 的 48 是无障碍下限，不属于复刻数值。
+tokens:
+  - id: space.gutter
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 页面水平留白
+  - id: space.control.min.width
+    kind: dimension
+    value: 64
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 控件最小宽度
+  - id: space.touch.target.min
+    kind: dimension
+    value: 48
+    unit: dp
+    baseline: a11y / WCAG touch target floor
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 最小触摸目标（无障碍下限，非复刻值）
+  - id: shape.corner.card
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 卡片圆角
+  - id: shape.corner.button
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 按钮圆角
+  - id: space.gap.xs
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 标题与副标题的行间间距
+  - id: space.gap.small
+    kind: dimension
+    value: 8
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 紧凑元素间距
+  - id: space.gap.large
+    kind: dimension
+    value: 24
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 区块间距
+  - id: space.card.padding
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 卡片内边距
+  - id: space.appbar.title.inset
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 顶栏标题距屏幕左侧（APK 资源 dump：Appbar titleMarginStart = op_control_margin_screen_left3 20dp）
+  - id: space.list.top
+    kind: dimension
+    value: 9
+    unit: dp
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 列表首组距顶栏（APK 资源 dump：op_control_margin_list_top1 9dp）
+  - id: space.list.item.inset
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 设置行左右内边距（真机量得文字距屏幕约 20dp）
+  - id: space.list.group.gap
+    kind: dimension
+    value: 21
+    unit: dp
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 列表分组之间的间距（APK 资源 dump：op_control_margin_list_top4 / bottom4 21dp）
+  - id: size.appbar.height
+    kind: dimension
+    value: 72
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 标准顶栏在状态栏下方的高度（真机 206px @450dpi = 73.2dp；按 4dp 网格取 72dp，等于 20dp 上边距 + 52dp 内容）
+  - id: size.appbar.collapsed.height
+    kind: dimension
+    value: 72
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 大顶栏收拢后的高度（收拢态与标准顶栏等高；真机收拢后标题圆心距状态栏 40.4dp，按 4dp 网格与 `size.appbar.height` 同步取 72dp）
+  - id: size.appbar.pager.collapsed.height
+    kind: dimension
+    value: 96
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 横划顶栏收拢后的高度（真机图库上滑收拢后底部分割线在 379px、状态栏下沿 104px @450dpi，差 275px = 97.8dp；按 4dp 网格取 96dp，比标准顶栏高 24dp，因为收拢态仍保留指示器与小副标题）
+  - id: size.bottom.bar.height
+    kind: dimension
+    value: 55
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 底栏内容高度（真机量得 55dp，不含系统导航条；顶部分割线另算）
+  - id: size.fab
+    kind: dimension
+    value: 56
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 悬浮操作按钮直径（真机量得约 55dp，取 56dp）
+  - id: size.fab.small
+    kind: dimension
+    value: 40
+    unit: dp
+    baseline: Material 3 / FAB sizes / 2026-11-15
+    source: https://m3.material.io/components/floating-action-button/specs
+    evidence: E0
+    status: draft
+    description: 小号悬浮按钮直径（对齐 M3 small FAB 40dp；尚未在本机量取）
+  - id: size.fab.large
+    kind: dimension
+    value: 96
+    unit: dp
+    baseline: Material 3 / FAB sizes / 2026-11-15
+    source: https://m3.material.io/components/floating-action-button/specs
+    evidence: E0
+    status: draft
+    description: 大号悬浮按钮直径（对齐 M3 large FAB 96dp；尚未在本机量取）
+  - id: size.appbar.large.height
+    kind: dimension
+    value: 264
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 大顶栏展开高度（真机 747px @450dpi = 265.6dp、资源值 op_app_bar_collapsing_height 245dp + 20dp 上边距；按 4dp 网格取 264dp），窗口更矮时收敛到可用高度
+
+  - id: size.appbar.collapse.distance
+    kind: dimension
+    value: 171
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 大顶栏从完全展开滚到完全收拢的滚动距离（资源值 op_app_bar_distance = 171dp）
+  - id: size.appbar.action.ripple
+    kind: dimension
+    value: 36
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 顶栏动作的水波纹半径（大于触摸目标，允许盖住标题）
+  - id: size.list.row.min.height
+    kind: dimension
+    value: 64
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 设置行最小高度
+  - id: size.button.height
+    kind: dimension
+    value: 48
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 按钮高度
+  - id: size.button.padding.horizontal
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 按钮水平内边距
+  - id: size.chip.height
+    kind: dimension
+    value: 32
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: chip 视觉高度（M3 默认 32dp）；触摸目标由组件扩展到 space.touch.target.min，不用它画点击区
+  - id: size.chip.border.width
+    kind: dimension
+    value: 1
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 未选中 chip 的描边宽度；比 size.control.border 的 1.5dp 更细，故不复用
+  - id: size.switch.track.width
+    kind: dimension
+    value: 34
+    unit: dp
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 开关轨道宽度（APK 只给轨道高度 17dp，宽度按 2:1 视觉比例推断）
+  - id: size.switch.track.height
+    kind: dimension
+    value: 17
+    unit: dp
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关轨道高度（APK 资源 dump：op_switch_track_material 17dp，圆角半径 8.5dp）
+  - id: size.switch.thumb
+    kind: dimension
+    value: 17
+    unit: dp
+    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关拇指直径（APK 资源 dump：op_switch_thumb_material 17dp）
+  - id: size.slider.track.height
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 滑块轨道高度（资源值 op_seekbar_track_background_height_material = 4dp，圆角半径同值；真机实测 11px @450dpi）
+  - id: size.slider.thumb
+    kind: dimension
+    value: 15
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 滑块拇指直径（资源值 op_seekbar_thumb_material / op_ic_brightness_thumb 均为 15dp 圆形；真机实测 42px @450dpi）
+  - id: size.slider.ripple.radius
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 滑块按压/拖动水波纹半径（真机拖亮度滑块实测直径 90px @450dpi ≈ 32dp，12% 黑叠加在轨道上）
+  - id: size.slider.tick
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 步进滑块的档位圆点直径（真机「显示大小」页实测 10px @450dpi ≈ 3.6dp，取 4dp）
+  - id: size.control.radio
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 单选框直径（真机杜比全景声页实测 44–48px @450dpi，取 16dp）
+  - id: size.control.checkbox
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 复选框边长（资源值 op_checkbox 视图 63 内 51 的圆角方块，按 20dp 盒子折算是 16dp）
+  - id: size.control.border
+    kind: dimension
+    value: 1.5
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 单选/复选框未选中态描边宽度（真机实测 4px @450dpi ≈ 1.4dp）
+  - id: size.control.checkbox.corner
+    kind: dimension
+    value: 2
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 复选框圆角（op_checkbox 向量在 63 视口用 8 的圆角，折合约 2dp）
+  - id: size.control.dot
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 单选框选中态内点直径（真机实测 11px @450dpi ≈ 4dp）
+  - id: size.divider.thickness
+    kind: dimension
+    value: 1
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 分割线厚度
+  - id: icon.size.small
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 小图标尺寸
+  - id: icon.size.medium
+    kind: dimension
+    value: 24
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 标准图标尺寸
+  - id: icon.size.large
+    kind: dimension
+    value: 36
+    unit: dp
+    baseline: Material 3 / Large FAB icon / 2026-11-15
+    source: https://m3.material.io/components/floating-action-button/specs
+    evidence: E0
+    status: draft
+    description: 大号图标尺寸（大号悬浮按钮内用，对齐 M3 36dp）
+  - id: size.settings.switch.cell
+    kind: dimension
+    value: 45
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 行尾开关单元格边长（op_switch_preference_material / op_preference_checkable_two_target 均为 45dp 方框，开关在其中居中）
+  - id: space.settings.switch.inset
+    kind: dimension
+    value: 15
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 行尾带开关时的右侧内边距（真机量得轨道右缘距屏幕边缘 20.6dp，扣除 45dp 单元格对 34dp 轨道的单侧 5.5dp 居中留白）
+  - id: size.settings.divider.height
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 设置行内「点击区 / 开关」之间竖分割线的高度（真机量得 54px @450dpi ≈ 19dp）
+  - id: space.settings.divider.gap
+    kind: dimension
+    value: 10
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 竖分割线到开关单元格的间距（真机量得分割线到轨道 17dp，扣除单元格居中留白 5.5dp 后取 10dp 余量）
+  - id: size.switch.ripple.radius
+    kind: dimension
+    value: 18
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-13
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 开关按压波纹半径（资源真值 op_switch_ripple_radius = 18dp；圆心是拇指中心，直径 36dp 可溢出 17dp 轨道）
+  - id: size.input.height
+    kind: dimension
+    value: 40
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 输入框容器最小高度（真机「设备名称」EditText 111px @450dpi = 39.5dp；带 label 时由内容撑开，不再固定 56dp）
+  - id: size.input.indicator.thickness
+    kind: dimension
+    value: 1
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 输入框未聚焦态底部指示线粗细（对齐 M3 的 1dp）
+  - id: size.input.indicator.thickness.focused
+    kind: dimension
+    value: 2
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 输入框聚焦态底部指示线粗细（对齐 M3 的 2dp）
+  - id: shape.corner.input
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: OxygenOS <version> / <device> / <date>
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 输入框小圆角矩形圆角（对齐 M3 OutlinedTextField 的 4dp）
+  - id: size.dialog.inset
+    kind: dimension
+    value: 8
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 弹窗左右外边距（真机「设备名称」弹窗卡片 1036px 宽 @450dpi = 368dp，屏宽 384dp，左右各 8dp）
+  - id: size.dialog.padding
+    kind: dimension
+    value: 24
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 弹窗左右内边距（真机输入框距卡片边缘 68px @450dpi = 24dp）
+  - id: size.appbar.pager.indicator.height
+    kind: dimension
+    value: 2
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 横划顶栏分段指示器的高度（真机图库指示器 6px @450dpi = 2.1dp，取 2dp；三段各 310px 宽、间隔 24px、圆角端头）
+  - id: space.appbar.subtitle.tighten
+    kind: dimension
+    value: 1.5
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 顶栏副标题相对标题行盒底的上提量（真机图库收拢态「标题墨迹底 275 → 副标题墨迹顶 291」= 16px，Compose 的行盒上下余量会撑到 20px，上提 1.5dp 抵消；展开态不生效，因为大字号下行盒余量与真机本来就一致）
+  - id: space.appbar.pager.top
+    kind: dimension
+    value: 10.5
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 横划顶栏分段指示器距状态栏下沿（真机状态栏 inset 104px、指示器上沿 134px @450dpi，差 30px = 10.7dp，取 10.5dp）
+  - id: space.appbar.pager.title.gap
+    kind: dimension
+    value: 29
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 横划顶栏「分段指示器 → 大标题」的间距（按墨迹复测：真机指示器下沿 139px 到大标题墨迹顶 255px = 116px；减去 46sp 字号在 54sp 行盒里的墨迹偏移 34.6px，得行盒间距 81.4px = 28.9dp，取 29dp；旧值 36dp 误把墨迹顶当成行盒顶）
+  - id: size.progress.linear.height
+    kind: dimension
+    value: 2
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 线性进度条厚度（沿用本项目已落地的「细条」风格：顶栏分段指示器实测 6px @450dpi = 2.1dp，取 2dp；不采用 M3 的 4dp 默认厚度）
+  - id: size.progress.circular.size
+    kind: dimension
+    value: 24
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 圆环进度指示器直径（细环形态，取 24dp 以便内联进行尾或按钮；M3 默认 40dp，此处按「细条」方向收小，尚无 OxygenOS 真机参考）
+  - id: size.progress.circular.stroke
+    kind: dimension
+    value: 2
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: 圆环进度指示器描边宽度（与 `size.progress.linear.height` 同厚度，保持细条风格；M3 默认 4dp）
+  - id: space.refresh.threshold
+    kind: dimension
+    value: 64
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 下拉刷新触发阈值（下拉量达到该值松手才触发刷新；M3 默认约 80dp，按 4dp 网格取 64dp）
+  - id: space.refresh.max
+    kind: dimension
+    value: 96
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 下拉刷新最大位移（超过阈值后阻力继续增大，位移封顶于该值）
+  - id: space.overscroll.max
+    kind: dimension
+    value: 72
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 滚动到边界后内容能继续位移的最大距离（过冲回弹的位移上限）。阻尼曲线是三次曲线 `x - x² + x³/3`，端点是范围的 1/3，所以曲线尺度取本值的 3 倍；真机手感需 P5 逐帧校准
+  - id: effect.overscroll.drag.scale
+    kind: dimension
+    value: 0.5
+    unit: ratio
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 过冲起点「位移 / 手指位移」的比例（0.5 表示起手只跟一半），之后由三次曲线渐进变沉；它也决定拉满所需的触摸距离 = 3 × 位移上限 / 本值（0.5 → 432dp）
+  - id: effect.refresh.drag.scale
+    kind: dimension
+    value: 0.5
+    unit: ratio
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 下拉刷新位移对手指位移的阻尼比例（0.5 表示下拉一半距离；真机的手感需 P5 逐帧校准）
+  - id: size.tab.row.height
+    kind: dimension
+    value: 48
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 文字型 Tab 行的高度（48dp 与触摸目标下限同档，M3 默认也是 48dp；尚无 OxygenOS 真机 Tab 参考）
+  - id: size.tab.min.width
+    kind: dimension
+    value: 72
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 可滚动 Tab 每个页签的最小宽度（文字内距 16dp × 2 + 两个汉字宽，保证短文案也不会挤成一条）
+  - id: size.tab.indicator.height
+    kind: dimension
+    value: 2
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E1
+    status: draft
+    description: Tab 选中指示器的高度（沿用细条风格：与顶栏分段指示器实测 2.1dp、线性进度条 2dp 同档）
+  - id: space.tab.inset
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-15
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: Tab 文字距页签左右边缘的内距（只作用于文字，不缩进指示器：相邻页签的指示器首尾相接）
+
+  - id: size.badge.dot
+    kind: dimension
+    value: 6
+    unit: dp
+    baseline: Material 3 badge（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 无数字角标（小红点）的直径，对齐 M3 badge 小点 6dp
+  - id: size.badge.height
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: Material 3 badge（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 带数字角标的高度，同时作为最小宽度（单字时为 16dp 正圆）
+  - id: space.badge.padding.horizontal
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Material 3 badge（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 带数字角标的左右内距（16dp 高 + 4dp 内距，单字正圆、两位起变胶囊）
+  - id: size.tooltip.max.width
+    kind: dimension
+    value: 200
+    unit: dp
+    baseline: Material 3 plain tooltip（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 文字提示的最大宽度，超出后换行（M3 plain tooltip 上限 200dp）
+  - id: space.tooltip.padding.horizontal
+    kind: dimension
+    value: 8
+    unit: dp
+    baseline: Material 3 plain tooltip（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 文字提示的左右内距
+  - id: space.tooltip.padding.vertical
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Material 3 plain tooltip（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 文字提示的上下内距（反白底 + 4dp 内距，单行为主）
+  - id: size.menu.min.width
+    kind: dimension
+    value: 112
+    unit: dp
+    baseline: Material 3 dropdown menu（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 下拉菜单的最小宽度（M3 menu 112dp），内容更宽时按内容撑开
+  - id: size.menu.item.height
+    kind: dimension
+    value: 48
+    unit: dp
+    baseline: Material 3 dropdown menu（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 菜单项高度（48dp 同时是触摸目标下限）
+  - id: space.menu.padding.vertical
+    kind: dimension
+    value: 8
+    unit: dp
+    baseline: Material 3 dropdown menu（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 菜单容器上下内距（首末项不贴圆角）
+  - id: space.menu.item.padding.horizontal
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: Material 3 dropdown menu（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 菜单项左右内距
+  - id: size.sheet.handle.width
+    kind: dimension
+    value: 32
+    unit: dp
+    baseline: Material 3 bottom sheet（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 底部面板拖拽手柄的宽度
+  - id: size.sheet.handle.height
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Material 3 bottom sheet（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 底部面板拖拽手柄的高度（药丸形，圆角取高度一半）
+  - id: space.sheet.handle.inset
+    kind: dimension
+    value: 22
+    unit: dp
+    baseline: Material 3 bottom sheet（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 手柄所在顶部区域的高度（手柄垂直居中其中，M3 22dp）
+  - id: size.search.bar.height
+    kind: dimension
+    value: 56
+    unit: dp
+    baseline: Material 3 search bar（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 搜索栏高度（56dp 药丸容器，编辑态仍是同一高度）
+  - id: size.drawer.width
+    kind: dimension
+    value: 320
+    unit: dp
+    baseline: Material 3 navigation drawer（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 侧边抽屉宽度；窄屏取 min(该值, 屏宽 - 56dp)
+  - id: size.rail.width
+    kind: dimension
+    value: 80
+    unit: dp
+    baseline: Material 3 navigation rail（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 侧边导航条宽度（图标 + 文字的纵向窄栏）
+  - id: size.rail.item.height
+    kind: dimension
+    value: 56
+    unit: dp
+    baseline: Material 3 navigation rail（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 侧边导航条单个分块的高度（图标 24dp + 文案，56dp 与 M3 同档）
+  - id: effect.dismiss.threshold
+    kind: dimension
+    value: 0.4
+    unit: ratio
+    baseline: Material 3 swipe to dismiss（外部规范类比，非 OxygenOS 实测）
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: 滑动删除的位移阈值比例（占条目宽度的 40%，越过即触发删除；未越过回弹）
