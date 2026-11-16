@@ -24,6 +24,9 @@ kotlin {
             // androidx 组同名模块在这两个平台只有 jvmStubs）。
             implementation(libs.navigation3.runtime)
             implementation(libs.navigation3.ui)
+            // 动态取色的回退实现：Android 12+ 走系统壁纸取色，其余平台用种子色生成 M3 色板。
+            // 只给 catalog 用，库本身不依赖取色算法。
+            implementation(libs.materialkolor)
         }
     }
 }

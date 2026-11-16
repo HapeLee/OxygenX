@@ -99,7 +99,7 @@ androidx.compose.material3.ColorScheme  ──toOxygenColorScheme()──▶  Ox
 - 三类处理：**直连**（语义一致的 28 个角色原值搬运）/ **合成**（M3 没有的 9 个扩展角色按 `onSurface`、`primary` 叠本仓库 E0 令牌的透明度）/ **丢弃**（`tertiary*`、`background`、`surfaceVariant`、`surfaceTint`，显式设计不是遗漏）。
 - 明暗不靠外部标记：M3 的 `ColorScheme` 不携带 `isDark`，桥接按 `surface` 亮度（`luminance() < 0.5`）推断，顺带覆盖 AMOLED / 高对比度色板。
 - 反向（Oxygen → M3）不提供：本仓库角色集是 M3 的子集 + 扩展项，反向映射会丢信息。
-- catalog 的「关于 → 环境 / 主题」里有「M3 配色（桥接）」开关，打开后整个 catalog 用 Material 3 基线色板映射出来的色板，用来肉眼核对角色有没有漏。
+- catalog 的「关于 → 环境 / 主题」里有「动态取色（M3 桥接）」开关：打开后色板来自 **Material 3 动态取色**——Android 12+ 用系统壁纸取色（`dynamicLightColorScheme` / `dynamicDarkColorScheme`），其余平台（以及 Android 11 及以下）用种子色 `#0061A4` 跑一遍取色算法（`com.materialkolor` 的 `dynamicColorScheme`，**只给 catalog 用，库本身不依赖**）。两种来源最后都经 `toOxygenColorScheme()` 映射，用来肉眼核对 38 个角色有没有漏。
 
 ## 3. YAML Schema
 

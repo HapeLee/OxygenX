@@ -650,18 +650,46 @@ public final class io/oxygenx/ui/overlay/BadgeKt {
 	public static final fun BadgedBox (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/oxygenx/ui/overlay/ComposableSingletons$ModalBottomSheetKt {
+	public static final field INSTANCE Lio/oxygenx/ui/overlay/ComposableSingletons$ModalBottomSheetKt;
+	public fun <init> ()V
+	public final fun getLambda$370707936$io_oxygenx_oxygenx_ui ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class io/oxygenx/ui/overlay/DropdownMenuKt {
 	public static final fun DropdownMenu-IBZr-mw (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;JLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun DropdownMenuItem (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/oxygenx/ui/overlay/ModalBottomSheetKt {
-	public static final fun ModalBottomSheet (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/oxygenx/motion/OxygenMotionSpec;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ModalBottomSheet-nBX6wN0 (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/oxygenx/ui/overlay/SheetState;Lkotlin/jvm/functions/Function2;JJLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun rememberModalBottomSheetState (ZLkotlin/jvm/functions/Function1;Lio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/runtime/Composer;II)Lio/oxygenx/ui/overlay/SheetState;
 }
 
-public final class io/oxygenx/ui/overlay/ModalBottomSheetScope {
+public final class io/oxygenx/ui/overlay/SheetState {
 	public static final field $stable I
-	public final fun dismiss ()V
+	public static final field FLING_THRESHOLD F
+	public static final field MIN_DETENT_GAP F
+	public static final field PARTIAL_FRACTION F
+	public static final field SETTLE_EPSILON F
+	public final fun expand (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getConfirmValueChange ()Lkotlin/jvm/functions/Function1;
+	public final fun getCurrentValue ()Lio/oxygenx/ui/overlay/SheetValue;
+	public final fun getSkipPartiallyExpanded ()Z
+	public final fun hide (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun isVisible ()Z
+	public final fun partialExpand (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun requireOffset ()F
+	public final fun show (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/oxygenx/ui/overlay/SheetValue : java/lang/Enum {
+	public static final field Expanded Lio/oxygenx/ui/overlay/SheetValue;
+	public static final field Hidden Lio/oxygenx/ui/overlay/SheetValue;
+	public static final field PartiallyExpanded Lio/oxygenx/ui/overlay/SheetValue;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/oxygenx/ui/overlay/SheetValue;
+	public static fun values ()[Lio/oxygenx/ui/overlay/SheetValue;
 }
 
 public final class io/oxygenx/ui/overlay/SnackbarData {

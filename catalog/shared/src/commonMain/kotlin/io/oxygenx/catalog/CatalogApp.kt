@@ -3,8 +3,6 @@
 package io.oxygenx.catalog
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -19,6 +17,9 @@ import io.oxygenx.catalog.scaffold.ScaffoldDemoScreen
 import io.oxygenx.catalog.settings.SettingsHomeScreen
 import io.oxygenx.catalog.settings.SettingsListScreen
 import io.oxygenx.catalog.settings.WlanSettingsScreen
+import io.oxygenx.catalog.theme.CatalogSeedColor
+import io.oxygenx.catalog.theme.fallbackDynamicScheme
+import io.oxygenx.catalog.theme.rememberSystemDynamicColorScheme
 import io.oxygenx.material3.toOxygenColorScheme
 import io.oxygenx.theme.OxygenTheme
 
@@ -78,14 +79,16 @@ fun CatalogApp(onDarkThemeChange: (Boolean) -> Unit = {}) {
     }
     val sections = remember(push) { catalogSections(onOpen = push) }
 
-    // M3 配色桥接开关：「关于」页切换。打开后整个 catalog 走 Material 3 基线色板
-    // 经 `toOxygenColorScheme()` 映射出来的色板，用来肉眼核对 38 个角色有没有漏。
-    var m3ColorScheme by remember { mutableStateOf(false) }
-    val bridgedColorScheme = remember(m3ColorScheme, darkTheme) {
-        if (m3ColorScheme) {
-            (if (darkTheme) darkColorScheme() else lightColorScheme()).toOxygenColorScheme()
-        } else {
+    // 动态取色开关：「关于」页切换。Android 12+ 直接吃系统壁纸取色，其余平台（以及
+    // Android 11 及以下）用种子色跑一遍 M3 动态取色算法；两种来源最后都经
+    // `toOxygenColorScheme()` 映射成 Oxygen 色板，用来核对 38 个角色有没有漏。
+    var dynamicColor by remember { mutableStateOf(false) }
+    val systemScheme = rememberSystemDynamicColorScheme(darkTheme)
+    val bridgedColorScheme = remember(dynamicColor, darkTheme, systemScheme) {
+        if (!dynamicColor) {
             null
+        } else {
+            (systemScheme ?: fallbackDynamicScheme(CatalogSeedColor, darkTheme)).toOxygenColorScheme()
         }
     }
 
@@ -99,8 +102,8 @@ fun CatalogApp(onDarkThemeChange: (Boolean) -> Unit = {}) {
                         themeMode = themeMode,
                         systemDarkTheme = systemDarkTheme,
                         onThemeModeChange = { themeMode = it },
-                        m3ColorScheme = m3ColorScheme,
-                        onM3ColorSchemeChange = { m3ColorScheme = it },
+                        dynamicColor = dynamicColor,
+                        onDynamicColorChange = { dynamicColor = it },
                         sections = sections,
                         onOpenSection = { push(CatalogScreen.Section(it.id)) },
                     )

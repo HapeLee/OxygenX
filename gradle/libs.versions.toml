@@ -8,6 +8,8 @@ kotlinx-collections-immutable = "0.5.2"
 androidx-activity = "1.13.0"
 navigation3 = "1.2.0"
 binary-compatibility-validator = "0.18.2"
+# 只给 catalog 用：没有系统壁纸取色的平台（desktop / wasm / Android 11-）回退到种子色生成。
+materialkolor = "5.0.1"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -25,6 +27,7 @@ compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", v
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose-multiplatform" }
 compose-material-ripple = { module = "org.jetbrains.compose.material:material-ripple", version.ref = "compose-multiplatform" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+materialkolor = { module = "com.materialkolor:material-kolor", version.ref = "materialkolor" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

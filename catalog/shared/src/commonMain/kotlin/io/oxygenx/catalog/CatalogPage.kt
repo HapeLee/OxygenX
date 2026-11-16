@@ -254,8 +254,8 @@ fun CatalogPage(
     themeMode: CatalogThemeMode,
     systemDarkTheme: Boolean,
     onThemeModeChange: (CatalogThemeMode) -> Unit,
-    m3ColorScheme: Boolean,
-    onM3ColorSchemeChange: (Boolean) -> Unit,
+    dynamicColor: Boolean,
+    onDynamicColorChange: (Boolean) -> Unit,
     sections: List<CatalogSection>,
     onOpenSection: (CatalogSection) -> Unit,
 ) {
@@ -296,8 +296,8 @@ fun CatalogPage(
                     themeMode = themeMode,
                     systemDarkTheme = systemDarkTheme,
                     onThemeModeChange = onThemeModeChange,
-                    m3ColorScheme = m3ColorScheme,
-                    onM3ColorSchemeChange = onM3ColorSchemeChange,
+                    dynamicColor = dynamicColor,
+                    onDynamicColorChange = onDynamicColorChange,
                 )
             }
         }
@@ -340,8 +340,8 @@ private fun AboutPage(
     themeMode: CatalogThemeMode,
     systemDarkTheme: Boolean,
     onThemeModeChange: (CatalogThemeMode) -> Unit,
-    m3ColorScheme: Boolean,
-    onM3ColorSchemeChange: (Boolean) -> Unit,
+    dynamicColor: Boolean,
+    onDynamicColorChange: (Boolean) -> Unit,
 ) {
     val page = catalogPageSpacing()
     LazyColumn(
@@ -360,13 +360,14 @@ private fun AboutPage(
                         themeMode = themeMode,
                         systemDarkTheme = systemDarkTheme,
                         onThemeModeChange = onThemeModeChange,
-                        m3ColorScheme = m3ColorScheme,
-                        onM3ColorSchemeChange = onM3ColorSchemeChange,
+                        dynamicColor = dynamicColor,
+                        onDynamicColorChange = onDynamicColorChange,
                     )
                     BasicText(
                         text = "所有令牌均为 E0 占位值，不是 OxygenOS 的复刻参数；" +
-                            "打开「M3 配色」后颜色改由 Material 3 基线色板经 " +
-                            "toOxygenColorScheme() 映射（28 个角色直连、9 个扩展角色按 M3 角色合成）。",
+                            "打开「动态取色」后色板改由 Material 3 动态取色生成并经 " +
+                            "toOxygenColorScheme() 映射（28 个角色直连、9 个扩展角色按 M3 角色合成）：" +
+                            "Android 12+ 用系统壁纸取色，其它平台用种子色 #0061A4 生成。",
                         style = OxygenTheme.typography.caption.copy(
                             color = OxygenTheme.colorScheme.onSurfaceVariant,
                         ),
@@ -422,8 +423,8 @@ private fun EnvironmentControls(
     themeMode: CatalogThemeMode,
     systemDarkTheme: Boolean,
     onThemeModeChange: (CatalogThemeMode) -> Unit,
-    m3ColorScheme: Boolean,
-    onM3ColorSchemeChange: (Boolean) -> Unit,
+    dynamicColor: Boolean,
+    onDynamicColorChange: (Boolean) -> Unit,
 ) {
     CatalogThemeMode.entries.forEach { mode ->
         SettingsRow(
@@ -445,14 +446,14 @@ private fun EnvironmentControls(
         )
     }
     SettingsRow(
-        title = "M3 配色（桥接）",
-        subtitle = if (m3ColorScheme) {
-            "当前由 Material 3 基线色板映射：主色变紫，可用来核对角色有没有漏"
+        title = "动态取色（M3 桥接）",
+        subtitle = if (dynamicColor) {
+            "当前色板来自 Material 3 动态取色：Android 12+ 取壁纸色，其它平台按种子色生成"
         } else {
-            "当前用本项目令牌；打开后走 toOxygenColorScheme() 映射结果"
+            "当前用本项目令牌；打开后色板改由动态取色生成并经 toOxygenColorScheme() 映射"
         },
-        onClick = { onM3ColorSchemeChange(!m3ColorScheme) },
+        onClick = { onDynamicColorChange(!dynamicColor) },
         role = Role.Switch,
-        trailing = { Switch(checked = m3ColorScheme, onCheckedChange = null) },
+        trailing = { Switch(checked = dynamicColor, onCheckedChange = null) },
     )
 }
