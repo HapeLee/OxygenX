@@ -203,6 +203,8 @@ public final class io/oxygenx/ui/basic/IconButtonKt {
 }
 
 public final class io/oxygenx/ui/basic/IconKt {
+	public static final fun Icon-zSi9XkE (Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/String;Landroidx/compose/ui/Modifier;JFZLandroidx/compose/runtime/Composer;II)V
+	public static final fun Icon-zSi9XkE (Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/String;Landroidx/compose/ui/Modifier;JFZLandroidx/compose/runtime/Composer;II)V
 	public static final fun Icon-zSi9XkE (Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Landroidx/compose/ui/Modifier;JFZLandroidx/compose/runtime/Composer;II)V
 }
 
@@ -422,19 +424,21 @@ public final class io/oxygenx/ui/basic/TextFieldDefaults {
 	public final fun colors-HlaysQ4 (JJJJJJJJJJJLandroidx/compose/runtime/Composer;III)Lio/oxygenx/ui/basic/TextFieldColors;
 	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getHeight (Landroidx/compose/runtime/Composer;I)F
+	public final fun getMotion (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/motion/OxygenMotionSpec;
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 	public final fun placeholderStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun textStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/oxygenx/ui/basic/TextFieldKt {
-	public static final fun TextField (Landroidx/compose/ui/text/input/TextFieldValue;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;ZIILandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Lio/oxygenx/ui/basic/TextFieldColors;Landroidx/compose/runtime/Composer;IIII)V
-	public static final fun TextField (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;ZIILandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Lio/oxygenx/ui/basic/TextFieldColors;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun TextField (Landroidx/compose/foundation/text/input/TextFieldState;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/foundation/text/input/InputTransformation;Landroidx/compose/foundation/text/input/OutputTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/input/KeyboardActionHandler;Landroidx/compose/foundation/text/input/TextFieldLineLimits;Lkotlin/jvm/functions/Function2;Landroidx/compose/foundation/ScrollState;Landroidx/compose/ui/graphics/Shape;Lio/oxygenx/ui/basic/TextFieldColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/foundation/interaction/MutableInteractionSource;Lio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun TextField (Landroidx/compose/ui/text/input/TextFieldValue;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;ZIILandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Lio/oxygenx/ui/basic/TextFieldColors;Lio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun TextField (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZZLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/ui/text/input/VisualTransformation;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;ZIILandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Lio/oxygenx/ui/basic/TextFieldColors;Lio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class io/oxygenx/ui/basic/TextKt {
-	public static final fun Text-Y7b31uc (Landroidx/compose/ui/text/AnnotatedString;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;JLandroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontStyle;Landroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/unit/TextUnit;IIIZLandroidx/compose/ui/text/style/TextAlign;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
-	public static final fun Text-Y7b31uc (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;JLandroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontStyle;Landroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/unit/TextUnit;IIIZLandroidx/compose/ui/text/style/TextAlign;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Text-TfkgnXA (Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;JLandroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontStyle;Landroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/unit/TextUnit;IIIZLandroidx/compose/ui/text/style/TextAlign;Landroidx/compose/foundation/text/TextAutoSize;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/style/TextDecoration;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Text-dZKi_ZQ (Landroidx/compose/ui/text/AnnotatedString;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;JLandroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/text/font/FontWeight;Landroidx/compose/ui/text/font/FontStyle;Landroidx/compose/ui/unit/TextUnit;Landroidx/compose/ui/unit/TextUnit;IIIZLandroidx/compose/ui/text/style/TextAlign;Landroidx/compose/foundation/text/TextAutoSize;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/style/TextDecoration;Ljava/util/Map;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/oxygenx/ui/feedback/ComposableSingletons$SwipeToDismissBoxKt {
@@ -481,6 +485,7 @@ public final class io/oxygenx/ui/feedback/ProgressIndicatorKt {
 
 public final class io/oxygenx/ui/feedback/PullToRefreshKt {
 	public static final fun PullToRefreshBox (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLio/oxygenx/ui/feedback/ProgressColors;Lio/oxygenx/motion/OxygenMotionSpec;Lio/oxygenx/motion/OxygenLoopSpec;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PullToRefreshBox-zadm560 (ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZFLio/oxygenx/ui/feedback/ProgressColors;Lio/oxygenx/motion/OxygenMotionSpec;Lio/oxygenx/motion/OxygenLoopSpec;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/oxygenx/ui/feedback/SwipeToDismissBoxKt {
@@ -526,11 +531,6 @@ public final class io/oxygenx/ui/navigation/ComposableSingletons$TopAppBarKt {
 	public fun <init> ()V
 	public final fun getLambda$-1042996408$io_oxygenx_oxygenx_ui ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1885466017$io_oxygenx_oxygenx_ui ()Lkotlin/jvm/functions/Function3;
-}
-
-public final class io/oxygenx/ui/navigation/ModalNavigationDrawerKt {
-	public static final fun ModalNavigationDrawer (ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;Lio/oxygenx/motion/OxygenMotionSpec;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun NavigationDrawerItem (ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/oxygenx/ui/navigation/NavigationBarColors {
@@ -580,12 +580,20 @@ public final class io/oxygenx/ui/navigation/NavigationBarItem {
 }
 
 public final class io/oxygenx/ui/navigation/NavigationBarKt {
+	public static final fun NavigationBar (Landroidx/compose/ui/Modifier;Lio/oxygenx/ui/navigation/NavigationBarColors;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun NavigationBar (Ljava/util/List;ILkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lio/oxygenx/ui/navigation/NavigationBarColors;Lio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/runtime/Composer;II)V
+	public static final fun NavigationBarItem (Landroidx/compose/foundation/layout/RowScope;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLio/oxygenx/ui/navigation/NavigationBarColors;Lio/oxygenx/motion/OxygenMotionSpec;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/oxygenx/ui/navigation/NavigationRailDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/oxygenx/ui/navigation/NavigationRailDefaults;
+	public final fun getMotion (Landroidx/compose/runtime/Composer;I)Lio/oxygenx/motion/OxygenMotionSpec;
 }
 
 public final class io/oxygenx/ui/navigation/NavigationRailKt {
 	public static final fun NavigationRail-sW7UJKQ (Landroidx/compose/ui/Modifier;JLkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun NavigationRailItem (ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/runtime/Composer;II)V
+	public static final fun NavigationRailItem (ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZLio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/oxygenx/ui/navigation/PagerTopBarKt {
@@ -627,7 +635,9 @@ public final class io/oxygenx/ui/navigation/TabRowKt {
 public final class io/oxygenx/ui/navigation/TopAppBarKt {
 	public static final fun LargeTopAppBar (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZZLkotlin/jvm/functions/Function0;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lio/oxygenx/ui/navigation/TopAppBarState;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun TopAppBar (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TopAppBarAction-3f6hBDE (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZJLjava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun TopAppBarAction-uDo3WH8 (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZJLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun getLocalTopAppBarNavigationIconSize ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun rememberTopAppBarState (Lio/oxygenx/motion/OxygenMotionSpec;FLandroidx/compose/runtime/Composer;II)Lio/oxygenx/ui/navigation/TopAppBarState;
 }
 
@@ -656,8 +666,20 @@ public final class io/oxygenx/ui/overlay/ComposableSingletons$ModalBottomSheetKt
 	public final fun getLambda$370707936$io_oxygenx_oxygenx_ui ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/oxygenx/ui/overlay/DropdownMenuDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/oxygenx/ui/overlay/DropdownMenuDefaults;
+	public final fun getIconGap-D9Ej5fM ()F
+	public final fun getItemContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getMaxWidth-D9Ej5fM ()F
+	public final fun getShadowElevation-D9Ej5fM ()F
+	public final fun getWindowMargin-D9Ej5fM ()F
+}
+
 public final class io/oxygenx/ui/overlay/DropdownMenuKt {
 	public static final fun DropdownMenu-IBZr-mw (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;JLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DropdownMenu-x0xb5LI (ZLkotlin/jvm/functions/Function0;Lio/oxygenx/motion/OxygenMotionSpec;Landroidx/compose/ui/Modifier;JLio/oxygenx/motion/OxygenMotionSpec;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DropdownMenuItem (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/runtime/Composer;II)V
 	public static final fun DropdownMenuItem (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/runtime/Composer;II)V
 }
 
@@ -668,14 +690,13 @@ public final class io/oxygenx/ui/overlay/ModalBottomSheetKt {
 
 public final class io/oxygenx/ui/overlay/SheetState {
 	public static final field $stable I
-	public static final field FLING_THRESHOLD F
 	public static final field MIN_DETENT_GAP F
-	public static final field PARTIAL_FRACTION F
-	public static final field SETTLE_EPSILON F
+	public static final field PARTIAL_EXPANDED_RATIO F
 	public final fun expand (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getConfirmValueChange ()Lkotlin/jvm/functions/Function1;
 	public final fun getCurrentValue ()Lio/oxygenx/ui/overlay/SheetValue;
 	public final fun getSkipPartiallyExpanded ()Z
+	public final fun getTargetValue ()Lio/oxygenx/ui/overlay/SheetValue;
 	public final fun hide (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun isVisible ()Z
 	public final fun partialExpand (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

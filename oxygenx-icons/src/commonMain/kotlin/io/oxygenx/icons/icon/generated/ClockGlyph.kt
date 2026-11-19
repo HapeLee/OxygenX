@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/schedule.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/schedule.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -43,21 +43,13 @@ internal val ClockGlyph: ImageVector
             strokeLineMiter = 1f,
             pathFillType = PathFillType.Companion.NonZero,
           ) {
-            moveTo(12.75f, 11.7f)
-            verticalLineTo(7.75f)
-            quadToRelative(0f, -0.32f, -0.22f, -0.53f)
-            reflectiveQuadTo(12f, 7f)
-            reflectiveQuadTo(11.47f, 7.22f)
-            reflectiveQuadTo(11.25f, 7.75f)
-            verticalLineToRelative(4.18f)
-            quadToRelative(0f, 0.18f, 0.07f, 0.34f)
-            reflectiveQuadToRelative(0.21f, 0.31f)
-            lineTo(14.95f, 16f)
-            quadToRelative(0.21f, 0.21f, 0.52f, 0.21f)
-            reflectiveQuadTo(16f, 16f)
-            reflectiveQuadToRelative(0.22f, -0.53f)
-            reflectiveQuadTo(16f, 14.95f)
+            moveTo(15.47f, 16.53f)
+            lineToRelative(1.05f, -1.05f)
             lineTo(12.75f, 11.7f)
+            verticalLineTo(7f)
+            horizontalLineToRelative(-1.5f)
+            verticalLineToRelative(5.3f)
+            lineToRelative(4.22f, 4.22f)
             close()
             moveTo(12f, 21.5f)
             quadToRelative(-1.97f, 0f, -3.71f, -0.75f)

@@ -184,7 +184,7 @@ fun ExtendedFloatingActionButton(
         )
         BasicText(
             text = text,
-            style = OxygenTheme.typography.labelMedium.copy(
+            style = OxygenTheme.typography.labelLarge.copy(
                 color = colors.resolveContentColor(enabled),
             ),
             maxLines = 1,

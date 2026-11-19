@@ -13,7 +13,11 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.compose.ui)
+            api(libs.compose.ui)
+            api(project(":oxygenx-icons"))
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
     }
 }

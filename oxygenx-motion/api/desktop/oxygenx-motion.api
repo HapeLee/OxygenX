@@ -29,6 +29,9 @@ public final class io/oxygenx/motion/OxygenMotionDefaults {
 	public static final field INSTANCE Lio/oxygenx/motion/OxygenMotionDefaults;
 	public final fun appBarCollapse ()Lio/oxygenx/motion/OxygenMotionSpec;
 	public final fun dialogSlide ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun inputFocus ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun menuFade ()Lio/oxygenx/motion/OxygenMotionSpec;
+	public final fun menuScale ()Lio/oxygenx/motion/OxygenMotionSpec;
 	public final fun progressCircularLoop ()Lio/oxygenx/motion/OxygenLoopSpec;
 	public final fun progressLinearLoop ()Lio/oxygenx/motion/OxygenLoopSpec;
 	public final fun pullRefresh ()Lio/oxygenx/motion/OxygenMotionSpec;

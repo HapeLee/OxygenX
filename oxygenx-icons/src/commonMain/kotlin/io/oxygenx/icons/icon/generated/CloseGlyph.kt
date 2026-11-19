@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/close.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/close.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -43,31 +43,19 @@ internal val CloseGlyph: ImageVector
             strokeLineMiter = 1f,
             pathFillType = PathFillType.Companion.NonZero,
           ) {
-            moveTo(12f, 13.05f)
-            lineTo(6.93f, 18.13f)
-            quadTo(6.72f, 18.33f, 6.4f, 18.34f)
-            reflectiveQuadTo(5.87f, 18.13f)
-            reflectiveQuadTo(5.66f, 17.6f)
-            reflectiveQuadTo(5.87f, 17.07f)
+            moveTo(6.4f, 18.65f)
+            lineTo(5.35f, 17.6f)
             lineTo(10.95f, 12f)
-            lineTo(5.87f, 6.93f)
-            quadTo(5.67f, 6.72f, 5.66f, 6.4f)
-            reflectiveQuadTo(5.87f, 5.87f)
-            reflectiveQuadTo(6.4f, 5.66f)
-            reflectiveQuadTo(6.93f, 5.87f)
-            lineTo(12f, 10.95f)
-            lineTo(17.07f, 5.87f)
-            quadTo(17.28f, 5.67f, 17.6f, 5.66f)
-            reflectiveQuadToRelative(0.53f, 0.21f)
-            reflectiveQuadTo(18.34f, 6.4f)
-            reflectiveQuadTo(18.13f, 6.93f)
+            lineTo(5.35f, 6.4f)
+            lineTo(6.4f, 5.35f)
+            lineToRelative(5.6f, 5.6f)
+            lineToRelative(5.6f, -5.6f)
+            lineTo(18.65f, 6.4f)
             lineTo(13.05f, 12f)
-            lineToRelative(5.07f, 5.07f)
-            quadToRelative(0.21f, 0.21f, 0.21f, 0.52f)
-            reflectiveQuadToRelative(-0.21f, 0.53f)
-            reflectiveQuadTo(17.6f, 18.34f)
-            reflectiveQuadTo(17.07f, 18.13f)
+            lineToRelative(5.6f, 5.6f)
+            lineTo(17.6f, 18.65f)
             lineTo(12f, 13.05f)
+            lineToRelative(-5.6f, 5.6f)
             close()
           }
         }

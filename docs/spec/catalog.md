@@ -2,9 +2,11 @@
 
 `catalog/` 是**唯一的可视化验收面**：组件示例、动效对照、令牌总览、回归基线都在这里。它同时是文档站交互 demo 的源码，不另起一套演示代码。
 
-> **当前落地状态**：`catalog/shared` 的索引页是**横划三页**（`PagerTopBar` + `HorizontalPager`）：第 1 页组件清单、第 2 页图标库、第 3 页关于（环境开关 + 项目定位 / 许可 / 规范 / 阶段）。组件清单背后是 `catalogSections()` 注册表（TopBar、PagerTopBar、Scaffold、BottomBar、Button、IconButton、Chip、Badge、Tooltip、DropdownMenu、ModalBottomSheet、SwipeToDismiss、NavigationRail、NavigationDrawer、Switch、TextField、SearchBar、Dialog、FAB、Slider、TabRow、Progress、PullToRefresh、Overscroll、Card、RadioButton、Checkbox、设置项，共 28 个 Section），每个 Section 在 `CatalogSectionScreen` 里作为独立页面显示（自带 `Scaffold` 与返回式顶栏）；路由由 nav3 的 `NavDisplay` 承载。顶栏、横划顶栏、下拉刷新这三页用 `CatalogSection.screen` 整页接管——演示对象（顶栏 / 横划容器 / 下拉滚动源）本身就是页面外壳。另有 `settings/` 整页预览（设置首页 + 显示与亮度列表页）与 `scaffold/` 能力页，以及 `catalog/android`（真机可运行，主验收平台）、`catalog/desktop`（快速预览）与 `catalog/reference/`（占位说明）。`motion/` 对比页、`tokens/`、`registry/`、`golden/`、`catalog/web` 按 P3–P5 建立；下述结构是其目标形态，不代表已实现。
+> **当前落地状态**：`catalog/shared` 的索引页是**横划三页**（`PagerTopBar` + `HorizontalPager`）：第 1 页组件清单、第 2 页图标库、第 3 页关于（环境开关 + 项目定位 / 许可 / 规范 / 阶段）。组件清单背后是 `catalogSections()` 注册表（TopBar、PagerTopBar、Scaffold、NavigationBar、Button、IconButton、Text/Icon、Chip、Badge、Tooltip、DropdownMenu、ModalBottomSheet、SwipeToDismiss、NavigationRail、Switch、TextField、SearchBar、Dialog、FAB、Slider、TabRow、Progress、PullToRefresh、Overscroll、Card、RadioButton、Checkbox、设置项，共 28 个 Section），每个 Section 在 `CatalogSectionScreen` 里作为独立页面显示（自带 `Scaffold` 与返回式顶栏）；路由由 nav3 的 `NavDisplay` 承载。顶栏、横划顶栏、下拉刷新这三页用 `CatalogSection.screen` 整页接管——演示对象（顶栏 / 横划容器 / 下拉滚动源）本身就是页面外壳。另有 `settings/` 整页预览（设置首页 + 显示与亮度列表页）与 `scaffold/` 能力页，以及 `catalog/android`（真机可运行，主验收平台）、`catalog/desktop`（快速预览）与 `catalog/reference/`（占位说明）。`motion/` 对比页、`tokens/`、`registry/`、`golden/`、`catalog/web` 按 P3–P5 建立；下述结构是其目标形态，不代表已实现。
 
 ## 1. 结构
+
+2026-11-17 增量：`golden/CMP-SLIDER/` 已有 Desktop 的明暗 × LTR/RTL 四张静态回归图，说明见 `catalog/golden/README.md`；它们只保护本库输出，不属于 OxygenOS 真机 reference。Slider 页新增 RTL/提交值，TextField 页新增原生状态过滤 / 显示变换 / 程序化编辑、M3 Text 继承按钮样式和主题/样式颜色，Scaffold 能力页使用公开 SnackbarHost 并可取消调用协程。`golden/CMP-TEXTFIELD/` 补明暗两张输入槽位 Desktop 基线；全组件与 Android golden、逐帧对比模式仍未落地。
 
 ```
 catalog/
@@ -110,3 +112,7 @@ Android 是 full-fidelity 基准；Desktop 的快速迭代不得成为跳过 And
 - 只更新实现不更新示例，或只更新英文文档不更新中文文档。
 - 把参考录屏、专有素材打进发布物；在示例里留 `TODO` 占位却标 `verified`。
 - 新增 Section 但不注册，或注册了却没有对应演示文件。
+
+2026-11-17 Text / Icon 增量：新增 `cmp-text-icon`，同时演示原色 / 默认色、Vector / Painter / Bitmap、行内内容、自动字号与字体装饰；明暗 Desktop 图在 `golden/CMP-TEXT-ICON/`。Android 入口对目录页 test tag 启用 resource-id 映射供启动基准等待，Desktop 不依赖 Android 语义扩展。
+
+2026-11-17 过冲回归：Overscroll 演示扩充为 80 项，提供顶部 / 中间 / 底部定位与可见过冲状态；正常中间惯性不触发弹簧。Android 关于页从 BuildConfig 显示真实版本名 / 构建号，开发与 benchmark 使用独立包名。

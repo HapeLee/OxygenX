@@ -238,7 +238,7 @@ tokens:
     source: catalog/reference/README.md
     evidence: E0
     status: draft
-    description: 模态遮罩（底部面板 / 侧边抽屉之外自绘的暗层）；32% 黑与 M3 scrim 同值，Dialog 的遮罩由平台提供、不走这里
+    description: 模态遮罩（底部面板这类自绘暗层用）；32% 黑与 M3 scrim 同值，Dialog 的遮罩由平台提供、不走这里
   # ---- M3 桥接角色（:oxygenx-material3）----
   # 这批角色的第一个消费者是 M3 桥接：外部 App 已有一整套 M3 ColorScheme，
   # 映射进来时必须有地方落，否则只能拿 primary / secondary 凑近似。

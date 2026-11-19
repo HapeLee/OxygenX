@@ -1,0 +1,68 @@
+# 当前已实现规格；E0/E1 均不代表 OxygenOS 逐帧验收通过。
+motions:
+  - id: MOT-STATE-002
+    token: spec.switch.toggle
+    baseline: OxygenOS <version> / <device> / <date>
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-STATE-003
+    token: spec.appbar.collapse
+    baseline: OxygenOS <version> / <device> / <date>
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-STATE-004
+    implementation: OxygenMotionDefaults.pullRefresh
+    baseline: OxygenX pull refresh contract / 2026-11-15
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-STATE-005
+    token: spec.tab.switch
+    baseline: OxygenX P3 / OnePlus 9R / 2026-11-15
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-STATE-006
+    token: spec.input.focus
+    baseline: OxygenX input focus contract / 2026-11-17
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-ENTER-001
+    token: spec.dialog.slide
+    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    reference: catalog/reference/README.md
+    evidence: E1
+    status: draft
+  - id: MOT-SCROLL-001
+    token: spec.scroll.overscroll
+    baseline: OxygenX P3 / OnePlus 9R / 2026-11-15
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-PROGRESS-001
+    token: duration.progress.linear.cycle
+    baseline: Material 3 analogy / not OxygenOS measured
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-PROGRESS-002
+    token: duration.progress.circular.rotation
+    baseline: Material 3 analogy / not OxygenOS measured
+    reference: catalog/reference/README.md
+    evidence: E0
+    status: draft
+  - id: MOT-ENTER-002
+    token: spec.menu.spatial
+    baseline: Material3 1.5.0-beta01 menu / 2026-11-18
+    reference: docs/spec/material-type-menu-motion-plan.md
+    evidence: E0
+    status: draft
+  - id: MOT-ENTER-003
+    token: spec.menu.effects
+    baseline: Material3 1.5.0-beta01 menu / 2026-11-18
+    reference: docs/spec/material-type-menu-motion-plan.md
+    evidence: E0
+    status: draft

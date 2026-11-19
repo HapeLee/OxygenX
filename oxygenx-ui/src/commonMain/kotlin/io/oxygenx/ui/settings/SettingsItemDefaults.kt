@@ -115,7 +115,7 @@ internal fun SettingsItemText(
     Column(modifier = modifier) {
         BasicText(
             text = title,
-            style = OxygenTheme.typography.listItemTitle.copy(color = colors.resolveTitleColor(enabled)),
+            style = OxygenTheme.typography.bodyLarge.copy(color = colors.resolveTitleColor(enabled)),
         )
         if (summary != null) {
             BasicText(

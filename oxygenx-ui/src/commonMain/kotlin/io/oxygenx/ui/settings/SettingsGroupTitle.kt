@@ -34,7 +34,7 @@ fun SettingsGroupTitle(
             top = spacing.gapLarge,
             bottom = spacing.gapXs,
         ),
-        style = OxygenTheme.typography.caption.copy(
+        style = OxygenTheme.typography.titleSmall.copy(
             color = OxygenTheme.colorScheme.onSurfaceVariant,
         ),
     )

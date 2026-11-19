@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/check.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/check.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -43,21 +43,13 @@ internal val CheckGlyph: ImageVector
             strokeLineMiter = 1f,
             pathFillType = PathFillType.Companion.NonZero,
           ) {
-            moveTo(9.55f, 15.52f)
-            lineTo(18.19f, 6.88f)
-            quadTo(18.41f, 6.65f, 18.71f, 6.65f)
-            reflectiveQuadToRelative(0.53f, 0.23f)
-            reflectiveQuadToRelative(0.23f, 0.53f)
-            reflectiveQuadTo(19.24f, 7.95f)
-            lineToRelative(-9.06f, 9.07f)
-            quadTo(9.91f, 17.29f, 9.55f, 17.29f)
-            reflectiveQuadTo(8.92f, 17.02f)
-            lineTo(4.74f, 12.85f)
-            quadTo(4.52f, 12.62f, 4.52f, 12.32f)
-            reflectiveQuadTo(4.76f, 11.78f)
-            reflectiveQuadTo(5.29f, 11.54f)
-            reflectiveQuadToRelative(0.53f, 0.23f)
-            lineToRelative(3.72f, 3.74f)
+            moveTo(9.55f, 17.65f)
+            lineTo(4.22f, 12.32f)
+            lineTo(5.28f, 11.25f)
+            lineToRelative(4.27f, 4.27f)
+            lineTo(18.72f, 6.35f)
+            lineToRelative(1.07f, 1.07f)
+            lineTo(9.55f, 17.65f)
             close()
           }
         }

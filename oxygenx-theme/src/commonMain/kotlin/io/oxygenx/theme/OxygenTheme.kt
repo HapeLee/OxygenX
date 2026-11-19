@@ -6,33 +6,34 @@ import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.compositionLocalWithComputedDefaultOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.TextStyle
 
 /**
  * 当前内容色：容器（`Surface` / `Card` / `Scaffold` 等）负责下发，
  * 叶子组件（`Text` / `Icon` 等）在没显式传色时读它。
  *
- * 与 M3 `LocalContentColor` 同口径；[Color.Unspecified] 表示「这一层没声明」，
- * 组件再回退到 `colorScheme.onSurface`。
+ * 没有显式 provider 时，按读取位置的主题回退到 `colorScheme.onSurface`。
+ * 嵌套主题只改排版或间距时，不覆盖外层容器已下发的内容色。
  */
-val LocalContentColor = compositionLocalOf { Color.Unspecified }
+val LocalContentColor = compositionLocalWithComputedDefaultOf { LocalColorScheme.currentValue.onSurface }
 
 /**
  * 当前文本样式：容器负责下发，`Text` 在没显式传 `style` 时读它。
  *
- * 与 M3 `LocalTextStyle` 同口径。`OxygenTheme` 把它设为 `typography.bodyMedium`，
+ * 没有显式 provider 时，按读取位置的主题回退到 `typography.bodyMedium`，
  * 组件在自己的内容槽位里用 [ProvideTextStyle] 覆盖（例如按钮下发 `labelMedium`、
  * 顶栏下发 `appbarTitle`），于是槽位里的 `Text("文案")` 自动是正确档位。
  */
-val LocalTextStyle = staticCompositionLocalOf { TextStyle.Default }
+val LocalTextStyle = compositionLocalWithComputedDefaultOf { LocalTypography.currentValue.bodyMedium }
 
 /**
  * 把 [value] 合并进当前文本样式后下发：只覆盖 [value] 里显式声明过的属性
- * （字号、字重、行高、字距等），颜色仍由 [LocalContentColor] 决定。
+ * （字号、字重、行高、字距、颜色等）。样式中的显式颜色优先于 [LocalContentColor]。
  *
  * 与 M3 `ProvideTextStyle` 同口径；用于组件的内容槽位，避免调用方逐处写
  * `style = OxygenTheme.typography.xxx`。
@@ -80,10 +81,10 @@ object OxygenTheme {
         @Composable @ReadOnlyComposable
         get() = LocalInteraction.current
 
-    /** 当前内容色；[Color.Unspecified] 时组件应回退到 [colorScheme]`.onSurface`。 */
+    /** 当前内容色；显式 provider 传入 Unspecified 时回退到主题 onSurface。 */
     val contentColor: Color
         @Composable @ReadOnlyComposable
-        get() = LocalContentColor.current
+        get() = LocalContentColor.current.takeOrElse { colorScheme.onSurface }
 
     /**
      * 当前文本样式：主题默认 `typography.bodyMedium`，进入组件内容槽位后是该组件下发的档位。
@@ -100,10 +101,10 @@ object OxygenTheme {
  *
  * 与 M3 `MaterialTheme` 同口径地支持**局部覆写**：任何参数传 `null` 就继承外层当前值，
  * 所以可以在页面内套一层只换配色的 `OxygenTheme(colorScheme = …)` 而不影响其余令牌。
- * [darkTheme] 只在 [colorScheme] 未提供时生效（它是「整套换明暗」的快捷方式）。
+ * [darkTheme] 显式传入时、且 [colorScheme] 未提供时才切换默认明暗配色；不传则继承外层。
  *
- * @param darkTheme 未指定 [colorScheme] 时按明暗取 `lightColorScheme()` / `darkColorScheme()`。
- * @param colorScheme 配色；`null` 表示按 [darkTheme] 取默认配色。
+ * @param darkTheme `null` 继承外层；显式 `true` / `false` 切换默认深色 / 浅色配色。
+ * @param colorScheme 显式配色优先；`null` 时按 [darkTheme] 决定切换或继承。
  * @param spacing 间距；`null` 继承外层。
  * @param shapes 形状；`null` 继承外层。
  * @param typography 排版；`null` 继承外层。
@@ -114,7 +115,7 @@ object OxygenTheme {
  */
 @Composable
 fun OxygenTheme(
-    darkTheme: Boolean = false,
+    darkTheme: Boolean? = null,
     colorScheme: OxygenColorScheme? = null,
     spacing: OxygenSpacing? = null,
     shapes: OxygenShapes? = null,
@@ -124,8 +125,10 @@ fun OxygenTheme(
     interaction: OxygenInteraction? = null,
     content: @Composable () -> Unit,
 ) {
-    val resolvedColors = colorScheme ?: remember(darkTheme) {
-        if (darkTheme) darkColorScheme() else lightColorScheme()
+    val resolvedColors = colorScheme ?: if (darkTheme == null) {
+        OxygenTheme.colorScheme
+    } else {
+        remember(darkTheme) { if (darkTheme) darkColorScheme() else lightColorScheme() }
     }
     // 未传的令牌继承外层：这一层读到的就是父级 provider 的值。
     val resolvedSpacing = spacing ?: OxygenTheme.spacing
@@ -145,12 +148,6 @@ fun OxygenTheme(
         LocalIcons provides resolvedIcons,
         LocalLayout provides resolvedLayout,
         LocalInteraction provides resolvedInteraction,
-    ) {
-        // 内容色 / 文本样式单独一层：它们跟配色与排版走，但不参与上面那组令牌的覆写语义。
-        CompositionLocalProvider(
-            LocalContentColor provides resolvedColors.onSurface,
-            LocalTextStyle provides resolvedTypography.bodyMedium,
-            content = content,
-        )
-    }
+        content = content,
+    )
 }

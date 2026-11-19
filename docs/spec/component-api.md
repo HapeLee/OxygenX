@@ -28,6 +28,7 @@ fun ComponentName(
 - 无 `content` 的组件按同样顺序截尾；不需要的段直接省略，**不改变相对顺序**。
 - 单个 `modifier` 参数，禁止 `contentModifier` / `buttonModifier` 这类多 Modifier 参数。
 - 不暴露 `internal` 类型、平台类型或 Compose 实现细节到公开签名。
+- 公开签名中出现的第三方类型，其所属 Gradle 依赖必须通过 `api` 传递；不能依靠 catalog 的其他依赖碰巧补全。发布后用 `tools/consumer-smoke` 独立按 Maven 坐标构建验证。
 
 ### 1.1 文案一律走槽位，不提供 `String` 便捷重载
 
@@ -51,8 +52,24 @@ TopAppBar(title = { Text("设置") }, subtitle = { Text("上海, 19:04") })
 | `LocalTextStyle` | 该槽位的排版档位（`labelMedium` / `appbarTitle` / …） | `Text`（`style` 的默认值） |
 
 `Text` 自己的解析顺序是「显式 `style` → `LocalTextStyle` → `type.body.medium`」，
-「显式 `color` → `LocalContentColor` → `onSurface`」；容器想批量改默认排版时用
+「显式 `color` → `style.color` → `LocalContentColor` → `onSurface`」；容器想批量改默认排版时用
 `ProvideTextStyle(value) { … }`（按 M3 口径 `merge`，只覆盖显式声明过的属性）。
+
+`LocalContentColor` / `LocalTextStyle` 的默认值从读取位置的主题计算为 `onSurface` /
+`bodyMedium`，嵌套主题不得覆盖显式槽位样式。组件成对下发颜色与排版时使用
+`ProvideContentStyle(contentColor, textStyle)` 合并外层样式；只改颜色保留外层排版。
+未知容器色统一调用主题级 `contentColorFor(color)` 继承当前内容色，不得各自强制回退到
+`onSurface`。核心模块保留独立 locals；混用 M3 的单向 computed 桥接只在
+`oxygenx-material3.ProvideMaterial3Content` 中提供，不增加 core/ui 的 Material 依赖。
+
+### 1.1.1 状态输入参数
+
+`TextField(state: TextFieldState, …)` 直接委托 Foundation；通用参数按 M3 命名与类型：
+`inputTransformation`、`outputTransformation`、`onKeyboardAction`、`lineLimits`、
+`onTextLayout`、`scrollState`。禁止经 `String` 与 state 来回同步模拟状态输入；
+程序化 `state.edit` 不走用户输入过滤，输出变换不提交回 state。
+Oxygen 固定标签保留普通 composable 槽位，不暴露没有对应视觉行为的 Material
+`labelPosition` / `TextFieldLabelScope`。三种重载的槽位颜色、排版与显式样式优先级保持一致。
 
 **例外：行模板类组件参数用 `String`。** `SettingsItem` / `SettingsSwitchItem` /
 `SettingsSplitItem` / `SettingsRadioItem` / `SettingsCheckItem` 的 `title` / `summary` /
@@ -64,6 +81,18 @@ TopAppBar(title = { Text("设置") }, subtitle = { Text("上海, 19:04") })
 不另开同名重载（`Switch(checked, onCheckedChange = null, pressed = …)`、
 `Checkbox(checked, onCheckedChange = null)`、`RadioButton(selected, onClick = null)`）。
 好处是误用会直接编译失败，而不是静默命中另一个重载；纯展示态必须显式传 `null`。
+
+### 1.1.2 Text / Icon 接入契约
+
+`Icon` 的 `tint` 默认取当前内容色，显式 `Color.Unspecified` 表示移除着色，保留资源原色。
+Vector / Painter / ImageBitmap 三个重载的尺寸、语义与可选 RTL 镜像保持一致；不得把图标的
+Unspecified 再按 Text 的未指定颜色规则解析。
+
+`Text` 透传 Foundation `TextAutoSize?`，富文本透传 `Map<String, InlineTextContent>`；此 Map
+为与 Foundation 一致的 API 类型，不包装为虚假的 Immutable 容器。省略参数时保留原行为，
+未提供行内 id 时保留替代文本；autoSize 的测量成本和约束应写入文档。
+fontFamily / textDecoration 的显式覆盖仍保留原有颜色优先级。新增参数优先使用命名调用，
+不为扩大签名随意重排已有参数。
 
 ### 1.2 触摸态的开关
 
@@ -116,6 +145,8 @@ data class ButtonColors(
 - 需要复杂内部状态（拖动、展开、动画时钟）时，提供 `XxxState` 接口 + `rememberXxxState(...)`；状态类可保存时用 `Saver`。
 - 受控 / 非受控若同时支持，必须写清优先级与冲突行为，并在 KDoc 中给出两种用法。
 - 动画状态由组件或 state holder 独占，调用方只通过 `motion` 覆盖表现（见 [motion.md](./motion.md)）。
+- `OxygenTheme` 的 `darkTheme = null` 继承外层配色，显式 Boolean 切换默认明暗；显式 `colorScheme` 优先。只覆盖排版或间距不得意外重置配色。
+- `Slider` 的 RTL 统一作用于默认绘制、触摸取值与拇指位置；键盘有效步进与无障碍提交必须触发一次结束回调，值未变不得重复提交。宿主作用域取消 Snackbar 时必须清理当前消息。
 - 与滚动联动的组件（如大顶栏）提供 `XxxState` + `rememberXxxState`：state 只暴露只读进度，嵌套滚动连接由容器（`Scaffold` 的 `topBarState`）注入内容区；组件不得自行接管内容滚动，也不允许在组件内部偷偷持有调用方不可见的滚动进度。
 
 ## 4. 交互、语义与无障碍

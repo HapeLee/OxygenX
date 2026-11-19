@@ -87,7 +87,7 @@ fun Chip(
     CompositionLocalProvider(
         LocalChipContentColor provides contentColor,
         LocalContentColor provides contentColor,
-        LocalTextStyle provides OxygenTheme.typography.labelMedium,
+        LocalTextStyle provides LocalTextStyle.current.merge(OxygenTheme.typography.labelLarge),
     ) {
         // 视觉高度是 size.chip.height，触摸目标由外层 Box 撑到 space.touch.target.min。
         // clickable 放外层、波纹通过 indication 放内层，波纹才会被胶囊的 clip 裁住。

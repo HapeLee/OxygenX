@@ -1,161 +1,278 @@
-# OxygenX 设计令牌真源 — 排版
-# P3 组件渲染所需；以下取值全部是 E0 占位，不是 OxygenOS 的复刻值。
-# 字段：size / lineHeight（sp）、weight（1..1000）、letterSpacing（sp）、family（通用字族名）。
-# family 只允许通用字族，不引用任何厂商专有字体文件。
+# M3 基础字阶与兼容别名。
 tokens:
   - id: type.display.large
     kind: typography
-    size: 46
-    lineHeight: 54
+    size: 57
+    lineHeight: 64.0
     weight: 400
-    letterSpacing: 0
+    letterSpacing: -0.2
     family: sans-serif
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    source: catalog/reference/README.md
-    evidence: E2
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 页面大标题（大顶栏展开态与横划顶栏共用；真机设置首页「设置」墨迹 244×114px @450dpi、图库「照片」245×117px，44sp 只有 232×113px，折合 46sp；字重为常规）
+    description: displayLarge
+  - id: type.display.medium
+    kind: typography
+    size: 45
+    lineHeight: 52.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: displayMedium
+  - id: type.display.small
+    kind: typography
+    size: 36
+    lineHeight: 44.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: displaySmall
+  - id: type.headline.large
+    kind: typography
+    size: 32
+    lineHeight: 40.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: headlineLarge
+  - id: type.headline.medium
+    kind: typography
+    size: 28
+    lineHeight: 36.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: headlineMedium
+  - id: type.headline.small
+    kind: typography
+    size: 24
+    lineHeight: 32.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: headlineSmall
+  - id: type.title.large
+    kind: typography
+    size: 22
+    lineHeight: 28.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: titleLarge
   - id: type.title.medium
     kind: typography
-    size: 20
-    lineHeight: 28
-    weight: 600
-    letterSpacing: 0
-    family: sans-serif
-    baseline: OxygenOS <version> / <device> / <date>
-    source: catalog/reference/README.md
-    evidence: E0
-    status: draft
-    description: 顶栏与卡片标题
-  - id: type.dialog.title
-    kind: typography
-    size: 18
-    lineHeight: 24
+    size: 16
+    lineHeight: 24.0
     weight: 500
-    letterSpacing: 0
+    letterSpacing: 0.2
     family: sans-serif
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    source: catalog/reference/README.md
-    evidence: E2
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 弹窗标题（真机「设备名称」弹窗：4 字墨迹 198px 宽 / 46px 高 @450dpi，与 20sp 的 220px / 53px 相比折合 18sp）
-  - id: type.appbar.title
+    description: titleMedium
+  - id: type.title.small
     kind: typography
-    size: 18
-    lineHeight: 24
+    size: 14
+    lineHeight: 20.0
     weight: 500
-    letterSpacing: 0
+    letterSpacing: 0.1
     family: sans-serif
-    baseline: OxygenOS <version> / <device> / <date>
-    source: catalog/reference/README.md
-    evidence: E0
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 标准顶栏与「大顶栏」收拢态的标题
+    description: titleSmall
   - id: type.body.large
     kind: typography
     size: 16
-    lineHeight: 24
+    lineHeight: 24.0
     weight: 400
-    letterSpacing: 0
+    letterSpacing: 0.5
     family: sans-serif
-    baseline: OxygenOS <version> / <device> / <date>
-    source: catalog/reference/README.md
-    evidence: E0
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 正文
+    description: bodyLarge
   - id: type.body.medium
     kind: typography
-    size: 13
-    lineHeight: 18
+    size: 14
+    lineHeight: 20.0
     weight: 400
-    letterSpacing: 0
+    letterSpacing: 0.2
     family: sans-serif
-    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
-    source: catalog/reference/README.md
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
     evidence: E3
     status: draft
-    description: 次要正文与设置行说明（APK 资源 dump：op_text_size_body1 13sp）
-  - id: type.list.item.title
+    description: bodyMedium
+  - id: type.body.small
     kind: typography
-    size: 16
-    lineHeight: 22
+    size: 12
+    lineHeight: 16.0
+    weight: 400
+    letterSpacing: 0.4
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: bodySmall
+  - id: type.label.large
+    kind: typography
+    size: 14
+    lineHeight: 20.0
     weight: 500
-    letterSpacing: 0
+    letterSpacing: 0.1
     family: sans-serif
-    baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
-    source: catalog/reference/README.md
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
     evidence: E3
     status: draft
-    description: 设置行标题（APK 资源 dump：op_text_size_h6 16sp，OnePlus.TextAppearance.List.Title）
-  - id: type.clock.time
-    kind: typography
-    size: 32
-    lineHeight: 40
-    weight: 400
-    letterSpacing: 0
-    family: sans-serif
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
-    source: catalog/reference/README.md
-    evidence: E1
-    status: draft
-    description: 时钟列表时间的大字号（真机目测约 32sp、常规字重）
-  - id: type.input.text
-    kind: typography
-    size: 16
-    lineHeight: 24
-    weight: 400
-    letterSpacing: 0
-    family: sans-serif
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    source: catalog/reference/README.md
-    evidence: E2
-    status: draft
-    description: 输入框正文（真机「设备名称」输入行墨迹 230×34px @450dpi，16sp 且无额外字距；0.5sp 字距会宽出 12px）
+    description: labelLarge
   - id: type.label.medium
     kind: typography
-    size: 14
-    lineHeight: 20
+    size: 12
+    lineHeight: 16.0
     weight: 500
-    letterSpacing: 0
+    letterSpacing: 0.5
     family: sans-serif
-    baseline: OxygenOS <version> / <device> / <date>
-    source: catalog/reference/README.md
-    evidence: E0
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 按钮与设置行标题
-  - id: type.appbar.subtitle
+    description: labelMedium
+  - id: type.label.small
     kind: typography
-    size: 14
-    lineHeight: 17
-    weight: 400
-    letterSpacing: 0
+    size: 11
+    lineHeight: 16.0
+    weight: 500
+    letterSpacing: 0.5
     family: sans-serif
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
-    source: catalog/reference/README.md
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: labelSmall
+  - id: type.appbar.title
+    kind: typography
+    size: 18
+    lineHeight: 24.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    source: docs/spec/le2100-appbar-calibration.md
     evidence: E2
     status: draft
-    description: 顶栏标题下方的副标题，标准 / 大 / 横划顶栏共用（字号：真机图库副标题墨迹 36px 高 @450dpi，按 46sp 大标题的墨迹/em 比 0.905 折合 14.1sp，13sp 只有 33px；行高：收拢态「标题墨迹底 275 → 副标题墨迹顶 291」= 16px，20sp 行高会撑到 20px，17sp 恰好 16px）
+    description: 按真机校准的紧凑标题字号与行高，默认常规字重
+  - id: type.dialog.title
+    kind: typography
+    size: 24
+    lineHeight: 32.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: dialogTitle（兼容别名，对应 headlineSmall）
   - id: type.dialog.action
     kind: typography
     size: 14
-    lineHeight: 20
-    weight: 700
-    letterSpacing: 0
+    lineHeight: 20.0
+    weight: 500
+    letterSpacing: 0.1
     family: sans-serif
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    source: catalog/reference/README.md
-    evidence: E2
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 弹窗通栏文字按钮（「确定 / 取消」墨迹 76×36px @450dpi、实心像素约 900 个，比 500 字重厚近一倍，折合 14sp / 700）
+    description: dialogAction（兼容别名，对应 labelLarge）
+  - id: type.appbar.subtitle
+    kind: typography
+    size: 14
+    lineHeight: 20.0
+    weight: 400
+    letterSpacing: 0.2
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: appBarSubtitle（兼容别名，对应 bodyMedium）
+  - id: type.list.item.title
+    kind: typography
+    size: 16
+    lineHeight: 24.0
+    weight: 400
+    letterSpacing: 0.5
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: listItemTitle（兼容别名，对应 bodyLarge）
+  - id: type.clock.time
+    kind: typography
+    size: 32
+    lineHeight: 40.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: clockTime（兼容别名，对应 headlineLarge）
+  - id: type.input.text
+    kind: typography
+    size: 16
+    lineHeight: 24.0
+    weight: 400
+    letterSpacing: 0.5
+    family: sans-serif
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: inputText（兼容别名，对应 bodyLarge）
   - id: type.caption
     kind: typography
     size: 12
-    lineHeight: 16
+    lineHeight: 16.0
     weight: 400
-    letterSpacing: 0
+    letterSpacing: 0.4
     family: sans-serif
-    baseline: OxygenOS <version> / <device> / <date>
-    source: catalog/reference/README.md
-    evidence: E0
+    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
     status: draft
-    description: 说明与状态标记
+    description: caption（兼容别名，对应 bodySmall）

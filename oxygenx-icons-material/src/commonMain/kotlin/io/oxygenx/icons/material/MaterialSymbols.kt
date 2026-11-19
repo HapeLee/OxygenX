@@ -3,6 +3,7 @@
 package io.oxygenx.icons.material
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import io.oxygenx.icons.icon.OxygenIcons
 import io.oxygenx.icons.material.generated.AccountBalanceGlyph
 import io.oxygenx.icons.material.generated.AccountCircleGlyph
 import io.oxygenx.icons.material.generated.AddCircleGlyph
@@ -15,6 +16,7 @@ import io.oxygenx.icons.material.generated.ArrowForwardIosGlyph
 import io.oxygenx.icons.material.generated.ArticleGlyph
 import io.oxygenx.icons.material.generated.AssignmentGlyph
 import io.oxygenx.icons.material.generated.AttachMoneyGlyph
+import io.oxygenx.icons.material.generated.BugReportGlyph
 import io.oxygenx.icons.material.generated.CalendarTodayGlyph
 import io.oxygenx.icons.material.generated.CallGlyph
 import io.oxygenx.icons.material.generated.CancelGlyph
@@ -40,6 +42,7 @@ import io.oxygenx.icons.material.generated.ErrorOutlineGlyph
 import io.oxygenx.icons.material.generated.EventGlyph
 import io.oxygenx.icons.material.generated.ExpandLessGlyph
 import io.oxygenx.icons.material.generated.ExpandMoreGlyph
+import io.oxygenx.icons.material.generated.ExploreGlyph
 import io.oxygenx.icons.material.generated.FaceGlyph
 import io.oxygenx.icons.material.generated.FactCheckGlyph
 import io.oxygenx.icons.material.generated.FavoriteBorderGlyph
@@ -48,6 +51,8 @@ import io.oxygenx.icons.material.generated.FileDownloadGlyph
 import io.oxygenx.icons.material.generated.FileUploadGlyph
 import io.oxygenx.icons.material.generated.FilterAltGlyph
 import io.oxygenx.icons.material.generated.FingerprintGlyph
+import io.oxygenx.icons.material.generated.FullscreenExitGlyph
+import io.oxygenx.icons.material.generated.FullscreenGlyph
 import io.oxygenx.icons.material.generated.GroupsGlyph
 import io.oxygenx.icons.material.generated.HelpGlyph
 import io.oxygenx.icons.material.generated.HelpOutlineGlyph
@@ -56,11 +61,13 @@ import io.oxygenx.icons.material.generated.HistoryGlyph
 import io.oxygenx.icons.material.generated.HomeGlyph
 import io.oxygenx.icons.material.generated.ImageGlyph
 import io.oxygenx.icons.material.generated.LanguageGlyph
+import io.oxygenx.icons.material.generated.LibraryBooksGlyph
 import io.oxygenx.icons.material.generated.LightbulbGlyph
 import io.oxygenx.icons.material.generated.LinkGlyph
 import io.oxygenx.icons.material.generated.ListGlyph
 import io.oxygenx.icons.material.generated.LocalShippingGlyph
 import io.oxygenx.icons.material.generated.LocationOnGlyph
+import io.oxygenx.icons.material.generated.LocationSearchingGlyph
 import io.oxygenx.icons.material.generated.LockGlyph
 import io.oxygenx.icons.material.generated.LoginGlyph
 import io.oxygenx.icons.material.generated.LogoutGlyph
@@ -69,6 +76,7 @@ import io.oxygenx.icons.material.generated.ManageAccountsGlyph
 import io.oxygenx.icons.material.generated.MenuGlyph
 import io.oxygenx.icons.material.generated.MoreHorizGlyph
 import io.oxygenx.icons.material.generated.MoreVertGlyph
+import io.oxygenx.icons.material.generated.MyLocationGlyph
 import io.oxygenx.icons.material.generated.NavigateNextGlyph
 import io.oxygenx.icons.material.generated.NotificationsGlyph
 import io.oxygenx.icons.material.generated.OpenInNewGlyph
@@ -80,18 +88,25 @@ import io.oxygenx.icons.material.generated.PersonGlyph
 import io.oxygenx.icons.material.generated.PersonOutlineGlyph
 import io.oxygenx.icons.material.generated.PhoneGlyph
 import io.oxygenx.icons.material.generated.PhotoCameraGlyph
+import io.oxygenx.icons.material.generated.PictureInPictureAltGlyph
 import io.oxygenx.icons.material.generated.PlaceGlyph
 import io.oxygenx.icons.material.generated.PlayArrowGlyph
 import io.oxygenx.icons.material.generated.QuestionAnswerGlyph
 import io.oxygenx.icons.material.generated.RadioButtonUncheckedGlyph
 import io.oxygenx.icons.material.generated.RefreshGlyph
+import io.oxygenx.icons.material.generated.ReplayGlyph
 import io.oxygenx.icons.material.generated.ReportProblemGlyph
+import io.oxygenx.icons.material.generated.RssFeedGlyph
 import io.oxygenx.icons.material.generated.SaveGlyph
 import io.oxygenx.icons.material.generated.SchoolGlyph
+import io.oxygenx.icons.material.generated.SellGlyph
 import io.oxygenx.icons.material.generated.SendGlyph
 import io.oxygenx.icons.material.generated.ShareGlyph
 import io.oxygenx.icons.material.generated.ShoppingBagGlyph
 import io.oxygenx.icons.material.generated.ShoppingCartGlyph
+import io.oxygenx.icons.material.generated.SkipNextGlyph
+import io.oxygenx.icons.material.generated.SkipPreviousGlyph
+import io.oxygenx.icons.material.generated.SpeedGlyph
 import io.oxygenx.icons.material.generated.StarGlyph
 import io.oxygenx.icons.material.generated.StarRateGlyph
 import io.oxygenx.icons.material.generated.SupportAgentGlyph
@@ -105,40 +120,11 @@ import io.oxygenx.icons.material.generated.VisibilityOffGlyph
 import io.oxygenx.icons.material.generated.WarningGlyph
 
 /**
- * 常用 Material Symbols（Outlined 样式，`wght=300`）的静态 [ImageVector] 集合。
- *
- * **与 `:oxygenx-icons` 的分工**：那个模块只有 14 个手挑的精选图标（Rounded 样式），
- * 面向组件内部固定用途；本模块是「常用图标全集」，消费方按需依赖，两者互不依赖、
- * 也不共享符号名（`settings` / `add` / `search` / `close` / `check` / `info` / `schedule` /
- * `grid_view` / `alarm` / `public` / `hourglass_empty` / `timer` / `chevron_right` /
- * `arrow_back_ios_new` 这 14 个符号名已在 `OxygenIcons` 里存在，此处一律不含）。
- *
- * **来源与许可**：Google Material Symbols，Apache License 2.0；`generated/` 下每个文件都带
- * 自己的来源 URL 与版权头。不引 `material-icons-*` 依赖：那套库没有 weight 轴，且
- * Compose Multiplatform 的对应 artifact 不覆盖本项目的 wasmJs target。
- *
- * **生成参数**（每个图标都必须一致，否则一整套看起来不像一套）：
- * ```
- * https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/<symbol_name>.kt
- *     ?var=opsz,wght,FILL,GRAD@24,300,0,0
- * ```
- * `opsz=24`（24dp 光学尺寸）、`wght=300`（比默认 400 更细）、`FILL=0`（线性轮廓）、
- * `GRAD=0`（不加等级微调）。Outlined 样式没有 `ROND` 轴——那是 Rounded 样式专有的，
- * 带上会被服务端拒绝（实测 HTTP 400）。响应是 gzip，`curl --compressed`。
- *
- * **选取口径**：`https://fonts.google.com/metadata/icons?key=material_symbols&incomplete=true`
- * 的 `popularity` 字段（即 fonts.google.com/icons 页「按使用人数排序」的依据），同名条目
- * 取最大值后降序取前 100，再剔除上面那 14 个已存在的符号名。属性名就是符号名的
- * PascalCase（`check_box_outline_blank` → [CheckBoxOutlineBlank]），所以对不上号时可直接
- * 拿注释里的原始符号名去官网 / metadata 里查。
- *
- * **新增图标**：同参数下载到 `generated/<PascalName>Glyph.kt`，改 `package`、
- * 把 `public val <symbol>` 改名为 `internal val <PascalName>Glyph`，再在这里加一条映射。
- * 生成文件自带惰性缓存，未被引用的图标可被裁剪。
- *
- * **着色与尺寸**不在本模块：`Icon` 用 `ColorFilter.tint` 按颜色令牌着色、按
- * `icon.size.*` 缩放；方向性图标（`ArrowBack` / `ChevronLeft` / `ArrowForwardIos` 等）由
- * 调用方传 `mirrorInRtl = true`，生成文件不带 `autoMirror`。
+ * Google Material Symbols: Outlined, opsz=24, wght=300, FILL=0, GRAD=0; Apache-2.0.
+ * Includes the original 100 symbols, the 14 core symbols and application additions.
+ * Core symbols reuse OxygenIcons vectors; individual getters remain lazy and shrinkable.
+ * Directional vectors declare autoMirror; Icon also accepts explicit mirrorInRtl safely.
+ * Sources and SHA-256 pins: design/icons/material-symbols.json.
  */
 object MaterialSymbols {
     /** `account_balance` */
@@ -147,17 +133,26 @@ object MaterialSymbols {
     /** `account_circle` */
     val AccountCircle: ImageVector get() = AccountCircleGlyph
 
+    /** `add` */
+    val Add: ImageVector get() = OxygenIcons.Add
+
     /** `add_circle` */
     val AddCircle: ImageVector get() = AddCircleGlyph
 
     /** `add_circle_outline` */
     val AddCircleOutline: ImageVector get() = AddCircleOutlineGlyph
 
+    /** `alarm` */
+    val Alarm: ImageVector get() = OxygenIcons.Alarm
+
     /** `arrow_back` */
     val ArrowBack: ImageVector get() = ArrowBackGlyph
 
     /** `arrow_back_ios` */
     val ArrowBackIos: ImageVector get() = ArrowBackIosGlyph
+
+    /** `arrow_back_ios_new` */
+    val ArrowBackIosNew: ImageVector get() = OxygenIcons.Back
 
     /** `arrow_drop_down` */
     val ArrowDropDown: ImageVector get() = ArrowDropDownGlyph
@@ -177,6 +172,9 @@ object MaterialSymbols {
     /** `attach_money` */
     val AttachMoney: ImageVector get() = AttachMoneyGlyph
 
+    /** `bug_report` */
+    val BugReport: ImageVector get() = BugReportGlyph
+
     /** `calendar_today` */
     val CalendarToday: ImageVector get() = CalendarTodayGlyph
 
@@ -185,6 +183,9 @@ object MaterialSymbols {
 
     /** `cancel` */
     val Cancel: ImageVector get() = CancelGlyph
+
+    /** `check` */
+    val Check: ImageVector get() = OxygenIcons.Check
 
     /** `check_box` */
     val CheckBox: ImageVector get() = CheckBoxGlyph
@@ -201,8 +202,14 @@ object MaterialSymbols {
     /** `chevron_left` */
     val ChevronLeft: ImageVector get() = ChevronLeftGlyph
 
+    /** `chevron_right` */
+    val ChevronRight: ImageVector get() = OxygenIcons.ChevronRight
+
     /** `clear` */
     val Clear: ImageVector get() = ClearGlyph
+
+    /** `close` */
+    val Close: ImageVector get() = OxygenIcons.Close
 
     /** `content_copy` */
     val ContentCopy: ImageVector get() = ContentCopyGlyph
@@ -252,6 +259,9 @@ object MaterialSymbols {
     /** `expand_more` */
     val ExpandMore: ImageVector get() = ExpandMoreGlyph
 
+    /** `explore` */
+    val Explore: ImageVector get() = ExploreGlyph
+
     /** `face` */
     val Face: ImageVector get() = FaceGlyph
 
@@ -276,6 +286,15 @@ object MaterialSymbols {
     /** `fingerprint` */
     val Fingerprint: ImageVector get() = FingerprintGlyph
 
+    /** `fullscreen` */
+    val Fullscreen: ImageVector get() = FullscreenGlyph
+
+    /** `fullscreen_exit` */
+    val FullscreenExit: ImageVector get() = FullscreenExitGlyph
+
+    /** `grid_view` */
+    val GridView: ImageVector get() = OxygenIcons.Grid
+
     /** `groups` */
     val Groups: ImageVector get() = GroupsGlyph
 
@@ -294,11 +313,20 @@ object MaterialSymbols {
     /** `home` */
     val Home: ImageVector get() = HomeGlyph
 
+    /** `hourglass_empty` */
+    val HourglassEmpty: ImageVector get() = OxygenIcons.Hourglass
+
     /** `image` */
     val Image: ImageVector get() = ImageGlyph
 
+    /** `info` */
+    val Info: ImageVector get() = OxygenIcons.Info
+
     /** `language` */
     val Language: ImageVector get() = LanguageGlyph
+
+    /** `library_books` */
+    val LibraryBooks: ImageVector get() = LibraryBooksGlyph
 
     /** `lightbulb` */
     val Lightbulb: ImageVector get() = LightbulbGlyph
@@ -314,6 +342,9 @@ object MaterialSymbols {
 
     /** `location_on` */
     val LocationOn: ImageVector get() = LocationOnGlyph
+
+    /** `location_searching` */
+    val LocationSearching: ImageVector get() = LocationSearchingGlyph
 
     /** `lock` */
     val Lock: ImageVector get() = LockGlyph
@@ -338,6 +369,9 @@ object MaterialSymbols {
 
     /** `more_vert` */
     val MoreVert: ImageVector get() = MoreVertGlyph
+
+    /** `my_location` */
+    val MyLocation: ImageVector get() = MyLocationGlyph
 
     /** `navigate_next` */
     val NavigateNext: ImageVector get() = NavigateNextGlyph
@@ -372,11 +406,17 @@ object MaterialSymbols {
     /** `photo_camera` */
     val PhotoCamera: ImageVector get() = PhotoCameraGlyph
 
+    /** `picture_in_picture_alt` */
+    val PictureInPictureAlt: ImageVector get() = PictureInPictureAltGlyph
+
     /** `place` */
     val Place: ImageVector get() = PlaceGlyph
 
     /** `play_arrow` */
     val PlayArrow: ImageVector get() = PlayArrowGlyph
+
+    /** `public` */
+    val Public: ImageVector get() = OxygenIcons.WorldClock
 
     /** `question_answer` */
     val QuestionAnswer: ImageVector get() = QuestionAnswerGlyph
@@ -387,17 +427,35 @@ object MaterialSymbols {
     /** `refresh` */
     val Refresh: ImageVector get() = RefreshGlyph
 
+    /** `replay` */
+    val Replay: ImageVector get() = ReplayGlyph
+
     /** `report_problem` */
     val ReportProblem: ImageVector get() = ReportProblemGlyph
+
+    /** `rss_feed` */
+    val RssFeed: ImageVector get() = RssFeedGlyph
 
     /** `save` */
     val Save: ImageVector get() = SaveGlyph
 
+    /** `schedule` */
+    val Schedule: ImageVector get() = OxygenIcons.Clock
+
     /** `school` */
     val School: ImageVector get() = SchoolGlyph
 
+    /** `search` */
+    val Search: ImageVector get() = OxygenIcons.Search
+
+    /** `sell` */
+    val Sell: ImageVector get() = SellGlyph
+
     /** `send` */
     val Send: ImageVector get() = SendGlyph
+
+    /** `settings` */
+    val Settings: ImageVector get() = OxygenIcons.Settings
 
     /** `share` */
     val Share: ImageVector get() = ShareGlyph
@@ -407,6 +465,15 @@ object MaterialSymbols {
 
     /** `shopping_cart` */
     val ShoppingCart: ImageVector get() = ShoppingCartGlyph
+
+    /** `skip_next` */
+    val SkipNext: ImageVector get() = SkipNextGlyph
+
+    /** `skip_previous` */
+    val SkipPrevious: ImageVector get() = SkipPreviousGlyph
+
+    /** `speed` */
+    val Speed: ImageVector get() = SpeedGlyph
 
     /** `star` */
     val Star: ImageVector get() = StarGlyph
@@ -422,6 +489,9 @@ object MaterialSymbols {
 
     /** `thumb_up` */
     val ThumbUp: ImageVector get() = ThumbUpGlyph
+
+    /** `timer` */
+    val Timer: ImageVector get() = OxygenIcons.Stopwatch
 
     /** `trending_up` */
     val TrendingUp: ImageVector get() = TrendingUpGlyph
@@ -441,39 +511,39 @@ object MaterialSymbols {
     /** `warning` */
     val Warning: ImageVector get() = WarningGlyph
 
-    /**
-     * 全部 100 个图标，顺序与属性声明一致（属性名字母序）；每个 [ImageVector.name]
-     * 都是 Material Symbols 的原始符号名（例如 `check_box_outline_blank`），可直接拿去官网 / metadata 查。
-     *
-     * 首次访问会一次性构建全部矢量，只在需要遍历的场景（图标选择器、catalog 总览页）才用；
-     * 单个图标的消费方继续走 `MaterialSymbols.X`，逐个惰性缓存、按需裁剪。
-     */
+    /** Enumerates all vectors once; use individual getters for normal application icons. */
     val All: List<ImageVector> get() = allIcons
 
-    // 名字不能叫 `all`：`val All` 的 JVM 访问器就是 `getAll()`，会和 `get-all` 撞签名。
     private val allIcons: List<ImageVector> by lazy {
         listOf(
             AccountBalance,
             AccountCircle,
+            Add,
             AddCircle,
             AddCircleOutline,
+            Alarm,
             ArrowBack,
             ArrowBackIos,
+            ArrowBackIosNew,
             ArrowDropDown,
             ArrowForward,
             ArrowForwardIos,
             Article,
             Assignment,
             AttachMoney,
+            BugReport,
             CalendarToday,
             Call,
             Cancel,
+            Check,
             CheckBox,
             CheckBoxOutlineBlank,
             CheckCircle,
             CheckCircleOutline,
             ChevronLeft,
+            ChevronRight,
             Clear,
+            Close,
             ContentCopy,
             CreditCard,
             Dashboard,
@@ -490,6 +560,7 @@ object MaterialSymbols {
             Event,
             ExpandLess,
             ExpandMore,
+            Explore,
             Face,
             FactCheck,
             Favorite,
@@ -498,19 +569,26 @@ object MaterialSymbols {
             FileUpload,
             FilterAlt,
             Fingerprint,
+            Fullscreen,
+            FullscreenExit,
+            GridView,
             Groups,
             Help,
             HelpOutline,
             HighlightOff,
             History,
             Home,
+            HourglassEmpty,
             Image,
+            Info,
             Language,
+            LibraryBooks,
             Lightbulb,
             Link,
             List,
             LocalShipping,
             LocationOn,
+            LocationSearching,
             Lock,
             Login,
             Logout,
@@ -519,6 +597,7 @@ object MaterialSymbols {
             Menu,
             MoreHoriz,
             MoreVert,
+            MyLocation,
             NavigateNext,
             Notifications,
             OpenInNew,
@@ -530,23 +609,35 @@ object MaterialSymbols {
             PersonOutline,
             Phone,
             PhotoCamera,
+            PictureInPictureAlt,
             Place,
             PlayArrow,
+            Public,
             QuestionAnswer,
             RadioButtonUnchecked,
             Refresh,
+            Replay,
             ReportProblem,
+            RssFeed,
             Save,
+            Schedule,
             School,
+            Search,
+            Sell,
             Send,
+            Settings,
             Share,
             ShoppingBag,
             ShoppingCart,
+            SkipNext,
+            SkipPrevious,
+            Speed,
             Star,
             StarRate,
             SupportAgent,
             TaskAlt,
             ThumbUp,
+            Timer,
             TrendingUp,
             Verified,
             VerifiedUser,

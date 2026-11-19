@@ -22,7 +22,8 @@ import io.oxygenx.theme.OxygenTheme
 import io.oxygenx.ui.basic.Text
 import io.oxygenx.ui.feedback.PullToRefreshBox
 import io.oxygenx.ui.layout.Scaffold
-import io.oxygenx.ui.navigation.TopAppBar
+import io.oxygenx.ui.navigation.LargeTopAppBar
+import io.oxygenx.ui.navigation.rememberTopAppBarState
 import io.oxygenx.ui.settings.SettingsItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -41,15 +42,18 @@ fun PullRefreshDemoScreen(onBack: () -> Unit) {
     val scope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
     var itemCount by remember { mutableIntStateOf(24) }
+    val topBarState = rememberTopAppBarState()
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            LargeTopAppBar(
+                state = topBarState,
                 title = { Text("PullToRefresh / 下拉刷新", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 onNavigateBack = onBack,
                 navigationContentDescription = "返回",
             )
         },
+        topBarState = topBarState,
         containerColor = OxygenTheme.colorScheme.surfaceContainer,
     ) { insets ->
         PullToRefreshBox(
@@ -76,7 +80,7 @@ fun PullRefreshDemoScreen(onBack: () -> Unit) {
                         modifier = Modifier.padding(horizontal = spacing.gutter),
                     )
                     BasicText(
-                        text = "下拉超过 64dp 松手触发一次刷新；刷新中圆环常驻旋转，结束后列表末尾追加 6 行。" +
+                        text = "列表到顶且顶栏展开后继续下拉，超过阈值松手刷新；快速甩动只滚动列表或展开顶栏。" +
                             "当前共 $itemCount 行。",
                         modifier = Modifier.padding(horizontal = spacing.gutter),
                         style = OxygenTheme.typography.caption.copy(

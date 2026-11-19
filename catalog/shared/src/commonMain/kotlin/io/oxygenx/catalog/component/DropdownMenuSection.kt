@@ -38,11 +38,12 @@ private fun DropdownMenuVariants() {
     val colors = OxygenTheme.colorScheme
     val caption = OxygenTheme.typography.caption.copy(color = colors.onSurfaceVariant)
     var expanded by remember { mutableStateOf(false) }
+    var longExpanded by remember { mutableStateOf(false) }
     var sort by remember { mutableStateOf("按名称") }
 
     Column(verticalArrangement = Arrangement.spacedBy(OxygenTheme.spacing.gapSmall)) {
         BasicText(
-            text = "菜单放在锚点所在的 Box 里：Popup 以父布局为锚点，下方放不下自动翻到上方，横向夹在窗口内",
+            text = "经典 M3 样式：小圆角、轻投影、48dp 行高，宽度 112–280dp。锚点缩放 / 淡入淡出，可快速反向；支持长文字、大字体、滚动与 RTL 定位。",
             modifier = Modifier.fillMaxWidth(),
             style = caption,
         )
@@ -78,6 +79,21 @@ private fun DropdownMenuVariants() {
                         Icon(imageVector = OxygenIcons.Close, contentDescription = null)
                     },
                 )
+                DropdownMenuItem(text = { Text("不可用操作") }, onClick = {}, enabled = false)
+            }
+        }
+        Box {
+            Button(onClick = { longExpanded = true }) { Text("长菜单与换行（40 项）") }
+            DropdownMenu(expanded = longExpanded, onDismissRequest = { longExpanded = false }) {
+                repeat(40) { index ->
+                    DropdownMenuItem(
+                        text = { Text(if (index == 0) "这是一项较长的菜单说明，会按可用宽度自动换行" else "菜单项 ${index + 1}") },
+                        onClick = {
+                            sort = "菜单项 ${index + 1}"
+                            longExpanded = false
+                        },
+                    )
+                }
             }
         }
         BasicText(

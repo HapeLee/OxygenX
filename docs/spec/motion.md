@@ -154,3 +154,7 @@ measurements.csv 时间点 → 位移/缩放/不透明度等采样，及拟合�
 - 用全局倍率 / sleep / `CompositionLocal` 改写动画时长；用主观描述替代测量数据。
 - 在 commonMain 调平台动画 API；用刷新率差异当作「测不准」的借口。
 - 把 `E0` 占位参数悄悄标成 `verified` 或写进公开文档。
+
+## 2026-11-18 菜单进出场
+
+用户明确要求补菜单动画。MOT-ENTER-002 / 003 分别为从锚点缩放和透明度通道，使用 M3 标准 fast spatial / effects 弹簧类比；阈值为项目选择，E0 / draft。保持 Popup 至退出完成，反向不重置 Animatable，帧中仅写 graphicsLayer。手势按压反馈仍采用水波纹，不将进出场缩放误称为按压缩放。

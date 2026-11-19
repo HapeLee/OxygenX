@@ -33,30 +33,30 @@ private val SimpleTabs = listOf(
     NavigationBarItem(label = "设置", icon = OxygenIcons.Settings),
 )
 
-fun LazyListScope.bottomBarSection() {
-    item(key = "cmp-bottom-bar") {
-        SmallTitle(text = "BottomBar / 底栏", specId = "CMP-BOTTOM-BAR")
+fun LazyListScope.navigationBarSection() {
+    item(key = "cmp-navigation-bar") {
+        SmallTitle(text = "NavigationBar / 底栏导航", specId = "CMP-NAVIGATION-BAR")
         DemoCard {
-            FileManagerBottomBarDemo()
+            FileManagerNavigationBarDemo()
         }
     }
-    item(key = "cmp-bottom-bar-simple") {
-        SmallTitle(text = "三栏底栏", specId = "CMP-BOTTOM-BAR")
+    item(key = "cmp-navigation-bar-simple") {
+        SmallTitle(text = "三栏底栏", specId = "CMP-NAVIGATION-BAR")
         DemoCard {
-            SimpleBottomBarDemo()
+            SimpleNavigationBarDemo()
         }
     }
-    item(key = "cmp-bottom-bar-states") {
-        SmallTitle(text = "禁用栏 / 配色变体", specId = "CMP-BOTTOM-BAR")
+    item(key = "cmp-navigation-bar-states") {
+        SmallTitle(text = "禁用栏 / 配色变体", specId = "CMP-NAVIGATION-BAR")
         DemoCard {
-            BottomBarStatesDemo()
+            NavigationBarStatesDemo()
         }
     }
 }
 
 /** 文件管理应用的形态：四个一级入口，55dp 等分，选中栏取强调色。 */
 @Composable
-private fun FileManagerBottomBarDemo() {
+private fun FileManagerNavigationBarDemo() {
     var selected by remember { mutableIntStateOf(0) }
     Column(verticalArrangement = Arrangement.spacedBy(OxygenTheme.spacing.gapSmall)) {
         Label("文件管理这类应用把一级入口放底栏：四栏等分、图标压字、选中只换内容色；按下时从按点扩散半径等于栏高的大圆，溢出底栏的部分被裁掉")
@@ -70,7 +70,7 @@ private fun FileManagerBottomBarDemo() {
 }
 
 @Composable
-private fun SimpleBottomBarDemo() {
+private fun SimpleNavigationBarDemo() {
     var selected by remember { mutableIntStateOf(0) }
     Column(verticalArrangement = Arrangement.spacedBy(OxygenTheme.spacing.gapSmall)) {
         Label("三栏是下限：栏宽随数量等分，文案单行省略，分割线与顶栏同一条细线")
@@ -84,7 +84,7 @@ private fun SimpleBottomBarDemo() {
 }
 
 @Composable
-private fun BottomBarStatesDemo() {
+private fun NavigationBarStatesDemo() {
     var selected by remember { mutableIntStateOf(0) }
     Column(verticalArrangement = Arrangement.spacedBy(OxygenTheme.spacing.gapSmall)) {
         Label("中间栏 enabled = false：取 disabled 色、不响应点击，其余栏照常切换")
@@ -106,6 +106,17 @@ private fun BottomBarStatesDemo() {
                 selectedContent = OxygenTheme.colorScheme.secondary,
             ),
         )
+        Label("槽位 API：宿主保留自己的导航分派与图标内容")
+        NavigationBar {
+            SimpleTabs.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = selected == index,
+                    onClick = { selected = index },
+                    label = { io.oxygenx.ui.basic.Text(item.label) },
+                    icon = { io.oxygenx.ui.basic.Icon(item.icon, contentDescription = null) },
+                )
+            }
+        }
     }
 }
 

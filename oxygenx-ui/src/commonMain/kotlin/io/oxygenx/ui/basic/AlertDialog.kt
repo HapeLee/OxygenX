@@ -9,13 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.DialogProperties
-import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 
 /**
  * 提示弹窗：标题 / 说明 / 确认与取消按钮的常见组合，是 [Dialog] 的高层封装。
@@ -79,18 +77,18 @@ fun AlertDialog(
                     ),
                 ) {
                     if (title != null) {
-                        CompositionLocalProvider(
-                            LocalContentColor provides colors.onSurface,
-                            LocalTextStyle provides typography.dialogTitle.copy(textAlign = TextAlign.Center),
+                        ProvideContentStyle(
+                            contentColor = colors.onSurface,
+                            textStyle = typography.headlineSmall.copy(textAlign = TextAlign.Center),
                         ) {
                             Box(modifier = Modifier.fillMaxWidth()) { title() }
                         }
                         Spacer(modifier = Modifier.height(spacing.dialogPadding))
                     }
                     if (text != null) {
-                        CompositionLocalProvider(
-                            LocalContentColor provides colors.onSurfaceVariant,
-                            LocalTextStyle provides typography.bodyMedium,
+                        ProvideContentStyle(
+                            contentColor = colors.onSurfaceVariant,
+                            textStyle = typography.bodyMedium,
                         ) {
                             text()
                         }

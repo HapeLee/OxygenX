@@ -6,7 +6,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,9 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.util.lerp
 import io.oxygenx.icons.icon.OxygenIcons
-import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 import io.oxygenx.ui.basic.Icon
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -112,7 +109,7 @@ internal fun pagerTitleAlpha(index: Int, pagePosition: Float): Float = (1f - 2f 
  *
  * 本质是「大顶栏 + 横划指示器」，不是另一套顶栏：栏头由分段指示器占据（N 段等宽、2dp 高、
  * 8dp 间隔、两端圆角，上沿走 `space.appbar.pager.top`），栏头之下的大标题
- * （`type.display.large`，与大顶栏同一个令牌）与副标题（`type.appbar.subtitle`）沿用
+ * （`type.display.medium`，与大顶栏同一个令牌）与副标题（`type.appbar.subtitle`）沿用
  * [LargeTopAppBar] 的展开态落位参数（[LargeTopBarMetrics]）；展开高度、收拢高度、
  * 标题字号插值、操作区从右下到右中、底部分割线淡入也都与大顶栏同构，只是收拢高度更高
  * （`size.appbar.pager.collapsed.height`，因为收拢态仍保留指示器与副标题）。
@@ -175,6 +172,7 @@ fun PagerTopBar(
     val colors = OxygenTheme.colorScheme
     val density = LocalDensity.current
     val fraction = state?.collapsedFraction ?: 0f
+    val navigationIconSize = appBarNavigationIconSize(fraction)
 
     if (state != null) {
         // 收拢进度按 `size.appbar.collapse.distance` 折算，与大顶栏同口径：
@@ -199,7 +197,7 @@ fun PagerTopBar(
     // 无导航图标时的标题落位，也是带导航图标收拢完成的落位（两种形态收拢后必须一致）。
     val collapsedTitleTop = spacing.appBarPagerTop + spacing.appBarPagerIndicatorHeight + spacing.appBarPagerTitleGap
     val collapsedStartInset = if (onNavigateBack != null) {
-        backButtonStartPadding() + spacing.touchTargetMin
+        spacing.touchTargetMin
     } else {
         metrics.titleInset
     }
@@ -213,11 +211,11 @@ fun PagerTopBar(
     // 右侧给操作区留位（与改版前同一口径）：长标题不会钻到操作图标下面。
     val titleEndInset = metrics.endInset + spacing.gapSmall + spacing.touchTargetMin * 2
 
-    // 标题只有一条：展开态直接复用大顶栏的 `type.display.large`，按收拢进度连续缩到
+    // 标题只有一条：展开态复用大顶栏的 displayMedium 角色，按收拢进度连续缩到
     // 标准顶栏标题（与大顶栏同一条插值、同一个样式）。
     val titleStyle = lerpAppBarTitleStyle(
-        expanded = typography.displayLarge.copy(color = colors.onSurface),
-        collapsed = typography.appbarTitle.copy(color = colors.onSurface),
+        expanded = typography.displayMedium.copy(color = colors.onSurface),
+        collapsed = typography.titleLarge.compactAppBarTitle().copy(color = colors.onSurface),
         fraction = fraction,
     )
     // 连续页位置：3.25 表示停在第 3 页往第 4 页划了四分之一。
@@ -326,11 +324,11 @@ fun PagerTopBar(
                 if (onNavigateBack != null) {
                     TopAppBarAction(
                         onClick = onNavigateBack,
-                        modifier = Modifier.padding(start = backButtonStartPadding()),
                     ) {
                         Icon(
                             imageVector = OxygenIcons.Back,
                             contentDescription = navigationContentDescription,
+                            size = navigationIconSize,
                             mirrorInRtl = true,
                         )
                     }
@@ -478,17 +476,17 @@ private fun PagerTitles(
                         alpha = pagerTitleAlpha(index, pagePosition)
                     },
             ) {
-                CompositionLocalProvider(
-                    LocalContentColor provides colors.onSurface,
-                    LocalTextStyle provides titleStyle,
+                ProvideContentStyle(
+                    contentColor = colors.onSurface,
+                    textStyle = titleStyle,
                 ) {
                     title(index)
                 }
                 if (subtitleSlot != null) {
                     Box(modifier = Modifier.offset(y = -subtitleTighten)) {
-                        CompositionLocalProvider(
-                            LocalContentColor provides colors.onSurfaceVariant,
-                            LocalTextStyle provides typography.appBarSubtitle,
+                        ProvideContentStyle(
+                            contentColor = colors.onSurfaceVariant,
+                            textStyle = typography.bodyMedium,
                         ) {
                             subtitleSlot(index)
                         }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -21,9 +20,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
-import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 
 /**
  * 文字按钮：无容器、48dp 高、文字居中，用强调色。
@@ -73,9 +71,9 @@ fun TextButton(
             ),
         contentAlignment = Alignment.Center,
     ) {
-        CompositionLocalProvider(
-            LocalContentColor provides colors.resolveContentColor(enabled),
-            LocalTextStyle provides OxygenTheme.typography.dialogAction,
+        ProvideContentStyle(
+            contentColor = colors.resolveContentColor(enabled),
+            textStyle = OxygenTheme.typography.labelLarge,
         ) {
             content()
         }

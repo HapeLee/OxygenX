@@ -67,16 +67,17 @@ internal fun overscrollTouchDistance(offset: Float, range: Float): Float {
 }
 
 /**
- * 滚动过冲效果：内容滚到任意一端后继续拖，整块内容跟着位移（**横向 / 纵向各自独立**），
- * 松手用一条紧凑弹簧弹回，甩得越快回得越快。
+ * 滚动过冲效果：内容滚到上下任意一端后继续拖，整块内容跟着位移，松手用一条紧凑弹簧弹回，
+ * 甩得越快回得越快。**只做纵向**：横向位移一律原样留给父级容器（Pager 翻页、`LazyRow`），
+ * 既不吸收也不画位移。
  *
  * 实现的是官方的 [OverscrollEffect]，因此可以挂到任意可滚动容器上（`LazyColumn`、
- * `verticalScroll`、`HorizontalPager` 的纵向分量、`LazyRow` 的横向分量），而不是只能包一个
- * 专用容器：
- * - `applyToScroll` 把「内容没吃掉的越界位移」按 [overscrollDampingDistance] 吸收成位移；
+ * `verticalScroll`、`HorizontalPager` 的纵向分量），而不是只能包一个专用容器：
+ * - `applyToScroll` 把「内容没吃掉的**纵向**越界位移」按 [overscrollDampingDistance] 吸收成
+ *   位移，横向残量不记消费、直接留给父级；
  * - `applyToFling` 在抬手那一刻就把位移与速度交给弹簧，**并保留甩动惯性**：位移方向上的
  *   速度整段交给弹簧（内容不再滑），反向的甩动保留一部分给内容（`1 / 2.13333`），
- *   `performFling` 的剩余速度再打 `1 / 1.53333` 喂回弹簧；
+ *   只有本次惯性已产生边界位移时，才把同方向的剩余速度打 `1 / 1.53333` 喂回弹簧；
  * - 手指重新按下或内容重新能滚动时，位移按反函数换算回等效触摸量继续跟手，不会跳。
  *
  * 位移画在 [node] 的 draw 阶段（`translate`），逐帧只重绘不重组。
@@ -102,29 +103,24 @@ internal class OxygenOverscrollEffect(
 
     // 原始触摸累计量是唯一真源：位移由它经曲线算出来，因此「往回拖 / 回弹被接管」都能
     // 直接在这条轴上加减，不必和位移互相反解（只在接管弹簧时才反解一次）。
-    private var rawX = 0f
     private var rawY = 0f
-
-    internal var offsetX by mutableFloatStateOf(0f)
-        private set
 
     internal var offsetY by mutableFloatStateOf(0f)
         private set
 
-    private var settleJobX: Job? = null
-    private var settleJobY: Job? = null
+    private var settleJob: Job? = null
+    private var flingSession: Any? = null
 
     override val isInProgress: Boolean
-        get() = offsetX != 0f || offsetY != 0f
+        get() = offsetY != 0f
 
     override val node: DelegatableNode = object : Modifier.Node(), DrawModifierNode {
         override fun ContentDrawScope.draw() {
-            val dx = offsetX
             val dy = offsetY
-            if (dx == 0f && dy == 0f) {
+            if (dy == 0f) {
                 drawContent()
             } else {
-                translate(left = dx, top = dy) { this@draw.drawContent() }
+                translate(top = dy) { this@draw.drawContent() }
             }
         }
     }
@@ -135,57 +131,41 @@ internal class OxygenOverscrollEffect(
         performScroll: (Offset) -> Offset,
     ): Offset {
         val userInput = source == NestedScrollSource.UserInput
-        // 手指重新按下：立刻接管，正在跑的回弹让位（位移先换算回等效触摸量，接着算不会跳）。
+        // 新手势接管回弹时才需要反解；拖拽中的 rawY 保持为原始触摸累计量。
         if (userInput) {
-            cancelSettle()
-            syncRawFromOffsets()
+            flingSession = null
+            if (settleJob?.isActive == true) {
+                cancelSettle()
+                syncRawFromOffsets()
+            }
         }
 
         var consumed = Offset.Zero
         var remaining = delta
 
-        // 1) 已经拉出过冲、且这一下是往回拖：先把过冲按曲线收回去，内容原地不动。
-        val pullBackY = pullBack(raw = rawY, delta = remaining.y)
-        if (pullBackY != 0f) {
-            setRawY(rawY + pullBackY)
-            consumed += Offset(0f, pullBackY)
-            remaining -= Offset(0f, pullBackY)
-        }
-        val pullBackX = pullBack(raw = rawX, delta = remaining.x)
-        if (pullBackX != 0f) {
-            setRawX(rawX + pullBackX)
-            consumed += Offset(pullBackX, 0f)
-            remaining -= Offset(pullBackX, 0f)
+        // 回弹中的惯性仍可滚动内容，不能改写弹簧正在更新的位移。
+        val canPull = userInput || (flingSession != null && settleJob?.isActive != true)
+        if (canPull) {
+            val pullBackY = pullBack(raw = rawY, delta = remaining.y)
+            if (pullBackY != 0f) {
+                setRawY(rawY + pullBackY)
+                consumed = Offset(0f, pullBackY)
+                remaining -= consumed
+            }
         }
 
-        // 2) 剩下的交给内容自己滚。契约要求恰好调用一次，剩余量为 0 时也要调。
+        // performScroll 包含所有嵌套滚动消费；契约要求无论余量是否为 0 都调用一次。
         val scrollConsumed = performScroll(remaining)
         consumed += scrollConsumed
-
-        // 3) 内容已经到边界、还有剩余：吸收成过冲位移。
-        val leftover = remaining - scrollConsumed
-        val inertia = !userInput
-        // 回弹已经把位移拉走了一半，惯性剩下的部分直接拒收，别和回弹抢同一个位移。
-        // 注意必须先看位移非零：回弹刚归零、job 还在收尾的那一小段时间里，若照旧拒收，
-        // 紧接着的惯性第一帧就被判「滚不动」，表现得像「没有惯性」。
-        val yAvailable = !(inertia && offsetY != 0f && settleJobY?.isActive == true)
-        val xAvailable = !(inertia && offsetX != 0f && settleJobX?.isActive == true)
-
-        if (leftover.y != 0f && yAvailable) {
+        val leftover = remaining.y - scrollConsumed.y
+        // 使用 Foundation fling 的半像素舍入容差。未确认边界时不累计微小余量。
+        if (canPull && touchRange > 0f && sign(leftover) == sign(remaining.y) &&
+            (abs(leftover) > SCROLL_ROUNDING_TOLERANCE_PX || (rawY != 0f && leftover != 0f))
+        ) {
             consumed = consumeOrSettle(
-                axisY = true,
-                raw = setRawY(rawY + leftover.y),
-                leftover = leftover.y,
-                inertia = inertia,
-                consumed = consumed,
-            )
-        }
-        if (leftover.x != 0f && xAvailable) {
-            consumed = consumeOrSettle(
-                axisY = false,
-                raw = setRawX(rawX + leftover.x),
-                leftover = leftover.x,
-                inertia = inertia,
+                raw = setRawY(rawY + leftover),
+                leftover = leftover,
+                inertia = !userInput,
                 consumed = consumed,
             )
         }
@@ -196,27 +176,27 @@ internal class OxygenOverscrollEffect(
         velocity: Velocity,
         performFling: suspend (Velocity) -> Velocity,
     ) {
-        // 新的 fling 开始：上一次回弹即使还在收尾也作废，否则它会把这次的惯性吃掉。
-        cancelSettle()
+        val session = Any()
+        flingSession = session
         var toFling = velocity
 
-        // 位移方向上的速度整段交给弹簧（内容不再滑）；反向甩动留一部分给内容。
-        if (offsetY != 0f && velocity.y != 0f) {
-            startSettle(axisY = true, initialVelocity = velocity.y)
-            toFling = Velocity(toFling.x, contentVelocity(velocity.y, offsetY))
-        }
-        if (offsetX != 0f && velocity.x != 0f) {
-            startSettle(axisY = false, initialVelocity = velocity.x)
-            toFling = Velocity(contentVelocity(velocity.x, offsetX), toFling.y)
+        if (offsetY != 0f) {
+            if (settleJob?.isActive != true) startSettle(initialVelocity = velocity.y)
+            toFling = Velocity(velocity.x, contentVelocity(velocity.y, offsetY))
         }
 
-        val remaining = performFling(toFling)
-        // 惯性撞到边界后剩下的速度继续喂给弹簧：这就是「甩出去还有余势」的来源。
-        if (remaining.y != 0f) {
-            startSettle(axisY = true, initialVelocity = remaining.y / RESIDUAL_VELOCITY_DAMPING)
-        }
-        if (remaining.x != 0f) {
-            startSettle(axisY = false, initialVelocity = remaining.x / RESIDUAL_VELOCITY_DAMPING)
+        var residualY = 0f
+        try {
+            // 返回的是已消费速度。余速也可能来自低速跳过或 fling 被打断，不能证明触边。
+            residualY = (toFling - performFling(toFling)).y
+        } finally {
+            if (flingSession === session) {
+                flingSession = null
+                if (offsetY != 0f) {
+                    val edgeVelocity = if (sign(residualY) == sign(offsetY)) residualY / RESIDUAL_VELOCITY_DAMPING else 0f
+                    startSettle(initialVelocity = edgeVelocity)
+                }
+            }
         }
     }
 
@@ -235,12 +215,6 @@ internal class OxygenOverscrollEffect(
         return rawY
     }
 
-    private fun setRawX(value: Float): Float {
-        rawX = value.coerceIn(-touchRange, touchRange)
-        offsetX = displacementOf(rawX)
-        return rawX
-    }
-
     /** 等效触摸量 → 位移（含符号）。 */
     private fun displacementOf(raw: Float): Float {
         if (touchRange <= 0f) return 0f
@@ -255,8 +229,7 @@ internal class OxygenOverscrollEffect(
     }
 
     private fun syncRawFromOffsets() {
-        if (offsetY != 0f) rawY = rawOf(offsetY)
-        if (offsetX != 0f) rawX = rawOf(offsetX)
+        rawY = rawOf(offsetY)
     }
 
     /**
@@ -267,7 +240,6 @@ internal class OxygenOverscrollEffect(
      * 父级容器（下拉刷新会抢）。
      */
     private fun consumeOrSettle(
-        axisY: Boolean,
         raw: Float,
         leftover: Float,
         inertia: Boolean,
@@ -275,40 +247,33 @@ internal class OxygenOverscrollEffect(
     ): Offset {
         val saturated = inertia && abs(raw) >= touchRange * FLING_SATURATION_RATIO
         if (!saturated) {
-            return if (axisY) consumed + Offset(0f, leftover) else consumed + Offset(leftover, 0f)
+            return consumed + Offset(0f, leftover)
         }
         // 不能等 fling 收尾：框架在 content fling 结束之后还要分发 post-fling，
         // 顶栏收拢之类的长动画就在那里，等它跑完再回弹也会「停顿」。
-        startSettle(axisY = axisY, initialVelocity = 0f)
+        startSettle(initialVelocity = 0f)
         return consumed
     }
 
     private fun cancelSettle() {
-        settleJobX?.cancel()
-        settleJobY?.cancel()
+        settleJob?.cancel()
     }
 
-    private fun startSettle(axisY: Boolean, initialVelocity: Float) {
+    private fun startSettle(initialVelocity: Float) {
         val scope = scope ?: return
-        val offset = if (axisY) offsetY else offsetX
-        if (offset == 0f && initialVelocity == 0f) return
-        val running = if (axisY) settleJobY else settleJobX
-        if (running?.isActive == true) return
-        val job = scope.launch { settleToRest(axisY = axisY, initialVelocity = initialVelocity) }
-        if (axisY) settleJobY = job else settleJobX = job
+        if (offsetY == 0f && initialVelocity == 0f) return
+        if (settleJob?.isActive == true) return
+        val job = scope.launch { settleToRest(initialVelocity = initialVelocity) }
+        settleJob = job
         // 完成后立刻清掉引用：留着已完成的 job 会让下一次越界滚动误判「回弹仍在进行」。
         job.invokeOnCompletion {
-            if (axisY) {
-                if (settleJobY === job) settleJobY = null
-            } else {
-                if (settleJobX === job) settleJobX = null
-            }
+            if (settleJob === job) settleJob = null
         }
     }
 
     /** 把当前位移弹回 0；弹簧自带过零回弹，初始速度就是甩动的余势。 */
-    private suspend fun settleToRest(axisY: Boolean, initialVelocity: Float) {
-        val start = if (axisY) offsetY else offsetX
+    private suspend fun settleToRest(initialVelocity: Float) {
+        val start = offsetY
         if (start == 0f && initialVelocity == 0f) return
         animate(
             initialValue = start,
@@ -316,16 +281,11 @@ internal class OxygenOverscrollEffect(
             initialVelocity = initialVelocity,
             animationSpec = settle,
         ) { value, _ ->
-            if (axisY) offsetY = value else offsetX = value
+            offsetY = value
         }
         // 弹簧可能过零后被拉回，收尾统一归零，并把原始触摸量一起清掉。
-        if (axisY) {
-            offsetY = 0f
-            rawY = 0f
-        } else {
-            offsetX = 0f
-            rawX = 0f
-        }
+        offsetY = 0f
+        rawY = 0f
     }
 
     private companion object {
@@ -338,6 +298,8 @@ internal class OxygenOverscrollEffect(
          * 不取 1.0：曲线后段每帧只挪零点几像素，fling 只要还有一丝增长就会继续消耗速度。
          */
         const val FLING_SATURATION_RATIO = 0.9f
+
+        const val SCROLL_ROUNDING_TOLERANCE_PX = 0.5f
 
         /**
          * 与位移反向的甩动：内容仍保留一部分惯性。

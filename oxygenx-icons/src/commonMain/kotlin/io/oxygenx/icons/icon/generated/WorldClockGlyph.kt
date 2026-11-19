@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/public.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/public.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 

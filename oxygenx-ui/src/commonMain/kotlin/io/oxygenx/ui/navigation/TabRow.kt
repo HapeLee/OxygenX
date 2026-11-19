@@ -43,9 +43,8 @@ import androidx.compose.ui.unit.Dp
 import io.oxygenx.motion.OxygenMotionDefaults
 import io.oxygenx.motion.OxygenMotionSpec
 import io.oxygenx.motion.rememberOxygenAnimation
-import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 import io.oxygenx.ui.basic.IndicationDefaults
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -213,9 +212,9 @@ fun Tab(
             .padding(horizontal = spacing.tabInset),
         contentAlignment = Alignment.Center,
     ) {
-        CompositionLocalProvider(
-            LocalContentColor provides contentColor,
-            LocalTextStyle provides OxygenTheme.typography.labelMedium,
+        ProvideContentStyle(
+            contentColor = contentColor,
+            textStyle = OxygenTheme.typography.titleSmall,
         ) {
             if (icon != null) {
                 Column(

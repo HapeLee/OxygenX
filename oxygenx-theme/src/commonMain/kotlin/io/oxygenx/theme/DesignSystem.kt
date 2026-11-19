@@ -4,13 +4,10 @@ package io.oxygenx.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Immutable
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.oxygenx.theme.generated.GeneratedTokens
 
 @Immutable
@@ -35,7 +32,7 @@ data class OxygenSpacing(
     val settingsSwitchInset: Dp,
     val settingsDividerHeight: Dp,
     val settingsDividerGap: Dp,
-    val bottomBarHeight: Dp,
+    val navigationBarHeight: Dp,
     val fabSize: Dp,
     val fabSmall: Dp,
     val fabLarge: Dp,
@@ -91,7 +88,6 @@ data class OxygenSpacing(
     val sheetHandleHeight: Dp,
     val sheetHandleInset: Dp,
     val searchBarHeight: Dp,
-    val drawerWidth: Dp,
     val railWidth: Dp,
     val railItemHeight: Dp,
 )
@@ -108,22 +104,9 @@ data class OxygenShapes(
     val pill: RoundedCornerShape,
 )
 
-@Immutable
-data class OxygenTypography(
-    val displayLarge: TextStyle,
-    val appbarTitle: TextStyle,
-    val dialogTitle: TextStyle,
-    val dialogAction: TextStyle,
-    val appBarSubtitle: TextStyle,
-    val titleMedium: TextStyle,
-    val listItemTitle: TextStyle,
-    val clockTime: TextStyle,
-    val inputText: TextStyle,
-    val bodyLarge: TextStyle,
-    val bodyMedium: TextStyle,
-    val labelMedium: TextStyle,
-    val caption: TextStyle,
-)
+/** 菜单独立采用经典 M3 小圆角；扩展属性保留 OxygenShapes 的原构造与 copy 签名。 */
+val OxygenShapes.cornerMenu: RoundedCornerShape
+    get() = RoundedCornerShape(GeneratedTokens.SHAPE_CORNER_MENU.dp)
 
 @Immutable
 data class OxygenIconMetrics(
@@ -172,7 +155,7 @@ internal fun defaultSpacing(): OxygenSpacing = OxygenSpacing(
     settingsSwitchInset = GeneratedTokens.SPACE_SETTINGS_SWITCH_INSET.dp,
     settingsDividerHeight = GeneratedTokens.SIZE_SETTINGS_DIVIDER_HEIGHT.dp,
     settingsDividerGap = GeneratedTokens.SPACE_SETTINGS_DIVIDER_GAP.dp,
-    bottomBarHeight = GeneratedTokens.SIZE_BOTTOM_BAR_HEIGHT.dp,
+    navigationBarHeight = GeneratedTokens.SIZE_NAVIGATION_BAR_HEIGHT.dp,
     fabSize = GeneratedTokens.SIZE_FAB.dp,
     fabSmall = GeneratedTokens.SIZE_FAB_SMALL.dp,
     fabLarge = GeneratedTokens.SIZE_FAB_LARGE.dp,
@@ -228,7 +211,6 @@ internal fun defaultSpacing(): OxygenSpacing = OxygenSpacing(
     sheetHandleHeight = GeneratedTokens.SIZE_SHEET_HANDLE_HEIGHT.dp,
     sheetHandleInset = GeneratedTokens.SPACE_SHEET_HANDLE_INSET.dp,
     searchBarHeight = GeneratedTokens.SIZE_SEARCH_BAR_HEIGHT.dp,
-    drawerWidth = GeneratedTokens.SIZE_DRAWER_WIDTH.dp,
     railWidth = GeneratedTokens.SIZE_RAIL_WIDTH.dp,
     railItemHeight = GeneratedTokens.SIZE_RAIL_ITEM_HEIGHT.dp,
 )
@@ -240,106 +222,7 @@ internal fun defaultShapes(): OxygenShapes = OxygenShapes(
     pill = RoundedCornerShape(percent = 50),
 )
 
-internal fun defaultTypography(): OxygenTypography = OxygenTypography(
-    displayLarge = textStyle(
-        size = GeneratedTokens.TYPE_DISPLAY_LARGE_SIZE,
-        lineHeight = GeneratedTokens.TYPE_DISPLAY_LARGE_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_DISPLAY_LARGE_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_DISPLAY_LARGE_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_DISPLAY_LARGE_FAMILY,
-    ),
-    clockTime = textStyle(
-        size = GeneratedTokens.TYPE_CLOCK_TIME_SIZE,
-        lineHeight = GeneratedTokens.TYPE_CLOCK_TIME_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_CLOCK_TIME_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_CLOCK_TIME_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_CLOCK_TIME_FAMILY,
-    ),
-    inputText = textStyle(
-        size = GeneratedTokens.TYPE_INPUT_TEXT_SIZE,
-        lineHeight = GeneratedTokens.TYPE_INPUT_TEXT_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_INPUT_TEXT_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_INPUT_TEXT_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_INPUT_TEXT_FAMILY,
-    ),
-    appbarTitle = textStyle(
-        size = GeneratedTokens.TYPE_APPBAR_TITLE_SIZE,
-        lineHeight = GeneratedTokens.TYPE_APPBAR_TITLE_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_APPBAR_TITLE_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_APPBAR_TITLE_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_APPBAR_TITLE_FAMILY,
-    ),
-    dialogTitle = textStyle(
-        size = GeneratedTokens.TYPE_DIALOG_TITLE_SIZE,
-        lineHeight = GeneratedTokens.TYPE_DIALOG_TITLE_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_DIALOG_TITLE_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_DIALOG_TITLE_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_DIALOG_TITLE_FAMILY,
-    ),
-    dialogAction = textStyle(
-        size = GeneratedTokens.TYPE_DIALOG_ACTION_SIZE,
-        lineHeight = GeneratedTokens.TYPE_DIALOG_ACTION_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_DIALOG_ACTION_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_DIALOG_ACTION_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_DIALOG_ACTION_FAMILY,
-    ),
-    // 顶栏副标题单行使用，行盒按字形裁到最小：不裁的话行盒上下各留一截空白，
-    // 收到收拢栏里标题与副标题之间会多出约 7dp 空隙（真机只有 16px @450dpi）。
-    appBarSubtitle = textStyle(
-        size = GeneratedTokens.TYPE_APPBAR_SUBTITLE_SIZE,
-        lineHeight = GeneratedTokens.TYPE_APPBAR_SUBTITLE_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_APPBAR_SUBTITLE_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_APPBAR_SUBTITLE_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_APPBAR_SUBTITLE_FAMILY,
-    ).copy(
-        lineHeightStyle = LineHeightStyle(
-            alignment = LineHeightStyle.Alignment.Center,
-            trim = LineHeightStyle.Trim.Both,
-        ),
-    ),
-    titleMedium = textStyle(
-        size = GeneratedTokens.TYPE_TITLE_MEDIUM_SIZE,
-        lineHeight = GeneratedTokens.TYPE_TITLE_MEDIUM_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_TITLE_MEDIUM_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_TITLE_MEDIUM_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_TITLE_MEDIUM_FAMILY,
-    ),
-    listItemTitle = textStyle(
-        size = GeneratedTokens.TYPE_LIST_ITEM_TITLE_SIZE,
-        lineHeight = GeneratedTokens.TYPE_LIST_ITEM_TITLE_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_LIST_ITEM_TITLE_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_LIST_ITEM_TITLE_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_LIST_ITEM_TITLE_FAMILY,
-    ),
-    bodyLarge = textStyle(
-        size = GeneratedTokens.TYPE_BODY_LARGE_SIZE,
-        lineHeight = GeneratedTokens.TYPE_BODY_LARGE_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_BODY_LARGE_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_BODY_LARGE_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_BODY_LARGE_FAMILY,
-    ),
-    bodyMedium = textStyle(
-        size = GeneratedTokens.TYPE_BODY_MEDIUM_SIZE,
-        lineHeight = GeneratedTokens.TYPE_BODY_MEDIUM_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_BODY_MEDIUM_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_BODY_MEDIUM_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_BODY_MEDIUM_FAMILY,
-    ),
-    labelMedium = textStyle(
-        size = GeneratedTokens.TYPE_LABEL_MEDIUM_SIZE,
-        lineHeight = GeneratedTokens.TYPE_LABEL_MEDIUM_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_LABEL_MEDIUM_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_LABEL_MEDIUM_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_LABEL_MEDIUM_FAMILY,
-    ),
-    caption = textStyle(
-        size = GeneratedTokens.TYPE_CAPTION_SIZE,
-        lineHeight = GeneratedTokens.TYPE_CAPTION_LINE_HEIGHT,
-        weight = GeneratedTokens.TYPE_CAPTION_WEIGHT,
-        letterSpacing = GeneratedTokens.TYPE_CAPTION_LETTER_SPACING,
-        family = GeneratedTokens.TYPE_CAPTION_FAMILY,
-    ),
-)
+internal fun defaultTypography(): OxygenTypography = OxygenTypography()
 
 internal fun defaultIconMetrics(): OxygenIconMetrics = OxygenIconMetrics(
     small = GeneratedTokens.ICON_SIZE_SMALL.dp,
@@ -355,20 +238,6 @@ internal fun defaultInteraction(): OxygenInteraction = OxygenInteraction(
 
 internal fun defaultLayout(): OxygenLayout = OxygenLayout(
     appBarLargeHeight = GeneratedTokens.SIZE_APPBAR_LARGE_HEIGHT.dp,
-)
-
-private fun textStyle(
-    size: Float,
-    lineHeight: Float,
-    weight: Int,
-    letterSpacing: Float,
-    family: String,
-): TextStyle = TextStyle(
-    fontFamily = fontFamilyOf(family),
-    fontSize = size.sp,
-    lineHeight = lineHeight.sp,
-    fontWeight = FontWeight(weight),
-    letterSpacing = letterSpacing.sp,
 )
 
 /** 令牌只登记通用字族；自有字体接入前统一映射到平台默认无衬线。 */

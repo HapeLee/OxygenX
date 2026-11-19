@@ -4,7 +4,7 @@ package io.oxygenx.ui.navigation
 
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.animate
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -42,7 +43,6 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
@@ -55,8 +55,9 @@ import io.oxygenx.icons.icon.OxygenIcons
 import io.oxygenx.motion.OxygenMotionDefaults
 import io.oxygenx.motion.OxygenMotionSpec
 import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
+import io.oxygenx.theme.generated.GeneratedTokens
 import io.oxygenx.ui.basic.Icon
 import io.oxygenx.ui.basic.IndicationDefaults
 import kotlin.math.roundToInt
@@ -84,7 +85,7 @@ import kotlin.math.roundToInt
  * [onNavigateBack]，可用来放「关闭」「菜单」等。内置返回按钮的起始内边距不会自动加到
  * 自定义内容上，需要跟标准栏对齐时自行加 `spacing.appBarTitleInset` 量级的左内距。
  * @param showDivider 是否画底部分割线；内容直接接在顶栏下方时保留（默认）。
- * @param actions 右侧操作区，建议使用 [TopAppBarAction]。
+ * @param actions 右侧操作区，按钮紧邻排列。建议使用 [TopAppBarAction]。
  */
 @Composable
 fun TopAppBar(
@@ -105,11 +106,11 @@ fun TopAppBar(
         {
             TopAppBarAction(
                 onClick = onNavigateBack,
-                modifier = Modifier.padding(start = backButtonStartPadding()),
             ) {
                 Icon(
                     imageVector = OxygenIcons.Back,
                     contentDescription = navigationContentDescription,
+                    size = LocalTopAppBarNavigationIconSize.current ?: OxygenTheme.icons.medium,
                     mirrorInRtl = true,
                 )
             }
@@ -131,13 +132,13 @@ fun TopAppBar(
                     )
                 }
             }
-            .padding(end = spacing.gapSmall),
+            .padding(top = CompactAppBarContentOffset * 2, end = spacing.gapSmall),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (navigation != null) {
             // 水波纹比按钮本身大，允许盖到标题上，因此导航槽要画在标题之后。
             Box(modifier = Modifier.zIndex(1f)) {
-                navigation()
+                CompositionLocalProvider(LocalTopAppBarNavigationIconSize provides CompactAppBarNavigationIconSize, content = navigation)
             }
         }
         Column(
@@ -155,16 +156,16 @@ fun TopAppBar(
                 .padding(end = spacing.gapSmall),
             verticalArrangement = Arrangement.Center,
         ) {
-            CompositionLocalProvider(
-                LocalContentColor provides colors.onSurface,
-                LocalTextStyle provides OxygenTheme.typography.appbarTitle,
+            ProvideContentStyle(
+                contentColor = colors.onSurface,
+                textStyle = OxygenTheme.typography.titleLarge.compactAppBarTitle(),
                 content = title,
             )
             val subtitleSlot = subtitle?.takeIf { showSubtitle }
             if (subtitleSlot != null) {
-                CompositionLocalProvider(
-                    LocalContentColor provides colors.onSurfaceVariant,
-                    LocalTextStyle provides OxygenTheme.typography.appBarSubtitle,
+                ProvideContentStyle(
+                    contentColor = colors.onSurfaceVariant,
+                    textStyle = OxygenTheme.typography.bodyMedium,
                 ) {
                     Box(
                         // 行盒上下余量会把副标题推离标题，上提 `space.appbar.subtitle.tighten`
@@ -178,14 +179,13 @@ fun TopAppBar(
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(spacing.gapSmall),
             content = actions,
         )
     }
 }
 
 /**
- * 大顶栏：展开时占据约三分之一屏高，标题使用 `type.display.large`，操作区贴右下；
+ * 大顶栏：展开时占据约三分之一屏高，标题使用 `type.display.medium`，操作区贴右下；
  * 随内容滚动收拢为标准单行顶栏：标题始终是同一条文本，字号按进度连续缩到
  * `type.appbar.title` 并移到收拢位，副标题在收拢前半程淡出，高度收到
  * `size.appbar.collapsed.height`。有返回键时，展开态顶部是一段与标准顶栏同高
@@ -200,7 +200,7 @@ fun TopAppBar(
  * - Status: `draft`
  *
  * @param title 标题内容槽：槽位内下发的排版是按 `collapsedFraction` 从
- *   `type.display.large` 连续插值到 `type.appbar.title` 的那一条，所以槽位里写
+ *   `type.display.medium` 连续插值到 `type.appbar.title` 的那一条，所以槽位里写
  *   `Text("设置", maxLines = 1, overflow = Ellipsis)` 就是逐像素验证过的连续过渡；
  *   需要图形标题时槽位接受任意内容，但不再有字号插值。
  * @param modifier 外部 Modifier。
@@ -211,9 +211,9 @@ fun TopAppBar(
  * @param onNavigateBack 传入非空时显示内置返回按钮。
  * @param navigationContentDescription 返回按钮的无障碍描述。
  * @param navigationIcon 自定义导航图标（M3 `navigationIcon` 槽口径），非空时优先于
- * [onNavigateBack]；起始内边距与内置返回按钮一致。
+ * [onNavigateBack]；图标可读取 [LocalTopAppBarNavigationIconSize]。
  * @param state 收拢进度来源；为 `null` 时固定展开。
- * @param actions 操作区，展开态贴右下、收拢态贴右中。
+ * @param actions 操作区，展开态贴右下、收拢态贴右中；按钮紧邻排列。
  */
 @Composable
 fun LargeTopAppBar(
@@ -234,16 +234,17 @@ fun LargeTopAppBar(
     val typography = OxygenTheme.typography
     val density = LocalDensity.current
     val fraction = state?.collapsedFraction ?: 0f
+    val navigationIconSize = appBarNavigationIconSize(fraction)
     // 导航槽只占一个子项：内置返回键与自定义图标走同一条测量/摆放路径。
     val navigation = navigationIcon ?: if (onNavigateBack != null) {
         {
             TopAppBarAction(
                 onClick = onNavigateBack,
-                modifier = Modifier.padding(start = backButtonStartPadding()),
             ) {
                 Icon(
                     imageVector = OxygenIcons.Back,
                     contentDescription = navigationContentDescription,
+                    size = LocalTopAppBarNavigationIconSize.current ?: OxygenTheme.icons.medium,
                     mirrorInRtl = true,
                 )
             }
@@ -268,16 +269,16 @@ fun LargeTopAppBar(
             SideEffect { state.collapseRangePx = rangePx }
         }
 
-        // 标题只有一条：按收拢进度从 display.large 连插值到标准顶栏标题，
+        // 标题只有一条：按收拢进度从 displayMedium 连插值到标准顶栏标题，
         // 位置同步从展开位挪到收拢位，全程不交叉淡入，两态之间是同一个字形在缩小。
         val titleStyle = lerpAppBarTitleStyle(
-            expanded = typography.displayLarge.copy(color = colors.onSurface),
-            collapsed = typography.appbarTitle.copy(color = colors.onSurface),
+            expanded = typography.displayMedium.copy(color = colors.onSurface),
+            collapsed = typography.titleLarge.compactAppBarTitle().copy(color = colors.onSurface),
             fraction = fraction,
         )
         // [showSubtitle] 为 false 时整段不画，后续索引与居中计算都按「没有副标题」走。
         val subtitleSlot = subtitle?.takeIf { showSubtitle }
-        val subtitleStyle = typography.appBarSubtitle.copy(color = colors.onSurfaceVariant)
+        val subtitleStyle = typography.bodyMedium.copy(color = colors.onSurfaceVariant)
         // 副标题跟着标题下沿走：默认在收拢前半程淡出，避免和标题缩放抢视觉；
         // [hideSubtitleOnCollapse] 为 false 时整段保留，与标题一起在收拢栏里整体居中。
         val subtitleAlpha = if (hideSubtitleOnCollapse) {
@@ -289,7 +290,7 @@ fun LargeTopAppBar(
         // 收拢态标题起点与标准顶栏对齐：有返回键时紧贴导航图标之后，
         // 没有时从 appBarTitleInset 起。
         val collapsedStartInset = if (navigation != null) {
-            backButtonStartPadding() + spacing.touchTargetMin
+            spacing.touchTargetMin
         } else {
             spacing.appBarTitleInset
         }
@@ -318,27 +319,26 @@ fun LargeTopAppBar(
                 },
             content = {
                 // 水平与垂直位置都由下面的 Layout 负责，这里不能再加内边距，否则会重复偏移。
-                CompositionLocalProvider(
-                    LocalContentColor provides colors.onSurface,
-                    LocalTextStyle provides titleStyle,
+                ProvideContentStyle(
+                    contentColor = colors.onSurface,
+                    textStyle = titleStyle,
                     content = title,
                 )
                 if (subtitleSlot != null) {
                     Box(modifier = Modifier.graphicsLayer { alpha = subtitleAlpha }) {
-                        CompositionLocalProvider(
-                            LocalContentColor provides colors.onSurfaceVariant,
-                            LocalTextStyle provides subtitleStyle,
+                        ProvideContentStyle(
+                            contentColor = colors.onSurfaceVariant,
+                            textStyle = subtitleStyle,
                             content = subtitleSlot,
                         )
                     }
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(spacing.gapSmall),
                     content = actions,
                 )
                 if (navigation != null) {
-                    navigation()
+                    CompositionLocalProvider(LocalTopAppBarNavigationIconSize provides navigationIconSize, content = navigation)
                 }
             },
         ) { measurables, constraints ->
@@ -381,7 +381,9 @@ fun LargeTopAppBar(
 
             // 导航图标属于栏头，始终停在标准顶栏（74dp）的垂直中线上，
             // 不随大顶栏的展开高度上下浮动。
-            val backTopPx = (with(density) { spacing.appBarHeight.toPx() } - (backPlaceable?.height ?: 0)) / 2f
+            val compactOffsetPx = with(density) { CompactAppBarContentOffset.toPx() }
+            val backTopPx = (with(density) { spacing.appBarHeight.toPx() } - (backPlaceable?.height ?: 0)) / 2f +
+                compactOffsetPx * fraction
             // 收拢态把「标题 + 副标题」当成一整块居中，而不是只让标题居中（否则副标题会把
             // 视觉重心拉低）。副标题若在收拢时淡出，它的高度按透明度折算，避免文字已经看不见
             // 还把标题顶偏。
@@ -396,7 +398,7 @@ fun LargeTopAppBar(
                 // 展开态按设计内边距，收拢态在单行栏里整体居中，中间连续插值。
                 val titleTop = lerp(
                     expandedTextTopPx,
-                    (heightPx - collapsedGroupHeightPx) / 2f,
+                    (heightPx - collapsedGroupHeightPx) / 2f + compactOffsetPx,
                     fraction,
                 )
                 titlePlaceable.place(startPx.roundToInt(), titleTop.roundToInt())
@@ -407,7 +409,7 @@ fun LargeTopAppBar(
 
                 val actionsTop = lerp(
                     (heightPx - expandedBottomInsetPx - actionsPlaceable.height).coerceAtLeast(0f),
-                    (heightPx - actionsPlaceable.height) / 2f,
+                    (heightPx - actionsPlaceable.height) / 2f + compactOffsetPx,
                     fraction,
                 )
                 actionsPlaceable.place(
@@ -514,6 +516,25 @@ fun TopAppBarAction(
     enabled: Boolean = true,
     contentColor: Color = Color.Unspecified,
     content: @Composable () -> Unit,
+) = TopAppBarAction(
+    onClick = onClick,
+    onLongClick = null,
+    modifier = modifier,
+    enabled = enabled,
+    contentColor = contentColor,
+    content = content,
+)
+
+/** 带可选长按的顶栏操作按钮，触摸目标与水波纹沿用原生顶栏样式。 */
+@Composable
+fun TopAppBarAction(
+    onClick: () -> Unit,
+    onLongClick: (() -> Unit)?,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    contentColor: Color = Color.Unspecified,
+    onLongClickLabel: String? = null,
+    content: @Composable () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val colors = OxygenTheme.colorScheme
@@ -530,12 +551,14 @@ fun TopAppBarAction(
         Box(
             modifier = modifier
                 .size(OxygenTheme.spacing.touchTargetMin)
-                .clickable(
+                .combinedClickable(
                     interactionSource = interactionSource,
                     indication = ripple,
                     enabled = enabled,
                     role = Role.Button,
                     onClick = onClick,
+                    onLongClick = onLongClick,
+                    onLongClickLabel = onLongClickLabel,
                 ),
             contentAlignment = Alignment.Center,
         ) {
@@ -579,38 +602,23 @@ internal fun largeTopBarMetrics(headerHeight: Dp, titleGap: Dp): LargeTopBarMetr
     )
 }
 
-/** 让 24dp 图标在视觉上左对齐到 gutter 所需的按钮起始内缩；横划顶栏复用同一口径。 */
-@Composable
-internal fun backButtonStartPadding(): Dp {
-    val spacing = OxygenTheme.spacing
-    val glyphInset = (spacing.touchTargetMin - OxygenTheme.icons.medium) / 2f
-    return (spacing.gutter - glyphInset).coerceAtLeast(0.dp)
-}
+private val CompactAppBarContentOffset = GeneratedTokens.SPACE_APPBAR_COMPACT_CONTENT_OFFSET.dp
+private val CompactAppBarNavigationIconSize = GeneratedTokens.ICON_SIZE_APPBAR_NAVIGATION_COMPACT.dp
 
-/**
- * 大顶栏标题的两个样式之间插值：字号、行高、字距连续变化，字重由平台取最接近的一档。
- *
- * 两个样式都来自排版令牌，`fontSize` / `lineHeight` / `letterSpacing` 一律是 sp，
- * 因此可以直接按数值插值；这样收拢到标准顶栏时标题是同一个字形在缩小移位，
- * 而不是两条文本交叉淡入。
- */
+/** 顶栏导航槽的默认图标画布尺寸；槽位之外为 null。触摸目标由按钮组件决定。 */
+val LocalTopAppBarNavigationIconSize = compositionLocalOf<Dp?> { null }
+
+@Composable
+internal fun appBarNavigationIconSize(fraction: Float): Dp = lerp(OxygenTheme.icons.medium, CompactAppBarNavigationIconSize, fraction.coerceIn(0f, 1f))
+
+internal fun TextStyle.compactAppBarTitle(): TextStyle = copy(
+    fontSize = GeneratedTokens.TYPE_APPBAR_TITLE_SIZE.sp,
+    lineHeight = GeneratedTokens.TYPE_APPBAR_TITLE_LINE_HEIGHT.sp,
+)
+
+/** 两个主题角色之间按 Compose TextStyle 规则插值，端点保留各自完整的字体属性。 */
 internal fun lerpAppBarTitleStyle(
     expanded: TextStyle,
     collapsed: TextStyle,
     fraction: Float,
-): TextStyle = expanded.copy(
-    fontSize = lerp(expanded.fontSize.value, collapsed.fontSize.value, fraction).sp,
-    lineHeight = lerp(expanded.lineHeight.value, collapsed.lineHeight.value, fraction).sp,
-    letterSpacing = lerp(
-        expanded.letterSpacing.value,
-        collapsed.letterSpacing.value,
-        fraction,
-    ).sp,
-    fontWeight = FontWeight(
-        lerp(
-            (expanded.fontWeight ?: FontWeight.Normal).weight,
-            (collapsed.fontWeight ?: FontWeight.Normal).weight,
-            fraction,
-        ),
-    ),
-)
+): TextStyle = androidx.compose.ui.text.lerp(expanded, collapsed, fraction)

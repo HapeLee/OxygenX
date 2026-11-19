@@ -2,7 +2,7 @@
 
 一次「完成」不是写完一个 `.kt` 文件。组件、令牌、动效、测试、示例、文档、基线是一整批交付物。
 
-> **阶段说明**：门禁 1–4 已落地并跑通（含 Android `assembleDebug` 与真机 `installDebug`）；CI 自动化、catalog 逐帧对比、性能基准（5–6）、golden 与文档站（7）尚未建立。在对应模块/脚本落地前，不得把未执行项写成通过。
+> **阶段说明**：门禁 1–4 已落地；新增 Desktop UI 回归、Slider / TextField / Text-Icon / Material Symbols / Dropdown 共十二张 golden、十五对双语使用文档与 `tools/check_docs.py`。Windows CI 与手动签名发布配置已编写，远端运行尚未验证。Android catalog 启动采集与 Macrobenchmark 入口已落地，真机结果另记；catalog 逐帧对比、组件帧率 / 重组基准、全组件 golden 与文档站尚未建立，不得把未执行项写成通过。
 
 ## 1. 实现状态
 

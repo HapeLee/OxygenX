@@ -175,14 +175,18 @@ tokens:
 - 需要真实 `Shape` 值的地方（裁剪、Surface 参数）用形状令牌；需要 `Modifier` 级绘制的场合用统一封装，禁止各组件自己写 `drawRoundRect`。
 - 栅格单位、间距、最小内边距全部来自 `space.*`；组件不得写死数值。
 - 触摸目标不小于 48dp（无障碍下限，非复刻值）；视觉尺寸可以小于触摸目标，用 `Modifier` 扩展点击区域。
-- **层级不用阴影表达**：容器类组件是「容器底色 + 一圈细边框」，边框颜色 `color.outline.variant`、厚度 `size.divider.thickness`，与顶栏分割线同一套视觉；卡片的原 `elevation.card`（唯一一个 `elevation.` 令牌）因此删除，`OxygenTheme.elevation` 整个分组不再存在。模糊半径、下拉阻尼等来自 `effect.*`；按压反馈只有水波纹，没有按压缩放（原 `effect.press.scale` 已删）。平台不支持时按 [component-api.md](./component-api.md) 的 capability 规则降级。
+- **普通容器层级不用阴影表达**：容器类组件是「容器底色 + 一圈细边框」，边框颜色 `color.outline.variant`、厚度 `size.divider.thickness`，与顶栏分割线同一套视觉；卡片的原 `elevation.card`（唯一一个 `elevation.` 令牌）因此删除，`OxygenTheme.elevation` 整个分组不再存在。模糊半径、下拉阻尼等来自 `effect.*`；按压反馈只有水波纹，没有按压缩放（原 `effect.press.scale` 已删）。平台不支持时按 [component-api.md](./component-api.md) 的 capability 规则降级。
+
+2026-11-18 用户指定的菜单样式例外：DropdownMenu 参考经典 M3，单独使用 `shape.corner.menu`（4dp）和 `elevation.menu`（3dp），无卡片描边；Card / Surface 的默认值不变。其余菜单尺寸与来源见 `docs/spec/dropdown-m3-plan.md`，形状通过 `OxygenTheme.shapes.cornerMenu` 扩展属性读取以保留原 Shapes 构造签名。
 
 ## 7. 图标
 
-- 图标一律 `ImageVector`，一个图标一个文件，按用途分两个模块：
-  - `oxygenx-icons/`：精选图标（Material Symbols **Rounded**，`wght=300`），只放组件自身固定需要的少量图标，经 `OxygenIcons.X` 暴露。
-  - `oxygenx-icons-material/`：常用图标全集（Material Symbols **Outlined**，`wght=300`，按使用量取前 100），经 `MaterialSymbols.X` 暴露，与前者不共享符号名，消费方按需依赖。
-  - 两者都是 Apache-2.0 的 Google Material Symbols，生成文件自带来源 URL 与版权头；不搬运专有图标资源。两套样式不同（Rounded / Outlined），同一页面不要混用。
+- 图标统一采用 Google Material Symbols **Outlined**，`opsz=24,wght=300,FILL=0,GRAD=0`，Apache-2.0；一符号一个 `ImageVector` 文件。
+  - `oxygenx-icons/`：14 个组件核心图标，保留 `OxygenIcons.X` 兼容名称与轻量依赖。
+  - `oxygenx-icons-material/`：既有 100 个 + 14 个核心符号 + 14 个应用缺口，共 128 个，按官方符号 PascalCase 经 `MaterialSymbols.X` 暴露；依赖并重导出核心矢量，避免重复资产。
+  - 旧核心 Rounded 造型统一为 Outlined，两个入口可混用且返回同一对象；不搬运厂商素材。
+  - `design/icons/material-symbols.json` 登记名称、来源哈希和方向性；`tools/material_symbols.py --fetch` 联网再生成，`--check` 离线校验。上游有变必须审查后显式 `--update-lock`。
+  - 方向性矢量声明 `autoMirror`；`Icon` 与显式 `mirrorInRtl` 协作避免双重镜像。上下首图标不镜像。
 - 尺寸与默认着色取自 `icon.*` 与颜色令牌；方向性图标必须支持 RTL 镜像（见 component-api.md）。生成的是填充轮廓路径，没有描边宽度这回事。
 - 图标文件（`**/icon/**/*.kt`、`**/generated/**/*.kt`）不参与 Spotless 格式化；其余约定（license header、命名）照常适用。
 
@@ -207,3 +211,9 @@ tokens:
 - 把 `E0/E1` 数值标为 `verified`，或把公开宣传术语当作数值来源。
 - 只改亮色或只改暗色；新增语义色却缺少状态层定义。
 - 引入无法确认许可的字体、图标或图片。
+
+## 2026-11-18 排版决策
+
+按用户要求，字体默认标准改为 M3 1.5.0-beta01 的 15 个基础角色；旧厂商测量值保留在历史记录，不再作为这些字体的默认值。类型中保留旧字段与二进制桥，新增 M3 命名工厂和 getter；完整迁移与源码映射见 material-type-menu-motion-plan.md。组件不再把 labelMedium 当成 14sp 按钮文字；对应角色为 labelLarge。
+
+顶栏排版：展开态使用 M3 displayMedium（45sp / 52sp），紧凑态按 type.appbar.title 校准字号与行高为 18sp / 24sp，字体和字重取主题的 titleLarge。尺寸证据见 le2100-appbar-calibration.md。

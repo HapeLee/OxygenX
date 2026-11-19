@@ -74,7 +74,7 @@ data class OxygenColorScheme(
     val switchTrackDisabled: Color,
     val switchThumbDisabled: Color,
     val controlDot: Color,
-    /** 模态遮罩：底部面板 / 侧边抽屉自绘暗层时用它（Dialog 的遮罩由平台提供）。 */
+    /** 模态遮罩：底部面板这类自绘暗层用它（Dialog 的遮罩由平台提供）。 */
     val scrim: Color,
     val isDark: Boolean,
 )

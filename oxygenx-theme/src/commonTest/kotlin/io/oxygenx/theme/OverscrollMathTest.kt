@@ -5,6 +5,7 @@ package io.oxygenx.theme
 import androidx.compose.animation.core.spring
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import kotlinx.coroutines.test.runTest
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -82,6 +83,18 @@ class OverscrollMathTest {
     }
 
     @Test
+    fun fractionalRemaindersDoNotAccumulateInTheMiddle() {
+        val effect = effect()
+        repeat(30) {
+            for (source in listOf(NestedScrollSource.UserInput, NestedScrollSource.SideEffect)) {
+                val consumed = effect.applyToScroll(Offset(0f, -20f), source) { Offset(0f, -19.75f) }
+                assertEquals(-19.75f, consumed.y)
+                assertFalse(effect.isInProgress)
+            }
+        }
+    }
+
+    @Test
     fun leftoversBecomeOverscroll() {
         // 内容只吃掉一半，剩下的一半原样算作被过冲消费（消耗量守恒）。
         val effect = effect()
@@ -109,35 +122,29 @@ class OverscrollMathTest {
     }
 
     @Test
-    fun inertiaStopsConsumingNearSaturation() {
-        // 惯性把位移推到上限附近后不再消费，避免「顶到极点后停顿一下」。
+    fun onlyActiveFlingCanBuildInertialOverscrollAndStopsNearSaturation() = runTest {
         val effect = effect(maxPx = 100f, dragScale = 1f)
-        effect.scroll(Offset(0f, 400f))
-        val consumed = effect.applyToScroll(Offset(0f, 50f), NestedScrollSource.SideEffect) {
+        val delta = Offset(0f, 50f)
+        assertEquals(Offset.Zero, effect.applyToScroll(delta, NestedScrollSource.SideEffect) { Offset.Zero })
+        assertFalse(effect.isInProgress)
+        effect.applyToFling(androidx.compose.ui.unit.Velocity(0f, 1000f)) {
+            assertEquals(delta, effect.applyToScroll(delta, NestedScrollSource.SideEffect) { Offset.Zero })
+            assertTrue(effect.isInProgress)
+            assertEquals(Offset.Zero, effect.applyToScroll(Offset(0f, 250f), NestedScrollSource.SideEffect) { Offset.Zero })
+            it
+        }
+    }
+
+    @Test
+    fun horizontalOverscrollIsLeftToParent() {
+        // 只做纵向过冲：横向位移既不吸收也不记消费，原样留给父级容器（Pager 翻页等）。
+        val effect = effect()
+        val consumed = effect.applyToScroll(Offset(80f, 0f), NestedScrollSource.UserInput) {
             Offset.Zero
         }
         assertEquals(Offset.Zero, consumed)
-    }
-
-    @Test
-    fun inertiaStillConsumesBelowSaturation() {
-        val effect = effect(maxPx = 100f, dragScale = 1f)
-        effect.scroll(Offset(0f, 100f))
-        val consumed = effect.applyToScroll(Offset(0f, 5f), NestedScrollSource.SideEffect) {
-            Offset.Zero
-        }
-        assertEquals(Offset(0f, 5f), consumed)
-    }
-
-    @Test
-    fun axesAreIndependent() {
-        // 横向越界只动 X，不影响 Y（HorizontalPager / LazyRow 用得到）。
-        val effect = effect()
-        effect.scroll(Offset(80f, 0f))
-        assertTrue(effect.offsetX > 0f)
         assertEquals(0f, effect.offsetY)
-        // touchRange = 3 × maxPx = 600，x = 80 / 600 ≈ 0.133，曲线给出 ≈ 69.8。
-        assertEquals(69.8f, effect.offsetX, absoluteTolerance = 0.5f)
+        assertFalse(effect.isInProgress)
     }
 
     @Test

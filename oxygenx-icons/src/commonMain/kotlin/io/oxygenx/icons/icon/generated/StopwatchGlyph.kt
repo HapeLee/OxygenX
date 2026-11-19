@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/timer.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/timer.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -43,29 +43,17 @@ internal val StopwatchGlyph: ImageVector
             strokeLineMiter = 1f,
             pathFillType = PathFillType.Companion.NonZero,
           ) {
-            moveTo(9.94f, 2.75f)
-            quadTo(9.62f, 2.75f, 9.41f, 2.53f)
-            reflectiveQuadTo(9.19f, 2f)
-            reflectiveQuadTo(9.41f, 1.47f)
-            reflectiveQuadTo(9.94f, 1.25f)
-            horizontalLineToRelative(4.12f)
-            quadToRelative(0.32f, 0f, 0.53f, 0.22f)
-            reflectiveQuadTo(14.81f, 2f)
-            reflectiveQuadTo(14.59f, 2.53f)
-            reflectiveQuadTo(14.06f, 2.75f)
-            horizontalLineTo(9.94f)
+            moveTo(9.19f, 2.75f)
+            verticalLineTo(1.25f)
+            horizontalLineToRelative(5.62f)
+            verticalLineToRelative(1.5f)
+            horizontalLineTo(9.19f)
             close()
-            moveToRelative(2.59f, 10.84f)
-            quadToRelative(0.22f, -0.22f, 0.22f, -0.53f)
-            verticalLineTo(8.94f)
-            quadToRelative(0f, -0.32f, -0.22f, -0.53f)
-            reflectiveQuadTo(12f, 8.19f)
-            reflectiveQuadTo(11.47f, 8.41f)
-            reflectiveQuadTo(11.25f, 8.94f)
-            verticalLineToRelative(4.12f)
-            quadToRelative(0f, 0.32f, 0.22f, 0.53f)
-            reflectiveQuadTo(12f, 13.81f)
-            reflectiveQuadToRelative(0.53f, -0.22f)
+            moveToRelative(2.06f, 11.06f)
+            horizontalLineToRelative(1.5f)
+            verticalLineTo(8.19f)
+            horizontalLineToRelative(-1.5f)
+            verticalLineToRelative(5.62f)
             close()
             moveTo(8.7f, 20.83f)
             quadTo(7.15f, 20.16f, 6f, 19f)
@@ -77,11 +65,8 @@ internal val StopwatchGlyph: ImageVector
             reflectiveQuadTo(12f, 4.5f)
             quadToRelative(1.5f, 0f, 2.89f, 0.51f)
             reflectiveQuadToRelative(2.58f, 1.46f)
-            lineTo(18.2f, 5.75f)
-            quadTo(18.4f, 5.54f, 18.72f, 5.54f)
-            reflectiveQuadToRelative(0.53f, 0.21f)
-            reflectiveQuadToRelative(0.22f, 0.53f)
-            reflectiveQuadTo(19.25f, 6.8f)
+            lineTo(18.72f, 5.22f)
+            lineToRelative(1.05f, 1.05f)
             lineTo(18.53f, 7.52f)
             quadToRelative(0.95f, 1.19f, 1.46f, 2.58f)
             reflectiveQuadTo(20.5f, 13f)

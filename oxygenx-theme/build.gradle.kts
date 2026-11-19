@@ -15,14 +15,15 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":oxygenx-core"))
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.foundation)
+            api(libs.compose.runtime)
+            api(libs.compose.ui)
+            api(libs.compose.foundation)
             // 过冲回弹的弹簧规格（与 MOT-SCROLL-001 同源 token）。
             implementation(libs.compose.animation)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

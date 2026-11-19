@@ -7,15 +7,18 @@ import androidx.compose.animation.core.animate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -24,11 +27,17 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
+import androidx.compose.ui.unit.dp
 import io.oxygenx.motion.OxygenLoopSpec
 import io.oxygenx.motion.OxygenMotionSpec
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.ui.navigation.TopAppBarState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
+internal val LocalRefreshTopAppBarState = staticCompositionLocalOf<TopAppBarState?> { null }
 
 /**
  * 下拉刷新容器：内容整体跟手下移，顶部冒出一个细描边圆环；松手时超过
@@ -63,6 +72,37 @@ fun PullToRefreshBox(
     motion: OxygenMotionSpec = ProgressDefaults.RefreshMotion,
     loop: OxygenLoopSpec = ProgressDefaults.CircularLoop,
     content: @Composable BoxScope.() -> Unit,
+) = PullToRefreshBox(
+    isRefreshing = isRefreshing,
+    onRefresh = onRefresh,
+    canRefresh = { true },
+    modifier = modifier,
+    enabled = enabled,
+    colors = colors,
+    motion = motion,
+    loop = loop,
+    content = content,
+)
+
+/**
+ * [PullToRefreshBox] with a live gesture gate for a collapsing app bar or another scroll parent.
+ *
+ * @param canRefresh Read at scroll dispatch and release. When false, downward input is passed to
+ *   the parent. For a large app bar, use `{ topBarState.collapsedFraction == 0f }`.
+ * @param indicatorTopPadding Offset for the indicator when content sits under an overlapping bar.
+ */
+@Composable
+fun PullToRefreshBox(
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
+    canRefresh: () -> Boolean,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    indicatorTopPadding: Dp = 0.dp,
+    colors: ProgressColors = ProgressDefaults.colors(),
+    motion: OxygenMotionSpec = ProgressDefaults.RefreshMotion,
+    loop: OxygenLoopSpec = ProgressDefaults.CircularLoop,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val spacing = OxygenTheme.spacing
     val density = LocalDensity.current
@@ -78,61 +118,75 @@ fun PullToRefreshBox(
     // 只有 graphicsLayer 与 derivedStateOf 读它，所以逐帧位移不会引起重组。
     var distance by remember { mutableFloatStateOf(0f) }
     val indicatorVisible by remember { derivedStateOf { distance > 0f } }
+    var dragDistance by remember { mutableFloatStateOf(0f) }
+    var settleJob by remember { mutableStateOf<Job?>(null) }
     val refreshingState = rememberUpdatedState(isRefreshing)
+    val enabledState = rememberUpdatedState(enabled)
+    val canRefreshState = rememberUpdatedState(canRefresh)
+    val topBarState = rememberUpdatedState(LocalRefreshTopAppBarState.current)
     val onRefreshState = rememberUpdatedState(onRefresh)
-
-    fun specFor(target: Float): AnimationSpec<Float> = if (target >= distance) motion.enter else motion.exit
+    val motionState = rememberUpdatedState(motion)
 
     suspend fun settle(target: Float) {
-        animate(initialValue = distance, targetValue = target, animationSpec = specFor(target)) { value, _ ->
-            distance = value
+        if (target == distance) return
+        val spec = motionState.value
+        val animation: AnimationSpec<Float> = if (target >= distance) spec.enter else spec.exit
+        animate(initialValue = distance, targetValue = target, animationSpec = animation) { value, _ ->
+            distance = value.coerceAtLeast(0f)
         }
     }
 
-    val connection = remember(thresholdPx, maxPx, dragScale, enabled) {
+    fun settleAfterRelease(refresh: Boolean) {
+        settleJob?.cancel()
+        settleJob = scope.launch {
+            if (refresh || refreshingState.value) settle(thresholdPx)
+            if (!refreshingState.value) settle(0f)
+        }
+    }
+
+    val connection = remember(thresholdPx, maxPx, dragScale) {
         object : NestedScrollConnection {
+            private fun canPull(): Boolean = enabledState.value && !refreshingState.value &&
+                (topBarState.value?.collapsedFraction ?: 0f) <= 0f && canRefreshState.value()
+
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                // 已经拉出一段且手指开始上滑：先把这段下拉量收回去，别让内容先滚。
-                if (available.y < 0f && distance > 0f) {
-                    val next = (distance + available.y).coerceAtLeast(0f)
-                    val consumed = next - distance
-                    distance = next
-                    return Offset(0f, consumed)
+                if (source != NestedScrollSource.UserInput || dragDistance <= 0f || available.y >= 0f) {
+                    return Offset.Zero
                 }
-                return Offset.Zero
+                val next = (dragDistance + available.y * dragScale).coerceAtLeast(0f)
+                val consumed = (next - dragDistance) / dragScale
+                dragDistance = next
+                distance = next
+                return Offset(0f, consumed)
             }
 
             override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
-                // 内容已经到顶、还有剩余下拉量，才轮到刷新容器吸收。
-                if (!enabled || refreshingState.value || available.y <= 0f) return Offset.Zero
-                val next = (distance + available.y * dragScale).coerceAtMost(maxPx)
-                val gained = next - distance
-                distance = next
-                // 返回的是「被消费的原始位移」，因此要除以阻尼比例还原。
-                return Offset(0f, if (dragScale > 0f) gained / dragScale else 0f)
+                // 惯性和程序滚动不能增加刷新距离。外层顶栏未展开时，让它先消费下拉。
+                if (source != NestedScrollSource.UserInput || !canPull() || available.y <= 0f || dragScale <= 0f) {
+                    return Offset.Zero
+                }
+                settleJob?.cancel()
+                dragDistance = (dragDistance + available.y * dragScale).coerceAtMost(maxPx)
+                distance = dragDistance
+                // 到达拉伸上限后本手势仍由刷新接管，避免再叠一层列表过冲。
+                return Offset(0f, available.y)
             }
 
-            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-                if (distance <= 0f) return Velocity.Zero
-                if (!refreshingState.value && distance >= thresholdPx) {
-                    settle(thresholdPx)
-                    onRefreshState.value()
-                } else {
-                    settle(if (refreshingState.value) thresholdPx else 0f)
-                }
-                // 下拉这一段的速度全部吃掉，避免交给内容继续 fling。
-                return available
+            override suspend fun onPreFling(available: Velocity): Velocity {
+                if (dragDistance <= 0f) return Velocity.Zero
+                // 松手就判定并清空本次下拉，避免 post-fling 或收尾动画二次触发。
+                val refresh = dragDistance >= thresholdPx && canPull()
+                dragDistance = 0f
+                if (refresh) onRefreshState.value()
+                settleAfterRelease(refresh)
+                return Velocity(0f, available.y.coerceAtLeast(0f))
             }
         }
     }
 
-    // 宿主翻转 isRefreshing 时把指示器送到位 / 收回；下拉中途翻转也不会跳变。
-    LaunchedEffect(isRefreshing) {
-        if (isRefreshing) {
-            if (distance < thresholdPx) settle(thresholdPx)
-        } else if (distance > 0f) {
-            settle(0f)
-        }
+    LaunchedEffect(isRefreshing, enabled, thresholdPx) {
+        if (isRefreshing || !enabled) dragDistance = 0f
+        if (isRefreshing || dragDistance == 0f) settleAfterRelease(refresh = false)
     }
 
     Box(modifier = modifier.nestedScroll(connection)) {
@@ -147,6 +201,7 @@ fun PullToRefreshBox(
             CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
+                    .offset(y = indicatorTopPadding)
                     .graphicsLayer {
                         val pull = (distance / thresholdPx).coerceIn(0f, 1f)
                         translationY = distance - indicatorSlotPx

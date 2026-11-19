@@ -75,8 +75,7 @@ fun Card(
     }
 
     // 卡片是容器：把内容色下发下去，卡内的 Text / Icon 自动跟随底色。
-    val mapped = OxygenTheme.colorScheme.contentColorFor(colors.containerColor)
-    val contentColor = if (mapped.isSpecified) mapped else OxygenTheme.colorScheme.onSurface
+    val contentColor = contentColorFor(colors.containerColor)
     CompositionLocalProvider(LocalContentColor provides contentColor) {
         Column(
             modifier = modifier

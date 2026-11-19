@@ -4,7 +4,7 @@
 //
 // Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/arrow_back.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
 // Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
-// Do not edit by hand; re-download from the URL above.
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.material.generated
 
@@ -30,6 +30,7 @@ internal val ArrowBackGlyph: ImageVector
           defaultHeight = 24.dp,
           viewportWidth = 24f,
           viewportHeight = 24f,
+          autoMirror = true,
         )
         .apply {
           path(

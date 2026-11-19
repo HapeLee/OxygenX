@@ -51,7 +51,7 @@ private val ICON_LETTER_GROUPS: List<IconLetterGroup> by lazy {
 /**
  * 图标库页：索引页第 2 页的内容（顶栏与横划容器由 `CatalogPage` 提供，这里只管网格）。
  *
- * 这一页是 `:oxygenx-icons-material` 的可视验收面：100 个图标全部由渲染接口生成，
+ * 这一页是 `:oxygenx-icons-material` 的可视验收面：全部图标均由渲染接口生成，
  * 只有铺出来才能看出某个 glyph 有没有画错、字号 / 细度是否一致。
  */
 @Composable
@@ -71,8 +71,8 @@ fun IconGalleryPage() {
                 DemoCard {
                     BasicText(
                         text = "常用 Material Symbols ${MaterialSymbols.All.size} 个：Outlined 样式、" +
-                            "wght=300，按字体官网「使用人数」取前 100，已排除 OxygenIcons 里的 14 个" +
-                            "精选符号。网格里写的就是官方符号名，代码里写成 MaterialSymbols.PascalCase。",
+                            "wght=300，包含原有 100 个、复用 OxygenIcons 的 14 个核心符号和应用增补。" +
+                            "全部统一 Outlined；网格是官方符号名，代码用 MaterialSymbols.PascalCase。",
                         style = OxygenTheme.typography.bodyMedium.copy(
                             color = OxygenTheme.colorScheme.onSurfaceVariant,
                         ),

@@ -83,6 +83,16 @@ tokens:
     status: draft
     description: 大顶栏收拢/展开的收尾动效规格占位
 
+  - id: spec.input.focus
+    kind: motionSpec
+    enterSpec: spring.snappy
+    exitSpec: spring.snappy
+    baseline: OxygenX input focus contract / 2026-11-17
+    source: catalog/reference/README.md
+    evidence: E0
+    status: draft
+    description: TODO(E0) 输入框聚焦指示线粗细与颜色过渡，复用状态弹簧，尚未逐帧校准
+
   - id: spec.dialog.slide
     kind: motionSpec
     enterSpec: spring.dialog
@@ -126,3 +136,41 @@ tokens:
     evidence: E0
     status: draft
     description: 圆环不确定态旋转一圈的时长（对齐 M3 / MDC 的 1332ms 旋转周期；弧长在同一周期内往返伸缩）
+  - id: spring.menu.spatial
+    kind: spring
+    stiffness: 1400
+    dampingRatio: 0.9
+    visibilityThreshold: 0.001
+    baseline: Material3 1.5.0-beta01 StandardMotionTokens（归一化阈值为项目选择）
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E0
+    status: draft
+    description: 菜单 spatial 运动，支持反向接续
+  - id: spec.menu.spatial
+    kind: motionSpec
+    enterSpec: spring.menu.spatial
+    exitSpec: spring.menu.spatial
+    baseline: Material3 1.5.0-beta01 菜单动效类比
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E0
+    status: draft
+    description: 菜单 spatial 进出场
+  - id: spring.menu.effects
+    kind: spring
+    stiffness: 3800
+    dampingRatio: 1.0
+    visibilityThreshold: 0.001
+    baseline: Material3 1.5.0-beta01 StandardMotionTokens（归一化阈值为项目选择）
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E0
+    status: draft
+    description: 菜单 effects 运动，支持反向接续
+  - id: spec.menu.effects
+    kind: motionSpec
+    enterSpec: spring.menu.effects
+    exitSpec: spring.menu.effects
+    baseline: Material3 1.5.0-beta01 菜单动效类比
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E0
+    status: draft
+    description: 菜单 effects 进出场

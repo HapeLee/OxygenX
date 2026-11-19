@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -24,9 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
-import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 
 /**
  * 填充式按钮：强调色底 + 反色文字；触摸态只有 M3 水波纹，没有按压缩放。
@@ -82,9 +80,9 @@ fun Button(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CompositionLocalProvider(
-            LocalContentColor provides colors.resolveContentColor(enabled),
-            LocalTextStyle provides OxygenTheme.typography.labelMedium,
+        ProvideContentStyle(
+            contentColor = colors.resolveContentColor(enabled),
+            textStyle = OxygenTheme.typography.labelLarge,
         ) {
             content()
         }

@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 package io.oxygenx.catalog.scaffold
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,21 +12,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import io.oxygenx.catalog.ui.DemoCard
 import io.oxygenx.catalog.ui.catalogPageSpacing
 import io.oxygenx.icons.icon.OxygenIcons
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.ui.basic.Button
 import io.oxygenx.ui.basic.FloatingActionButton
 import io.oxygenx.ui.basic.Text
 import io.oxygenx.ui.layout.Scaffold
 import io.oxygenx.ui.navigation.NavigationBar
 import io.oxygenx.ui.navigation.NavigationBarItem
 import io.oxygenx.ui.navigation.TopAppBar
+import io.oxygenx.ui.overlay.SnackbarDuration
+import io.oxygenx.ui.overlay.SnackbarHost
+import io.oxygenx.ui.overlay.SnackbarHostState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * Scaffold 能力验证页：顶栏 + 底栏 + 悬浮按钮 + Snackbar 宿主同时存在，
@@ -39,7 +41,9 @@ import io.oxygenx.ui.navigation.TopAppBar
 fun ScaffoldDemoScreen(onBack: () -> Unit) {
     var selectedTab by remember { mutableIntStateOf(0) }
     var created by remember { mutableIntStateOf(0) }
-    var snackbarMessage by remember { mutableStateOf<String?>(null) }
+    val snackbarState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    var snackbarJob by remember { mutableStateOf<Job?>(null) }
 
     Scaffold(
         topBar = {
@@ -60,17 +64,20 @@ fun ScaffoldDemoScreen(onBack: () -> Unit) {
             FloatingActionButton(
                 onClick = {
                     created += 1
-                    snackbarMessage = "已新建第 $created 项"
+                    snackbarJob?.cancel()
+                    snackbarJob = scope.launch {
+                        snackbarState.showSnackbar(
+                            message = "已新建第 $created 项",
+                            withDismissAction = true,
+                            duration = SnackbarDuration.Indefinite,
+                        )
+                    }
                 },
                 icon = OxygenIcons.Add,
                 contentDescription = "新建",
             )
         },
-        snackbarHost = {
-            snackbarMessage?.let { message ->
-                DemoSnackbar(message = message, onDismiss = { snackbarMessage = null })
-            }
-        },
+        snackbarHost = { SnackbarHost(snackbarState) },
     ) { insets ->
         val page = catalogPageSpacing()
         LazyColumn(
@@ -87,6 +94,12 @@ fun ScaffoldDemoScreen(onBack: () -> Unit) {
                             color = OxygenTheme.colorScheme.onSurface,
                         ),
                     )
+                }
+            }
+            item(key = "snackbar-cancellation") {
+                DemoCard {
+                    Text("先点新建，再取消调用协程；消息应立即消失。再次新建仍应正常显示。")
+                    Button(onClick = { snackbarJob?.cancel() }) { Text("取消 Snackbar 协程") }
                 }
             }
             item(key = "scaffold-tab-content") {
@@ -109,33 +122,9 @@ fun ScaffoldDemoScreen(onBack: () -> Unit) {
     }
 }
 
-/** 底栏用的是公开组件 `NavigationBar`（`CMP-BOTTOM-BAR`），这里只提供分栏数据。 */
+/** 底栏用的是公开组件 `NavigationBar`（`CMP-NAVIGATION-BAR`），这里只提供分栏数据。 */
 private val demoTabs = listOf(
     NavigationBarItem(label = "概览", icon = OxygenIcons.Clock),
     NavigationBarItem(label = "组件", icon = OxygenIcons.Grid),
     NavigationBarItem(label = "关于", icon = OxygenIcons.Info),
 )
-
-@Composable
-private fun DemoSnackbar(message: String, onDismiss: () -> Unit) {
-    val colors = OxygenTheme.colorScheme
-    val spacing = OxygenTheme.spacing
-    Row(
-        modifier = Modifier
-            .clip(OxygenTheme.shapes.pill)
-            .background(colors.onSurface)
-            .clickable(onClick = onDismiss)
-            .padding(horizontal = spacing.gutter, vertical = spacing.gapSmall),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(spacing.gapSmall),
-    ) {
-        BasicText(
-            text = message,
-            style = OxygenTheme.typography.bodyMedium.copy(color = colors.surface),
-        )
-        BasicText(
-            text = "轻触关闭",
-            style = OxygenTheme.typography.caption.copy(color = colors.surface.copy(alpha = 0.7f)),
-        )
-    }
-}

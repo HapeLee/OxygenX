@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/add.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/add.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -44,30 +44,18 @@ internal val AddGlyph: ImageVector
             pathFillType = PathFillType.Companion.NonZero,
           ) {
             moveTo(11.25f, 12.75f)
-            horizontalLineToRelative(-5f)
-            quadToRelative(-0.32f, 0f, -0.53f, -0.22f)
-            reflectiveQuadTo(5.5f, 12f)
-            reflectiveQuadTo(5.72f, 11.47f)
-            reflectiveQuadTo(6.25f, 11.25f)
-            horizontalLineToRelative(5f)
-            verticalLineToRelative(-5f)
-            quadToRelative(0f, -0.32f, 0.22f, -0.53f)
-            reflectiveQuadTo(12f, 5.5f)
-            reflectiveQuadToRelative(0.53f, 0.22f)
-            reflectiveQuadToRelative(0.22f, 0.53f)
-            verticalLineToRelative(5f)
-            horizontalLineToRelative(5f)
-            quadToRelative(0.32f, 0f, 0.53f, 0.22f)
-            reflectiveQuadTo(18.5f, 12f)
-            reflectiveQuadToRelative(-0.22f, 0.53f)
-            reflectiveQuadToRelative(-0.53f, 0.22f)
-            horizontalLineToRelative(-5f)
-            verticalLineToRelative(5f)
-            quadToRelative(0f, 0.32f, -0.22f, 0.53f)
-            reflectiveQuadTo(12f, 18.5f)
-            reflectiveQuadTo(11.47f, 18.28f)
-            reflectiveQuadTo(11.25f, 17.75f)
-            verticalLineToRelative(-5f)
+            horizontalLineTo(5.5f)
+            verticalLineToRelative(-1.5f)
+            horizontalLineToRelative(5.75f)
+            verticalLineTo(5.5f)
+            horizontalLineToRelative(1.5f)
+            verticalLineToRelative(5.75f)
+            horizontalLineTo(18.5f)
+            verticalLineToRelative(1.5f)
+            horizontalLineTo(12.75f)
+            verticalLineTo(18.5f)
+            horizontalLineToRelative(-1.5f)
+            verticalLineTo(12.75f)
             close()
           }
         }

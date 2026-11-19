@@ -12,3 +12,13 @@ node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 *.log
+
+# Signing material and local credentials
+*.jks
+*.keystore
+*.p12
+*.jks.b64
+signing.properties
+signing.properties.local
+__pycache__/
+*.py[cod]

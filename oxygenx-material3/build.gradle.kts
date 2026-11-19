@@ -24,5 +24,10 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
+        desktopTest.dependencies {
+            implementation(project(":oxygenx-ui"))
+            implementation(libs.compose.ui.test)
+            implementation(compose.desktop.currentOs)
+        }
     }
 }

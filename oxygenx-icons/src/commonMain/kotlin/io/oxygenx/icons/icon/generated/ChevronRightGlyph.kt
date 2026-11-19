@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/chevron_right.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/chevron_right.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -30,6 +30,7 @@ internal val ChevronRightGlyph: ImageVector
           defaultHeight = 24.dp,
           viewportWidth = 24f,
           viewportHeight = 24f,
+          autoMirror = true,
         )
         .apply {
           path(
@@ -44,21 +45,11 @@ internal val ChevronRightGlyph: ImageVector
             pathFillType = PathFillType.Companion.NonZero,
           ) {
             moveTo(12.95f, 12f)
-            lineTo(8.87f, 7.93f)
-            quadTo(8.67f, 7.72f, 8.66f, 7.4f)
-            reflectiveQuadTo(8.87f, 6.87f)
-            reflectiveQuadTo(9.4f, 6.66f)
-            reflectiveQuadTo(9.93f, 6.87f)
-            lineToRelative(4.49f, 4.49f)
-            quadToRelative(0.14f, 0.14f, 0.2f, 0.3f)
-            reflectiveQuadTo(14.68f, 12f)
-            reflectiveQuadToRelative(-0.06f, 0.34f)
-            reflectiveQuadToRelative(-0.2f, 0.3f)
-            lineTo(9.93f, 17.13f)
-            quadTo(9.72f, 17.33f, 9.4f, 17.34f)
-            reflectiveQuadTo(8.87f, 17.13f)
-            reflectiveQuadTo(8.66f, 16.6f)
-            reflectiveQuadTo(8.87f, 16.07f)
+            lineTo(8.35f, 7.4f)
+            lineTo(9.4f, 6.35f)
+            lineTo(15.05f, 12f)
+            lineTo(9.4f, 17.65f)
+            lineTo(8.35f, 16.6f)
             lineTo(12.95f, 12f)
             close()
           }

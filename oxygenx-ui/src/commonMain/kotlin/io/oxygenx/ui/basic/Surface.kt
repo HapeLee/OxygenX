@@ -24,7 +24,7 @@ import io.oxygenx.theme.contentColorFor
 
 /**
  * 铺底容器：画底色（可选描边），并把内容色下发给子树——这是 M3 `Surface` 的核心职责，
- * 也是本项目 `LocalContentColor` 机制的唯一入口。
+ * 内容色下发与其他容器使用同一套主题级回退契约。
  *
  * 与 M3 的差别只在视觉取向：没有 `tonalElevation` / 阴影，需要描边时用 [border] 显式传
  * （卡片那套细边框）。传 [onClick] 即成为可点击容器，水波纹裁在 [shape] 内。
@@ -54,14 +54,7 @@ fun Surface(
     interactionSource: MutableInteractionSource? = null,
     content: @Composable () -> Unit,
 ) {
-    val resolvedContentColor = when {
-        contentColor.isSpecified -> contentColor
-
-        else -> {
-            val mapped = OxygenTheme.colorScheme.contentColorFor(color)
-            if (mapped.isSpecified) mapped else resolveContentColor(Color.Unspecified)
-        }
-    }
+    val resolvedContentColor = if (contentColor.isSpecified) contentColor else contentColorFor(color)
     val source = interactionSource ?: remember { MutableInteractionSource() }
     val clickableModifier = if (onClick != null) {
         Modifier.clickable(

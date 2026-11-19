@@ -1,80 +1,59 @@
 # OxygenX
 
-> **Unofficial / 非官方**：独立的第三方实现，与 OnePlus / OxygenOS 无任何从属或授权关系。
-> **Phase 1 已完成；Android target 与 P2 动效内核基础已落地**：真机可运行、动效内核有单测；组件与完整 catalog 仍在后续阶段。
+**Unofficial / 非官方**：独立的 OxygenOS 风格 Compose Multiplatform UI 库，与 OnePlus / OxygenOS 无从属或授权关系。
 
-以可测量、可回归的方式复刻 OxygenOS 的视觉设计与动效，并提供一套 Compose Multiplatform 组件库与 catalog 示例应用。
+当前为 **P3 实验版**：基础组件、设置项、导航、弹出层、主题和动效内核已落地，提供 Android / Desktop catalog、M3 配色桥接、ABI 基线和本地 Maven 发布。所有组件仍为 `draft`，API 可能变化；OxygenOS 动效逐帧校准和性能验收尚未完成。
 
-**协作前请先读 [AGENT.md](./AGENT.md)**；细则在 [docs/spec/](./docs/spec/README.md)。
+## 文档
 
-## 目标
-
-- **设计复刻**：颜色、排版、形状、间距、图标、层级与状态，全部收敛到可追溯的设计令牌。
-- **动效复刻**：状态反馈、进出场、共享元素转场、手势驱动、系统级场景，统一由 `oxygenx-motion` 的弹簧/缓动规格驱动，可中断、可逐帧比对。
-- **可验证**：每个组件与动效都有 `Spec ID`、`targetBaseline`、reference 与证据等级；「看起来差不多」不算完成。
-- **可复用**：组件库与 catalog 分离，catalog 既是示例也是唯一的可视化验收面。
+- [中文使用文档](docs/zh_CN/README.md) / [English documentation](docs/README.md)
+- [接入与本地发布](docs/zh_CN/getting-started.md)
+- [平台与验证边界](docs/zh_CN/platforms.md)
+- [迁移说明](docs/zh_CN/migration.md)
+- [本轮修复与未验证项](docs/ui-library-hardening.md)
 
 ## 平台
 
-| 平台 | 定位 |
+| 平台 | 当前承诺 |
 | --- | --- |
-| Android | **第一优先与最终验收平台**（compileSdk 37 / minSdk 26），视觉、动效与触觉的完整实现 |
-| Desktop (JVM) | 快速预览与动效调试，不作为验收依据 |
-| Web (WasmJs) | 编译已通，应用入口延后 |
-| iOS / macOS | 暂不承诺 |
+| Android | 第一优先平台，minSdk 26 / compileSdk 37；有可构建 catalog |
+| Desktop JVM | 快速预览与 UI 回归；当前本机验证 Windows / JDK 21 |
+| Web WasmJs | 库编译与逻辑测试；没有 Web catalog 入口 |
+| iOS / macOS Native | 暂不支持 |
 
-平台能力差异通过 `LocalOxygenCapabilities` 降级，详见 `AGENT.md` 与 `docs/spec/component-api.md`。
+## 本地验证
 
-## 模块
-
-P1 已建立全部 `oxygenx-*` 库模块与 `catalog/shared`、`catalog/desktop`；`benchmark/`、文档站、Android/Web catalog 入口待后续阶段。
-
-| 模块 | 说明 |
-| --- | --- |
-| `oxygenx-core` | 平台能力抽象与工具 |
-| `oxygenx-theme` | 设计令牌与 `OxygenTheme` |
-| `oxygenx-motion` | 弹簧、缓动、编排与可访问性降级 |
-| `oxygenx-effects` | 模糊、发光等效果及降级 |
-| `oxygenx-icons` | 自绘图标，可独立使用 |
-| `oxygenx-ui` | 组件主体 |
-| `catalog` | 示例应用（shared + 平台入口） |
-| `design/tokens` | 令牌单一真源（YAML） |
-| `benchmark` | 帧率与动效性能基准 |
-
-## 路线图
-
-`P0 规范（已完成）` → `P1 工程骨架 + 令牌真源（已完成）` → `P2 动效内核` → `P3 组件` → `P4 catalog + 中英文档 + Android/Web 入口` → `P5 逐帧与性能验收`
-
-## 快速开始（本机已验证）
+需要 JDK 21、Android SDK Platform 37 / Build Tools 37.0.0 和供 Wasm 浏览器测试使用的 Chrome。通过 `local.properties` 的 `sdk.dir` 或 `ANDROID_HOME` 配置 SDK。依赖版本集中在 `gradle/libs.versions.toml`。
 
 ```powershell
 .\gradlew.bat :oxygenx-theme:generateTokens
+.\gradlew.bat spotlessCheck
+.\gradlew.bat compileKotlinDesktop :catalog:android:assembleDebug
 .\gradlew.bat check
-.\gradlew.bat :catalog:android:assembleDebug
-.\gradlew.bat :catalog:android:installDebug
-.\gradlew.bat :catalog:desktop:run
+python tools/check_docs.py
 ```
 
-Android 是主验收平台：`installDebug` 需要连接设备，本机已用真机（PLK110）验证安装、启动与动效交互；Desktop 仅作快速预览。
+Linux / macOS 使用 `./gradlew`。图像基线更新见 [golden 说明](catalog/golden/README.md)。CI 配置在 [.github/workflows/ci.yml](.github/workflows/ci.yml)，远端执行状态以 GitHub Actions 为准。
 
-Windows 用 `.\gradlew.bat`，其他平台用 `./gradlew`。完整命令表与状态见 `AGENT.md` 第 3 节。
+## 模块
 
-`design/tokens/*.yaml` 是设计/动效令牌的唯一真源，当前 15 个值全部是 `E0` / `draft` 占位，用于验证生成管线，不是 OxygenOS 的复刻参数。
-
-## 规范索引
-
-| 文档 | 内容 |
+| 模块 | 用途 |
 | --- | --- |
-| `AGENT.md` | 唯一权威规则：状态、结构、命令、代码风格、API/动效红线、提交规范 |
-| `docs/spec/README.md` | 优先级、术语、证据等级、合规边界、规范变更流程 |
-| `docs/spec/design-tokens.md` | 静态设计令牌 |
-| `docs/spec/motion.md` | 动效规范 |
-| `docs/spec/component-api.md` | 组件 API 与代码约定 |
-| `docs/spec/catalog.md` | 示例应用与验收 |
-| `docs/spec/workflow.md` | 交付清单与门禁 |
+| `oxygenx-ui` | Foundation 自绘组件 |
+| `oxygenx-theme` | 主题、颜色、排版、间距与滚动过冲 |
+| `oxygenx-motion` | 参数化、可中断的动效规格 |
+| `oxygenx-core` | 平台能力声明 |
+| `oxygenx-effects` | 能力感知的模糊入口 |
+| `oxygenx-icons` / `oxygenx-icons-material` | 自绘图标 / Material Symbols |
+| `oxygenx-material3` | 可选的 M3 → Oxygen 配色桥接、Oxygen → M3 内容样式桥接 |
+| `oxygenx-bom` | 本地发布版本约束 |
+| `catalog` | 公开 API 示例与人工验收入口 |
+| `design/tokens` | 设计与动效 YAML 真源 |
 
-## 合规
+## 贡献与许可
 
-只复刻可观察的视觉规律与动效行为，不搬运字体、图标、壁纸、音效、系统二进制等专有资产；参考录屏仅用于本地验收。详见 `docs/spec/README.md`。
+协作规则见 [AGENT.md](AGENT.md) 与 [docs/spec/](docs/spec/README.md)。只复刻可观察规律，不分发厂商专有资产；参考材料不进入发布制品。Apache-2.0，见 [LICENSE](LICENSE)。
 
-采用 Apache-2.0 许可，全文见 `LICENSE`；所有 `.kt` / `.kts` 文件带 SPDX 许可证头，由 Spotless 校验。
+Android catalog 启动 profile 与 Macrobenchmark 入口见 [性能文档](docs/zh_CN/performance.md)。此入口不代表全组件性能已验收。
+
+Legado MD3 的真实构建验证与待适配项见 [接入检查](docs/spec/legado-integration-readiness.md)。

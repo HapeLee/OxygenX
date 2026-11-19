@@ -47,14 +47,17 @@ private fun NavigationRailVariants() {
     Column(verticalArrangement = Arrangement.spacedBy(OxygenTheme.spacing.gapSmall)) {
         BasicText(
             text = "侧边窄栏（80dp）：图标在上、文案在下，选中只换内容色不铺底（与底栏同一套语义）；" +
-                "用于平板 / 桌面，header 槽可以放悬浮按钮",
+                "用于平板 / 桌面，header 槽可以放悬浮按钮；按下时和底栏一样是半径等于分块高的大圆，" +
+                "左右溢出的两截被栏宽切平",
             modifier = Modifier.fillMaxWidth(),
             style = OxygenTheme.typography.caption.copy(color = colors.onSurfaceVariant),
         )
+        // 侧边栏在真实布局里是整屏高，这里给 4 个分块的高度：3 个分块 + 上下内边距约 192dp，
+        // 原来借的是顶栏收拢距离（171dp）装不下，第三块会被挤掉。
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(OxygenTheme.spacing.appBarCollapseDistance),
+                .height(OxygenTheme.spacing.railItemHeight * 4),
         ) {
             NavigationRail {
                 NavigationRailItem(

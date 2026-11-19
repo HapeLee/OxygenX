@@ -14,7 +14,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":oxygenx-theme"))
-            implementation(libs.compose.ui)
+            api(libs.compose.ui)
         }
     }
 }

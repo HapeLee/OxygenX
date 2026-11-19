@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,9 +20,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 import io.oxygenx.ui.basic.Surface
 
 /**
@@ -89,9 +87,9 @@ fun TooltipSurface(
         color = colors.inverseSurface,
         shape = OxygenTheme.shapes.cornerInput,
     ) {
-        CompositionLocalProvider(
-            LocalContentColor provides colors.inverseOnSurface,
-            LocalTextStyle provides OxygenTheme.typography.caption,
+        ProvideContentStyle(
+            contentColor = colors.inverseOnSurface,
+            textStyle = OxygenTheme.typography.bodySmall,
         ) {
             Box(
                 modifier = Modifier.padding(

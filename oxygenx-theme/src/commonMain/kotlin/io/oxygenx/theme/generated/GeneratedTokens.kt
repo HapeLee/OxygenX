@@ -247,20 +247,28 @@ public object GeneratedTokens {
     public const val SPACE_LIST_GROUP_GAP: Float = 21f
 
     // size.appbar.height | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
-    public const val SIZE_APPBAR_HEIGHT: Float = 72f
+    // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    public const val SIZE_APPBAR_HEIGHT: Float = 74f
 
     // size.appbar.collapsed.height | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
-    public const val SIZE_APPBAR_COLLAPSED_HEIGHT: Float = 72f
+    // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    public const val SIZE_APPBAR_COLLAPSED_HEIGHT: Float = 74f
+
+    // space.appbar.compact.content.offset | E2 | draft
+    // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    public const val SPACE_APPBAR_COMPACT_CONTENT_OFFSET: Float = 4f
+
+    // icon.size.appbar.navigation.compact | E0 | draft
+    // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    public const val ICON_SIZE_APPBAR_NAVIGATION_COMPACT: Float = 16f
 
     // size.appbar.pager.collapsed.height | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
     public const val SIZE_APPBAR_PAGER_COLLAPSED_HEIGHT: Float = 96f
 
-    // size.bottom.bar.height | E2 | draft
+    // size.navigation.bar.height | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
-    public const val SIZE_BOTTOM_BAR_HEIGHT: Float = 55f
+    public const val SIZE_NAVIGATION_BAR_HEIGHT: Float = 55f
 
     // size.fab | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
@@ -502,6 +510,26 @@ public object GeneratedTokens {
     // baseline: Material 3 plain tooltip（外部规范类比，非 OxygenOS 实测）
     public const val SPACE_TOOLTIP_PADDING_VERTICAL: Float = 4f
 
+    // shape.corner.menu | E3 | draft
+    // baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    public const val SHAPE_CORNER_MENU: Float = 4f
+
+    // elevation.menu | E3 | draft
+    // baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    public const val ELEVATION_MENU: Float = 3f
+
+    // size.menu.max.width | E3 | draft
+    // baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    public const val SIZE_MENU_MAX_WIDTH: Float = 280f
+
+    // space.menu.icon.gap | E3 | draft
+    // baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    public const val SPACE_MENU_ICON_GAP: Float = 12f
+
+    // space.menu.window.margin | E3 | draft
+    // baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    public const val SPACE_MENU_WINDOW_MARGIN: Float = 48f
+
     // size.menu.min.width | E0 | draft
     // baseline: Material 3 dropdown menu（外部规范类比，非 OxygenOS 实测）
     public const val SIZE_MENU_MIN_WIDTH: Float = 112f
@@ -531,12 +559,12 @@ public object GeneratedTokens {
     public const val SPACE_SHEET_HANDLE_INSET: Float = 22f
 
     // size.search.bar.height | E0 | draft
-    // baseline: Material 3 search bar（外部规范类比，非 OxygenOS 实测）
-    public const val SIZE_SEARCH_BAR_HEIGHT: Float = 56f
+    // baseline: Legado Material 3 紧凑搜索输入框（非 OxygenOS 实测）
+    public const val SIZE_SEARCH_BAR_HEIGHT: Float = 48f
 
-    // size.drawer.width | E0 | draft
-    // baseline: Material 3 navigation drawer（外部规范类比，非 OxygenOS 实测）
-    public const val SIZE_DRAWER_WIDTH: Float = 320f
+    // space.search.bar.padding.horizontal | E0 | draft
+    // baseline: Legado Material 3 紧凑搜索输入框（非 OxygenOS 实测）
+    public const val SPACE_SEARCH_BAR_PADDING_HORIZONTAL: Float = 12f
 
     // size.rail.width | E0 | draft
     // baseline: Material 3 navigation rail（外部规范类比，非 OxygenOS 实测）
@@ -549,6 +577,10 @@ public object GeneratedTokens {
     // effect.dismiss.threshold | E0 | draft
     // baseline: Material 3 swipe to dismiss（外部规范类比，非 OxygenOS 实测）
     public const val EFFECT_DISMISS_THRESHOLD: Float = 0.4f
+
+    // effect.menu.closed.scale | E3 | draft
+    // baseline: Material3 1.5.0-beta01 Menu ClosedScaleTarget
+    public const val EFFECT_MENU_CLOSED_SCALE: Float = 0.8f
 
     // duration.short | E0 | draft
     // baseline: OxygenOS <version> / <device> / <date>
@@ -594,6 +626,11 @@ public object GeneratedTokens {
     public const val SPEC_APPBAR_COLLAPSE_ENTER: String = "spring.snappy"
     public const val SPEC_APPBAR_COLLAPSE_EXIT: String = "spring.snappy"
 
+    // spec.input.focus | E0 | draft
+    // baseline: OxygenX input focus contract / 2026-11-17
+    public const val SPEC_INPUT_FOCUS_ENTER: String = "spring.snappy"
+    public const val SPEC_INPUT_FOCUS_EXIT: String = "spring.snappy"
+
     // spec.dialog.slide | E1 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
     public const val SPEC_DIALOG_SLIDE_ENTER: String = "spring.dialog"
@@ -617,108 +654,210 @@ public object GeneratedTokens {
     // baseline: Material 3 indeterminate 圆环进度（外部规范类比，非 OxygenOS 实测）
     public const val DURATION_PROGRESS_CIRCULAR_ROTATION_MILLIS: Long = 1332L
 
-    // type.display.large | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    public const val TYPE_DISPLAY_LARGE_SIZE: Float = 46f
-    public const val TYPE_DISPLAY_LARGE_LINE_HEIGHT: Float = 54f
+    // spring.menu.spatial | E0 | draft
+    // baseline: Material3 1.5.0-beta01 StandardMotionTokens（归一化阈值为项目选择）
+    public const val SPRING_MENU_SPATIAL_STIFFNESS: Float = 1400f
+    public const val SPRING_MENU_SPATIAL_DAMPING_RATIO: Float = 0.9f
+    public const val SPRING_MENU_SPATIAL_VISIBILITY_THRESHOLD: Float = 0.001f
+
+    // spec.menu.spatial | E0 | draft
+    // baseline: Material3 1.5.0-beta01 菜单动效类比
+    public const val SPEC_MENU_SPATIAL_ENTER: String = "spring.menu.spatial"
+    public const val SPEC_MENU_SPATIAL_EXIT: String = "spring.menu.spatial"
+
+    // spring.menu.effects | E0 | draft
+    // baseline: Material3 1.5.0-beta01 StandardMotionTokens（归一化阈值为项目选择）
+    public const val SPRING_MENU_EFFECTS_STIFFNESS: Float = 3800f
+    public const val SPRING_MENU_EFFECTS_DAMPING_RATIO: Float = 1f
+    public const val SPRING_MENU_EFFECTS_VISIBILITY_THRESHOLD: Float = 0.001f
+
+    // spec.menu.effects | E0 | draft
+    // baseline: Material3 1.5.0-beta01 菜单动效类比
+    public const val SPEC_MENU_EFFECTS_ENTER: String = "spring.menu.effects"
+    public const val SPEC_MENU_EFFECTS_EXIT: String = "spring.menu.effects"
+
+    // type.display.large | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_DISPLAY_LARGE_SIZE: Float = 57f
+    public const val TYPE_DISPLAY_LARGE_LINE_HEIGHT: Float = 64f
     public const val TYPE_DISPLAY_LARGE_WEIGHT: Int = 400
-    public const val TYPE_DISPLAY_LARGE_LETTER_SPACING: Float = 0f
+    public const val TYPE_DISPLAY_LARGE_LETTER_SPACING: Float = -0.2f
     public const val TYPE_DISPLAY_LARGE_FAMILY: String = "sans-serif"
 
-    // type.title.medium | E0 | draft
-    // baseline: OxygenOS <version> / <device> / <date>
-    public const val TYPE_TITLE_MEDIUM_SIZE: Float = 20f
-    public const val TYPE_TITLE_MEDIUM_LINE_HEIGHT: Float = 28f
-    public const val TYPE_TITLE_MEDIUM_WEIGHT: Int = 600
-    public const val TYPE_TITLE_MEDIUM_LETTER_SPACING: Float = 0f
+    // type.display.medium | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_DISPLAY_MEDIUM_SIZE: Float = 45f
+    public const val TYPE_DISPLAY_MEDIUM_LINE_HEIGHT: Float = 52f
+    public const val TYPE_DISPLAY_MEDIUM_WEIGHT: Int = 400
+    public const val TYPE_DISPLAY_MEDIUM_LETTER_SPACING: Float = 0f
+    public const val TYPE_DISPLAY_MEDIUM_FAMILY: String = "sans-serif"
+
+    // type.display.small | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_DISPLAY_SMALL_SIZE: Float = 36f
+    public const val TYPE_DISPLAY_SMALL_LINE_HEIGHT: Float = 44f
+    public const val TYPE_DISPLAY_SMALL_WEIGHT: Int = 400
+    public const val TYPE_DISPLAY_SMALL_LETTER_SPACING: Float = 0f
+    public const val TYPE_DISPLAY_SMALL_FAMILY: String = "sans-serif"
+
+    // type.headline.large | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_HEADLINE_LARGE_SIZE: Float = 32f
+    public const val TYPE_HEADLINE_LARGE_LINE_HEIGHT: Float = 40f
+    public const val TYPE_HEADLINE_LARGE_WEIGHT: Int = 400
+    public const val TYPE_HEADLINE_LARGE_LETTER_SPACING: Float = 0f
+    public const val TYPE_HEADLINE_LARGE_FAMILY: String = "sans-serif"
+
+    // type.headline.medium | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_HEADLINE_MEDIUM_SIZE: Float = 28f
+    public const val TYPE_HEADLINE_MEDIUM_LINE_HEIGHT: Float = 36f
+    public const val TYPE_HEADLINE_MEDIUM_WEIGHT: Int = 400
+    public const val TYPE_HEADLINE_MEDIUM_LETTER_SPACING: Float = 0f
+    public const val TYPE_HEADLINE_MEDIUM_FAMILY: String = "sans-serif"
+
+    // type.headline.small | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_HEADLINE_SMALL_SIZE: Float = 24f
+    public const val TYPE_HEADLINE_SMALL_LINE_HEIGHT: Float = 32f
+    public const val TYPE_HEADLINE_SMALL_WEIGHT: Int = 400
+    public const val TYPE_HEADLINE_SMALL_LETTER_SPACING: Float = 0f
+    public const val TYPE_HEADLINE_SMALL_FAMILY: String = "sans-serif"
+
+    // type.title.large | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_TITLE_LARGE_SIZE: Float = 22f
+    public const val TYPE_TITLE_LARGE_LINE_HEIGHT: Float = 28f
+    public const val TYPE_TITLE_LARGE_WEIGHT: Int = 400
+    public const val TYPE_TITLE_LARGE_LETTER_SPACING: Float = 0f
+    public const val TYPE_TITLE_LARGE_FAMILY: String = "sans-serif"
+
+    // type.title.medium | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_TITLE_MEDIUM_SIZE: Float = 16f
+    public const val TYPE_TITLE_MEDIUM_LINE_HEIGHT: Float = 24f
+    public const val TYPE_TITLE_MEDIUM_WEIGHT: Int = 500
+    public const val TYPE_TITLE_MEDIUM_LETTER_SPACING: Float = 0.2f
     public const val TYPE_TITLE_MEDIUM_FAMILY: String = "sans-serif"
 
-    // type.dialog.title | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    public const val TYPE_DIALOG_TITLE_SIZE: Float = 18f
-    public const val TYPE_DIALOG_TITLE_LINE_HEIGHT: Float = 24f
-    public const val TYPE_DIALOG_TITLE_WEIGHT: Int = 500
-    public const val TYPE_DIALOG_TITLE_LETTER_SPACING: Float = 0f
-    public const val TYPE_DIALOG_TITLE_FAMILY: String = "sans-serif"
+    // type.title.small | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_TITLE_SMALL_SIZE: Float = 14f
+    public const val TYPE_TITLE_SMALL_LINE_HEIGHT: Float = 20f
+    public const val TYPE_TITLE_SMALL_WEIGHT: Int = 500
+    public const val TYPE_TITLE_SMALL_LETTER_SPACING: Float = 0.1f
+    public const val TYPE_TITLE_SMALL_FAMILY: String = "sans-serif"
 
-    // type.appbar.title | E0 | draft
-    // baseline: OxygenOS <version> / <device> / <date>
-    public const val TYPE_APPBAR_TITLE_SIZE: Float = 18f
-    public const val TYPE_APPBAR_TITLE_LINE_HEIGHT: Float = 24f
-    public const val TYPE_APPBAR_TITLE_WEIGHT: Int = 500
-    public const val TYPE_APPBAR_TITLE_LETTER_SPACING: Float = 0f
-    public const val TYPE_APPBAR_TITLE_FAMILY: String = "sans-serif"
-
-    // type.body.large | E0 | draft
-    // baseline: OxygenOS <version> / <device> / <date>
+    // type.body.large | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
     public const val TYPE_BODY_LARGE_SIZE: Float = 16f
     public const val TYPE_BODY_LARGE_LINE_HEIGHT: Float = 24f
     public const val TYPE_BODY_LARGE_WEIGHT: Int = 400
-    public const val TYPE_BODY_LARGE_LETTER_SPACING: Float = 0f
+    public const val TYPE_BODY_LARGE_LETTER_SPACING: Float = 0.5f
     public const val TYPE_BODY_LARGE_FAMILY: String = "sans-serif"
 
     // type.body.medium | E3 | draft
-    // baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
-    public const val TYPE_BODY_MEDIUM_SIZE: Float = 13f
-    public const val TYPE_BODY_MEDIUM_LINE_HEIGHT: Float = 18f
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_BODY_MEDIUM_SIZE: Float = 14f
+    public const val TYPE_BODY_MEDIUM_LINE_HEIGHT: Float = 20f
     public const val TYPE_BODY_MEDIUM_WEIGHT: Int = 400
-    public const val TYPE_BODY_MEDIUM_LETTER_SPACING: Float = 0f
+    public const val TYPE_BODY_MEDIUM_LETTER_SPACING: Float = 0.2f
     public const val TYPE_BODY_MEDIUM_FAMILY: String = "sans-serif"
 
+    // type.body.small | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_BODY_SMALL_SIZE: Float = 12f
+    public const val TYPE_BODY_SMALL_LINE_HEIGHT: Float = 16f
+    public const val TYPE_BODY_SMALL_WEIGHT: Int = 400
+    public const val TYPE_BODY_SMALL_LETTER_SPACING: Float = 0.4f
+    public const val TYPE_BODY_SMALL_FAMILY: String = "sans-serif"
+
+    // type.label.large | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_LABEL_LARGE_SIZE: Float = 14f
+    public const val TYPE_LABEL_LARGE_LINE_HEIGHT: Float = 20f
+    public const val TYPE_LABEL_LARGE_WEIGHT: Int = 500
+    public const val TYPE_LABEL_LARGE_LETTER_SPACING: Float = 0.1f
+    public const val TYPE_LABEL_LARGE_FAMILY: String = "sans-serif"
+
+    // type.label.medium | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_LABEL_MEDIUM_SIZE: Float = 12f
+    public const val TYPE_LABEL_MEDIUM_LINE_HEIGHT: Float = 16f
+    public const val TYPE_LABEL_MEDIUM_WEIGHT: Int = 500
+    public const val TYPE_LABEL_MEDIUM_LETTER_SPACING: Float = 0.5f
+    public const val TYPE_LABEL_MEDIUM_FAMILY: String = "sans-serif"
+
+    // type.label.small | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_LABEL_SMALL_SIZE: Float = 11f
+    public const val TYPE_LABEL_SMALL_LINE_HEIGHT: Float = 16f
+    public const val TYPE_LABEL_SMALL_WEIGHT: Int = 500
+    public const val TYPE_LABEL_SMALL_LETTER_SPACING: Float = 0.5f
+    public const val TYPE_LABEL_SMALL_FAMILY: String = "sans-serif"
+
+    // type.appbar.title | E2 | draft
+    // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    public const val TYPE_APPBAR_TITLE_SIZE: Float = 18f
+    public const val TYPE_APPBAR_TITLE_LINE_HEIGHT: Float = 24f
+    public const val TYPE_APPBAR_TITLE_WEIGHT: Int = 400
+    public const val TYPE_APPBAR_TITLE_LETTER_SPACING: Float = 0f
+    public const val TYPE_APPBAR_TITLE_FAMILY: String = "sans-serif"
+
+    // type.dialog.title | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_DIALOG_TITLE_SIZE: Float = 24f
+    public const val TYPE_DIALOG_TITLE_LINE_HEIGHT: Float = 32f
+    public const val TYPE_DIALOG_TITLE_WEIGHT: Int = 400
+    public const val TYPE_DIALOG_TITLE_LETTER_SPACING: Float = 0f
+    public const val TYPE_DIALOG_TITLE_FAMILY: String = "sans-serif"
+
+    // type.dialog.action | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_DIALOG_ACTION_SIZE: Float = 14f
+    public const val TYPE_DIALOG_ACTION_LINE_HEIGHT: Float = 20f
+    public const val TYPE_DIALOG_ACTION_WEIGHT: Int = 500
+    public const val TYPE_DIALOG_ACTION_LETTER_SPACING: Float = 0.1f
+    public const val TYPE_DIALOG_ACTION_FAMILY: String = "sans-serif"
+
+    // type.appbar.subtitle | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
+    public const val TYPE_APPBAR_SUBTITLE_SIZE: Float = 14f
+    public const val TYPE_APPBAR_SUBTITLE_LINE_HEIGHT: Float = 20f
+    public const val TYPE_APPBAR_SUBTITLE_WEIGHT: Int = 400
+    public const val TYPE_APPBAR_SUBTITLE_LETTER_SPACING: Float = 0.2f
+    public const val TYPE_APPBAR_SUBTITLE_FAMILY: String = "sans-serif"
+
     // type.list.item.title | E3 | draft
-    // baseline: Clock 5.3.0 (com.oneplus.deskclock) / PLK110 / 2026-11-13
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
     public const val TYPE_LIST_ITEM_TITLE_SIZE: Float = 16f
-    public const val TYPE_LIST_ITEM_TITLE_LINE_HEIGHT: Float = 22f
-    public const val TYPE_LIST_ITEM_TITLE_WEIGHT: Int = 500
-    public const val TYPE_LIST_ITEM_TITLE_LETTER_SPACING: Float = 0f
+    public const val TYPE_LIST_ITEM_TITLE_LINE_HEIGHT: Float = 24f
+    public const val TYPE_LIST_ITEM_TITLE_WEIGHT: Int = 400
+    public const val TYPE_LIST_ITEM_TITLE_LETTER_SPACING: Float = 0.5f
     public const val TYPE_LIST_ITEM_TITLE_FAMILY: String = "sans-serif"
 
-    // type.clock.time | E1 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
+    // type.clock.time | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
     public const val TYPE_CLOCK_TIME_SIZE: Float = 32f
     public const val TYPE_CLOCK_TIME_LINE_HEIGHT: Float = 40f
     public const val TYPE_CLOCK_TIME_WEIGHT: Int = 400
     public const val TYPE_CLOCK_TIME_LETTER_SPACING: Float = 0f
     public const val TYPE_CLOCK_TIME_FAMILY: String = "sans-serif"
 
-    // type.input.text | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
+    // type.input.text | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
     public const val TYPE_INPUT_TEXT_SIZE: Float = 16f
     public const val TYPE_INPUT_TEXT_LINE_HEIGHT: Float = 24f
     public const val TYPE_INPUT_TEXT_WEIGHT: Int = 400
-    public const val TYPE_INPUT_TEXT_LETTER_SPACING: Float = 0f
+    public const val TYPE_INPUT_TEXT_LETTER_SPACING: Float = 0.5f
     public const val TYPE_INPUT_TEXT_FAMILY: String = "sans-serif"
 
-    // type.label.medium | E0 | draft
-    // baseline: OxygenOS <version> / <device> / <date>
-    public const val TYPE_LABEL_MEDIUM_SIZE: Float = 14f
-    public const val TYPE_LABEL_MEDIUM_LINE_HEIGHT: Float = 20f
-    public const val TYPE_LABEL_MEDIUM_WEIGHT: Int = 500
-    public const val TYPE_LABEL_MEDIUM_LETTER_SPACING: Float = 0f
-    public const val TYPE_LABEL_MEDIUM_FAMILY: String = "sans-serif"
-
-    // type.appbar.subtitle | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
-    public const val TYPE_APPBAR_SUBTITLE_SIZE: Float = 14f
-    public const val TYPE_APPBAR_SUBTITLE_LINE_HEIGHT: Float = 17f
-    public const val TYPE_APPBAR_SUBTITLE_WEIGHT: Int = 400
-    public const val TYPE_APPBAR_SUBTITLE_LETTER_SPACING: Float = 0f
-    public const val TYPE_APPBAR_SUBTITLE_FAMILY: String = "sans-serif"
-
-    // type.dialog.action | E2 | draft
-    // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings 11 / 2026-11-14
-    public const val TYPE_DIALOG_ACTION_SIZE: Float = 14f
-    public const val TYPE_DIALOG_ACTION_LINE_HEIGHT: Float = 20f
-    public const val TYPE_DIALOG_ACTION_WEIGHT: Int = 700
-    public const val TYPE_DIALOG_ACTION_LETTER_SPACING: Float = 0f
-    public const val TYPE_DIALOG_ACTION_FAMILY: String = "sans-serif"
-
-    // type.caption | E0 | draft
-    // baseline: OxygenOS <version> / <device> / <date>
+    // type.caption | E3 | draft
+    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
     public const val TYPE_CAPTION_SIZE: Float = 12f
     public const val TYPE_CAPTION_LINE_HEIGHT: Float = 16f
     public const val TYPE_CAPTION_WEIGHT: Int = 400
-    public const val TYPE_CAPTION_LETTER_SPACING: Float = 0f
+    public const val TYPE_CAPTION_LETTER_SPACING: Float = 0.4f
     public const val TYPE_CAPTION_FAMILY: String = "sans-serif"
 
 }

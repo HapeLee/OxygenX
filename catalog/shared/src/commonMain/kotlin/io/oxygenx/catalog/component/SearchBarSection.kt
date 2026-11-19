@@ -38,8 +38,7 @@ private fun SearchBarVariants() {
     var submitted by remember { mutableStateOf("—") }
     Column(verticalArrangement = Arrangement.spacedBy(OxygenTheme.spacing.gapSmall)) {
         BasicText(
-            text = "药丸容器（56dp、surfaceContainerHighest）：左侧搜索图标、右侧清空槽，" +
-                "键盘搜索键触发 onSearch；不持有状态",
+            text = "紧凑搜索栏（${OxygenTheme.spacing.searchBarHeight.value.toInt()}dp）。按键盘搜索键提交，或用右侧按钮清空。",
             modifier = Modifier.fillMaxWidth(),
             style = OxygenTheme.typography.caption.copy(color = colors.onSurfaceVariant),
         )

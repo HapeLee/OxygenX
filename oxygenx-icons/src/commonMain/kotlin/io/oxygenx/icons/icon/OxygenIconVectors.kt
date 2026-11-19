@@ -19,28 +19,13 @@ import io.oxygenx.icons.icon.generated.StopwatchGlyph
 import io.oxygenx.icons.icon.generated.WorldClockGlyph
 
 /**
- * 项目图标集：Material Symbols（Rounded 样式，`wght=300`）的静态 [ImageVector]。
+ * 核心兼容入口：Google Material Symbols Outlined，opsz=24、wght=300、FILL=0、GRAD=0。
  *
- * **来源与许可**：Google Material Symbols，Apache License 2.0，`generated/` 下每个文件都带
- * 各自的来源 URL 与版权头。这里不引入 `material-icons-core` / `material-icons-extended`
- * 依赖：那套库是从静态 drawable 生成的、没有 weight 轴，且 Compose Multiplatform 的对应
- * artifact 不覆盖本项目的 wasmJs target；直接按轴生成静态矢量既拿到 300 的细度，也保持
- * `oxygenx-icons` 只依赖 `compose.ui`。
- *
- * **生成参数**（每个图标都必须一致，否则一整套看起来不像一套）：
- * ```
- * https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/<symbol_name>.kt
- *     ?var=opsz,wght,FILL,GRAD,ROND@24,300,0,0,50
- * ```
- * `opsz=24`（24dp 光学尺寸）、`wght=300`（比默认 400 更细）、`FILL=0`（线性轮廓）、
- * `GRAD=0`（不加等级微调）、`ROND=50`（Rounded 样式）。响应是 gzip，`curl --compressed`。
- * 新增图标时下载到 `generated/<PascalName>Glyph.kt`，改 package 与本文件同目录约定、
- * 把 `public val <symbol>` 改名为 `internal val <PascalName>Glyph`，再在这里加一条映射。
- * 每个生成文件自带惰性缓存，未使用的图标可被裁剪。
- *
- * **着色与尺寸**不在本模块：`Icon` 用 `ColorFilter.tint` 按颜色令牌着色、按
- * `icon.size.*` 缩放。生成文件是填充轮廓路径（不是描边），所以没有 `icon.stroke.width`
- * 这回事。方向性图标由 `Icon(mirrorInRtl = true)` 处理，生成文件不带 `autoMirror`。
+ * 保留 Back / Clock / Grid 等原有名称；扩展 MaterialSymbols 按官方符号名重导出同一对象。
+ * 14 个矢量只保存在本模块，不需要组件用户依赖完整扩展库。来源为 Google，Apache-2.0。
+ * 相比早期 Rounded 版本，本轮统一为 Outlined；方向性矢量声明 autoMirror。
+ * 生成来源、轴与 SHA-256 见 design/icons/material-symbols.json；运行
+ * `python tools/material_symbols.py --fetch`，不要手改 generated 文件。
  */
 object OxygenIcons {
     /**

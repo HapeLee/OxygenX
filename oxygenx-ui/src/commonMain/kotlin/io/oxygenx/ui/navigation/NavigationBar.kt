@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,13 +33,14 @@ import io.oxygenx.motion.OxygenMotionDefaults
 import io.oxygenx.motion.OxygenMotionSpec
 import io.oxygenx.motion.rememberOxygenAnimation
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
 import io.oxygenx.ui.basic.Icon
 import io.oxygenx.ui.basic.IndicationDefaults
 
 /**
  * 底栏导航：等分分栏、图标在上文字在下、顶部一条 1dp 细分割线，选中态取 `color.primary`。
  *
- * 形态取自一加文件管理这类「一级入口放底栏」的应用：55dp 内容高度（`size.bottom.bar.height`，
+ * 形态取自一加文件管理这类「一级入口放底栏」的应用：55dp 内容高度（`size.navigation.bar.height`，
  * 与时钟应用底栏同一份真机基线）、每栏等分整行宽度、图标 24dp 压一行 `caption` 文案，
  * 分割线与顶栏用的是同一条 `color.outline.variant` 细线，因此上下两条栏同属一套细线语言。
  * 与 [TabRow] 的分工：页签在内容区内切换分页（指示器是内容体的一部分），
@@ -51,7 +52,7 @@ import io.oxygenx.ui.basic.IndicationDefaults
  * 按下分栏时看到的那块大弧形高亮就是这个圆被底栏边缘裁掉后的样子。
  * 选中色与未选中色之间走 [motion]，与开关、页签同一条状态弹簧。
  *
- * - Spec ID: `CMP-BOTTOM-BAR`
+ * - Spec ID: `CMP-NAVIGATION-BAR`
  * - Baseline: `OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13`（高度令牌）
  * - Reference: `catalog/reference/README.md`
  * - Motion: `MOT-STATE-002`（选中色插值）。可通过 [motion] 覆盖。
@@ -75,52 +76,51 @@ fun NavigationBar(
     motion: OxygenMotionSpec = NavigationBarDefaults.Motion,
 ) {
     if (items.isEmpty()) return
-    val spacing = OxygenTheme.spacing
-    val safeIndex = bottomBarSafeIndex(selectedIndex, items.size)
-
-    Column(modifier = modifier.fillMaxWidth().background(colors.containerColor)) {
-        // 与顶栏同一条细线；画在背景之上、内容之前，滚动内容不会盖住它。
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(spacing.dividerThickness)
-                .background(colors.dividerColor),
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(spacing.bottomBarHeight)
-                // 按压水波纹是「半径 = 栏高」的大圆，直径超过栏高，上下会溢出这条栏；
-                // 这里把整行裁住，溢出的部分自然被切掉（真机上看起来就是大圆压到屏幕边缘）。
-                .clipToBounds(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            items.forEachIndexed { index, item ->
-                BottomBarTab(
-                    label = item.label,
-                    icon = item.icon,
-                    selected = index == safeIndex,
-                    enabled = item.enabled,
-                    onClick = { onSelect(index) },
-                    colors = colors,
-                    motion = motion,
-                    modifier = Modifier.weight(1f),
-                )
-            }
+    val safeIndex = navigationBarSafeIndex(selectedIndex, items.size)
+    NavigationBar(modifier = modifier, colors = colors) {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                selected = index == safeIndex,
+                onClick = { onSelect(index) },
+                enabled = item.enabled,
+                colors = colors,
+                motion = motion,
+                label = { io.oxygenx.ui.basic.Text(item.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                icon = { Icon(item.icon, contentDescription = null) },
+            )
         }
     }
 }
 
+/** Slot-based bar for hosts that already dispatch individual navigation items. Insets stay with the host. */
 @Composable
-private fun BottomBarTab(
-    label: String,
-    icon: ImageVector,
-    selected: Boolean,
-    enabled: Boolean,
-    onClick: () -> Unit,
-    colors: NavigationBarColors,
-    motion: OxygenMotionSpec,
+fun NavigationBar(
     modifier: Modifier = Modifier,
+    colors: NavigationBarColors = NavigationBarDefaults.colors(),
+    content: @Composable RowScope.() -> Unit,
+) {
+    val spacing = OxygenTheme.spacing
+    Column(modifier = modifier.fillMaxWidth().background(colors.containerColor)) {
+        Box(Modifier.fillMaxWidth().height(spacing.dividerThickness).background(colors.dividerColor))
+        Row(
+            modifier = Modifier.fillMaxWidth().height(spacing.navigationBarHeight).clipToBounds(),
+            verticalAlignment = Alignment.CenterVertically,
+            content = content,
+        )
+    }
+}
+
+/** Equal-width navigation slot with selection, disabled semantics and token-driven color motion. */
+@Composable
+fun RowScope.NavigationBarItem(
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: NavigationBarColors = NavigationBarDefaults.colors(),
+    motion: OxygenMotionSpec = NavigationBarDefaults.Motion,
+    label: (@Composable () -> Unit)? = null,
+    icon: @Composable () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val progress = rememberOxygenAnimation(spec = motion, initialValue = if (selected) 1f else 0f)
@@ -133,6 +133,7 @@ private fun BottomBarTab(
 
     Column(
         modifier = modifier
+            .weight(1f)
             .fillMaxHeight()
             .selectable(
                 selected = selected,
@@ -150,20 +151,19 @@ private fun BottomBarTab(
                 interactionSource = interactionSource,
                 indication = IndicationDefaults.ripple(
                     bounded = false,
-                    radius = OxygenTheme.spacing.bottomBarHeight,
+                    radius = OxygenTheme.spacing.navigationBarHeight,
                 ),
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Icon(imageVector = icon, contentDescription = null, tint = contentColor)
-        Spacer(modifier = Modifier.height(OxygenTheme.spacing.gapXs))
-        BasicText(
-            text = label,
-            style = OxygenTheme.typography.caption.copy(color = contentColor),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ProvideContentStyle(contentColor = contentColor, textStyle = OxygenTheme.typography.labelMedium) {
+            icon()
+            if (label != null) {
+                Spacer(modifier = Modifier.height(OxygenTheme.spacing.gapXs))
+                label()
+            }
+        }
     }
 }
 
@@ -173,14 +173,14 @@ private fun BottomBarTab(
  * 抽成纯函数便于单测：调用方常把「当前路由」直接当下标传进来，切换页面期间可能出现
  * 越界值，组件本身不应该因此崩掉或整行都不高亮。
  */
-internal fun bottomBarSafeIndex(index: Int, count: Int): Int {
+internal fun navigationBarSafeIndex(index: Int, count: Int): Int {
     if (count <= 0) return 0
     return index.coerceIn(0, count - 1)
 }
 
 object NavigationBarDefaults {
     val Height: Dp
-        @Composable get() = OxygenTheme.spacing.bottomBarHeight
+        @Composable get() = OxygenTheme.spacing.navigationBarHeight
 
     val DividerHeight: Dp
         @Composable get() = OxygenTheme.spacing.dividerThickness

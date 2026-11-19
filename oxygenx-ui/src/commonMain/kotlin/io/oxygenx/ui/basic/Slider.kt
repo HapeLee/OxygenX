@@ -3,11 +3,13 @@
 package io.oxygenx.ui.basic
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,12 +24,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.progressBarRangeInfo
@@ -35,6 +46,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import io.oxygenx.motion.OxygenMotionDefaults
 import io.oxygenx.motion.OxygenMotionSpec
 import io.oxygenx.motion.rememberOxygenAnimation
@@ -61,7 +73,7 @@ import kotlin.math.roundToInt
  * @param colors 轨道、拇指与水波纹颜色集合。
  * @param motion 按压水波纹的扩散规格。
  * @param interactionSource 交互状态源（M3 口径），可外部观察按压；`null` 时内部自建。
- * @param onValueChangeFinished 手势结束时回调，可用于持久化。
+ * @param onValueChangeFinished 手势结束、键盘每一步或无障碍调节完成后回调，可用于持久化。
  * @param track 轨道内容槽：给了之后默认轨道（空轨 / 进度 / 档位点）不再绘制，自己按
  *   [SliderScope] 的 `fraction` 画；槽位铺满整行高度。
  * @param thumb 拇指内容槽：给了之后默认拇指圆不再绘制，按 `fraction` 定位到轨道位置。
@@ -81,17 +93,26 @@ fun Slider(
     track: (@Composable SliderScope.() -> Unit)? = null,
     thumb: (@Composable SliderScope.() -> Unit)? = null,
 ) {
+    require(steps >= 0) { "steps must be non-negative" }
+    require(value.isFinite()) { "value must be finite" }
+    require(valueRange.start.isFinite() && valueRange.endInclusive.isFinite() && valueRange.start <= valueRange.endInclusive) {
+        "valueRange must be finite and ordered"
+    }
     val trackHeight = SliderDefaults.TrackHeight
     val thumbSize = SliderDefaults.ThumbSize
     val rippleRadius = SliderDefaults.RippleRadius
     val tickSize = SliderDefaults.TickSize
     var pressed by remember { mutableStateOf(false) }
     val source = interactionSource ?: remember { MutableInteractionSource() }
+    val focused by source.collectIsFocusedAsState()
+    val focusRequester = remember { FocusRequester() }
+    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val gestures = rememberCoroutineScope()
     val ripple = rememberOxygenAnimation(spec = motion)
     LaunchedEffect(pressed, ripple) { ripple.animateTo(if (pressed) 1f else 0f) }
     val currentOnValueChange by rememberUpdatedState(onValueChange)
     val currentOnFinished by rememberUpdatedState(onValueChangeFinished)
+    val currentValue by rememberUpdatedState(value)
     val fraction = valueToFraction(value, valueRange)
     val scope = remember(fraction, enabled, steps, valueRange) {
         SliderScope(
@@ -101,22 +122,40 @@ fun Slider(
             valueRange = valueRange,
         )
     }
+    fun commit(target: Float): Boolean {
+        val snapped = snapSliderValue(target, valueRange, steps)
+        if (snapped == currentValue.coerceIn(valueRange)) return false
+        currentOnValueChange(snapped)
+        currentOnFinished?.invoke()
+        return true
+    }
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(OxygenTheme.spacing.touchTargetMin)
-            .pointerInput(enabled, valueRange, steps, thumbSize) {
+            .focusRequester(focusRequester)
+            .onKeyEvent { event ->
+                if (!enabled) return@onKeyEvent false
+                val target = sliderKeyTarget(currentValue, event.key, valueRange, steps, isRtl)
+                    ?: return@onKeyEvent false
+                if (event.type == KeyEventType.KeyDown) commit(target)
+                true
+            }
+            .focusable(enabled = enabled, interactionSource = source)
+            .pointerInput(enabled, valueRange, steps, thumbSize, isRtl, source) {
                 if (!enabled) return@pointerInput
                 val radius = thumbSize.toPx() / 2f
                 awaitEachGesture {
                     fun update(pointerX: Float) {
                         val trackWidth = size.width - radius * 2f
                         if (trackWidth <= 0f) return
-                        val rawFraction = ((pointerX - radius) / trackWidth).coerceIn(0f, 1f)
+                        val visualFraction = ((pointerX - radius) / trackWidth).coerceIn(0f, 1f)
+                        val rawFraction = if (isRtl) 1f - visualFraction else visualFraction
                         currentOnValueChange(fractionToValue(rawFraction, valueRange, steps))
                     }
                     val down = awaitFirstDown(requireUnconsumed = false)
+                    focusRequester.requestFocus()
                     pressed = true
                     // 按压态同时写进 interactionSource：外部 collectIsPressedAsState 能拿到。
                     // 指针作用域是受限挂起作用域，emit 必须转到普通 scope 里。
@@ -124,29 +163,29 @@ fun Slider(
                     gestures.launch { source.emit(press) }
                     update(down.position.x)
                     down.consume()
+                    var completed = false
                     try {
-                        drag(down.id) { change ->
+                        completed = drag(down.id) { change ->
                             update(change.position.x)
                             change.consume()
                         }
                     } finally {
                         // 抬手或被取消都要收回水波纹，否则会卡在按下态。
                         pressed = false
-                        gestures.launch { source.emit(PressInteraction.Cancel(press)) }
+                        gestures.launch {
+                            source.emit(if (completed) PressInteraction.Release(press) else PressInteraction.Cancel(press))
+                        }
                         currentOnFinished?.invoke()
                     }
                 }
             }
             .semantics {
-                progressBarRangeInfo = ProgressBarRangeInfo(value, valueRange, steps)
+                progressBarRangeInfo = ProgressBarRangeInfo(value.coerceIn(valueRange), valueRange, steps)
                 if (!enabled) {
                     disabled()
                 } else {
                     setProgress { target ->
-                        currentOnValueChange(
-                            snapSliderValue(target, valueRange, steps),
-                        )
-                        true
+                        if (target.isFinite()) commit(target) else false
                     }
                 }
             },
@@ -164,6 +203,7 @@ fun Slider(
                     trackColor = colors.resolveTrackColor(enabled),
                     activeColor = colors.resolveActiveColor(enabled),
                     tickColor = colors.tick,
+                    isRtl = isRtl,
                 )
             }
         } else {
@@ -173,7 +213,15 @@ fun Slider(
         Canvas(modifier = Modifier.matchParentSize()) {
             val radius = thumbSize.toPx() / 2f
             val centerY = size.height / 2f
-            val thumbX = sliderThumbX(size.width, radius, fraction)
+            val thumbX = sliderThumbX(size.width, radius, fraction, isRtl)
+            if (focused && enabled) {
+                drawCircle(
+                    color = colors.ripple,
+                    radius = rippleRadius.toPx(),
+                    center = Offset(thumbX, centerY),
+                    style = Stroke(width = trackHeight.toPx()),
+                )
+            }
             val progress = ripple.value
             if (progress > 0f) {
                 // 按压/拖动的圆形水波纹：圆心跟着拇指走，从拇指半径扩散到 16dp 半径。
@@ -195,7 +243,7 @@ fun Slider(
         }
 
         if (thumb != null) {
-            SliderThumbSlot(fraction = fraction, modifier = Modifier.matchParentSize()) {
+            SliderThumbSlot(fraction = fraction, isRtl = isRtl, modifier = Modifier.matchParentSize()) {
                 thumb(scope)
             }
         }
@@ -236,6 +284,7 @@ private fun DrawScope.drawSliderTrack(
     trackColor: Color,
     activeColor: Color,
     tickColor: Color,
+    isRtl: Boolean,
 ) {
     val radius = thumbSize.toPx() / 2f
     // 拇指行程是「整宽减两端半径」，轨道本身铺满整宽：真机滑块的空轨是一条
@@ -244,7 +293,7 @@ private fun DrawScope.drawSliderTrack(
     val travelEndX = (size.width - radius).coerceAtLeast(travelStartX)
     val centerY = size.height / 2f
     val strokeWidth = trackHeight.toPx()
-    val thumbX = sliderThumbX(size.width, radius, fraction)
+    val thumbX = sliderThumbX(size.width, radius, fraction, isRtl)
 
     drawLine(
         color = trackColor,
@@ -256,7 +305,7 @@ private fun DrawScope.drawSliderTrack(
     if (thumbX > 0f) {
         drawLine(
             color = activeColor,
-            start = Offset(strokeWidth / 2f, centerY),
+            start = Offset(if (isRtl) size.width - strokeWidth / 2f else strokeWidth / 2f, centerY),
             end = Offset(thumbX, centerY),
             strokeWidth = strokeWidth,
             cap = StrokeCap.Round,
@@ -295,6 +344,7 @@ private fun SliderTrackSlot(
 @Composable
 private fun SliderThumbSlot(
     fraction: Float,
+    isRtl: Boolean,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -306,7 +356,7 @@ private fun SliderThumbSlot(
             Constraints(maxWidth = width, maxHeight = height),
         )
         val radius = thumbSize.toPx() / 2f
-        val thumbX = sliderThumbX(width.toFloat(), radius, fraction)
+        val thumbX = sliderThumbX(width.toFloat(), radius, fraction, isRtl)
         layout(width, height) {
             placeable.place(
                 (thumbX - placeable.width / 2f).roundToInt(),
@@ -317,10 +367,36 @@ private fun SliderThumbSlot(
 }
 
 /** 拇指中心相对整行左边的 x（像素）。 */
-private fun sliderThumbX(width: Float, radius: Float, fraction: Float): Float {
+private fun sliderThumbX(width: Float, radius: Float, fraction: Float, isRtl: Boolean): Float {
     val start = radius
     val end = (width - radius).coerceAtLeast(start)
-    return start + (end - start) * fraction.coerceIn(0f, 1f)
+    val visualFraction = if (isRtl) 1f - fraction else fraction
+    return start + (end - start) * visualFraction.coerceIn(0f, 1f)
+}
+
+/** 键盘以逻辑值调节；水平箭头随 RTL 镜像，Home / End 始终表示区间端点。 */
+internal fun sliderKeyTarget(
+    value: Float,
+    key: Key,
+    valueRange: ClosedFloatingPointRange<Float>,
+    steps: Int,
+    isRtl: Boolean,
+): Float? {
+    val intervals = if (steps > 0) steps + 1 else 100
+    val delta = (valueRange.endInclusive - valueRange.start) / intervals
+    val page = (intervals / 10).coerceAtLeast(1)
+    val target = when (key) {
+        Key.DirectionRight -> value + if (isRtl) -delta else delta
+        Key.DirectionLeft -> value + if (isRtl) delta else -delta
+        Key.DirectionUp -> value + delta
+        Key.DirectionDown -> value - delta
+        Key.MoveHome -> valueRange.start
+        Key.MoveEnd -> valueRange.endInclusive
+        Key.PageUp -> value + delta * page
+        Key.PageDown -> value - delta * page
+        else -> return null
+    }
+    return snapSliderValue(target, valueRange, steps)
 }
 
 object SliderDefaults {

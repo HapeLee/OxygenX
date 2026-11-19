@@ -51,7 +51,9 @@ private fun BottomSheetVariants() {
         BasicText(
             text = "语义对齐 M3：默认「半屏 ↔ 全屏 ↔ 收起」三档（传 skipPartiallyExpanded = true " +
                 "退化成两档），入场自动 show()，收起走 sheetState.hide()；" +
-                "点遮罩 / 返回键会先播完下滑再回调 onDismissRequest",
+                "点遮罩 / 返回键都会先播完下滑再回调 onDismissRequest；" +
+                "Android 14+ 从屏幕侧边往回划是预测式返回，面板跟着手势下移、松手前退回则弹回原档" +
+                "（宿主需开启 android:enableOnBackInvokedCallback=\"true\"）",
             modifier = Modifier.fillMaxWidth(),
             style = caption,
         )

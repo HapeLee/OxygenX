@@ -13,7 +13,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.compose.runtime)
+            api(libs.compose.runtime)
         }
         androidMain.dependencies {
             implementation(libs.compose.ui)

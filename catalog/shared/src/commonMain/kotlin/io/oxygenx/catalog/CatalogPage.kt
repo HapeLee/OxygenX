@@ -13,13 +13,13 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import io.oxygenx.catalog.component.PagerTopBarDemoScreen
 import io.oxygenx.catalog.component.PullRefreshDemoScreen
 import io.oxygenx.catalog.component.TopBarDemoScreen
 import io.oxygenx.catalog.component.badgeSection
-import io.oxygenx.catalog.component.bottomBarSection
 import io.oxygenx.catalog.component.bottomSheetSection
 import io.oxygenx.catalog.component.buttonSection
 import io.oxygenx.catalog.component.cardSection
@@ -29,7 +29,7 @@ import io.oxygenx.catalog.component.dialogSection
 import io.oxygenx.catalog.component.dropdownMenuSection
 import io.oxygenx.catalog.component.fabSection
 import io.oxygenx.catalog.component.iconButtonSection
-import io.oxygenx.catalog.component.navigationDrawerSection
+import io.oxygenx.catalog.component.navigationBarSection
 import io.oxygenx.catalog.component.navigationRailSection
 import io.oxygenx.catalog.component.overscrollSection
 import io.oxygenx.catalog.component.progressSection
@@ -46,6 +46,7 @@ import io.oxygenx.catalog.component.swipeToDismissSection
 import io.oxygenx.catalog.component.switchSection
 import io.oxygenx.catalog.component.tabRowSection
 import io.oxygenx.catalog.component.textFieldSection
+import io.oxygenx.catalog.component.textIconSection
 import io.oxygenx.catalog.component.tooltipSection
 import io.oxygenx.catalog.icon.IconGalleryPage
 import io.oxygenx.catalog.ui.DemoCard
@@ -123,14 +124,17 @@ fun catalogSections(onOpen: (CatalogScreen) -> Unit): List<CatalogSection> = lis
     ) {
         scaffoldSection(onOpenScaffoldDemo = { onOpen(CatalogScreen.ScaffoldDemo) })
     },
-    CatalogSection(id = "cmp-bottom-bar", title = "BottomBar / 底栏", specId = "CMP-BOTTOM-BAR") {
-        bottomBarSection()
+    CatalogSection(id = "cmp-navigation-bar", title = "NavigationBar / 底栏导航", specId = "CMP-NAVIGATION-BAR") {
+        navigationBarSection()
     },
     CatalogSection(id = "cmp-button", title = "Button / 按钮", specId = "CMP-BUTTON") {
         buttonSection()
     },
     CatalogSection(id = "cmp-icon-button", title = "IconButton / 图标按钮", specId = "CMP-ICON-BUTTON") {
         iconButtonSection()
+    },
+    CatalogSection(id = "cmp-text-icon", title = "Text / Icon", specId = "CMP-TEXT / CMP-ICON") {
+        textIconSection()
     },
     CatalogSection(id = "cmp-chip", title = "Chip / 芯片", specId = "CMP-CHIP") {
         chipSection()
@@ -168,13 +172,6 @@ fun catalogSections(onOpen: (CatalogScreen) -> Unit): List<CatalogSection> = lis
         specId = "CMP-NAVIGATION-RAIL",
     ) {
         navigationRailSection()
-    },
-    CatalogSection(
-        id = "cmp-navigation-drawer",
-        title = "NavigationDrawer / 侧边抽屉",
-        specId = "CMP-NAVIGATION-DRAWER",
-    ) {
-        navigationDrawerSection()
     },
     CatalogSection(id = "cmp-switch", title = "Switch / 开关", specId = "CMP-SWITCH") {
         switchSection()
@@ -317,7 +314,7 @@ private fun ComponentsPage(
 ) {
     val page = catalogPageSpacing(fullBleed = true)
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().testTag("oxygenx-catalog-index"),
         contentPadding = page.contentPadding(),
     ) {
         item(key = "catalog-index-group") { SettingsGroupTitle("组件示例") }
@@ -344,6 +341,7 @@ private fun AboutPage(
     onDynamicColorChange: (Boolean) -> Unit,
 ) {
     val page = catalogPageSpacing()
+    val buildInfo = LocalCatalogBuildInfo.current
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = page.contentPadding(),
@@ -377,6 +375,7 @@ private fun AboutPage(
         }
         item(key = "catalog-about-info") {
             DemoCard {
+                if (buildInfo != null) AboutLine(title = "版本", body = buildInfo)
                 AboutLine(
                     title = "定位",
                     body = "第三方非官方实现：只复刻可观察的视觉规律与动效，不搬运厂商二进制与受版权" +

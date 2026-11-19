@@ -63,6 +63,30 @@ object OxygenMotion {
 }
 
 object OxygenMotionDefaults {
+    private val menuScaleSpec: OxygenMotionSpec by lazy {
+        val spring = OxygenMotion.spring(
+            dampingRatio = GeneratedTokens.SPRING_MENU_SPATIAL_DAMPING_RATIO,
+            stiffness = GeneratedTokens.SPRING_MENU_SPATIAL_STIFFNESS,
+            visibilityThreshold = GeneratedTokens.SPRING_MENU_SPATIAL_VISIBILITY_THRESHOLD,
+        )
+        OxygenMotionSpec("MOT-ENTER-002", spring, spring)
+    }
+
+    /** M3 菜单的 menuScale 过渡；E0 / draft，阈值不是设备测量。 */
+    fun menuScale(): OxygenMotionSpec = menuScaleSpec
+
+    private val menuFadeSpec: OxygenMotionSpec by lazy {
+        val spring = OxygenMotion.spring(
+            dampingRatio = GeneratedTokens.SPRING_MENU_EFFECTS_DAMPING_RATIO,
+            stiffness = GeneratedTokens.SPRING_MENU_EFFECTS_STIFFNESS,
+            visibilityThreshold = GeneratedTokens.SPRING_MENU_EFFECTS_VISIBILITY_THRESHOLD,
+        )
+        OxygenMotionSpec("MOT-ENTER-003", spring, spring)
+    }
+
+    /** M3 菜单的 menuFade 过渡；E0 / draft，阈值不是设备测量。 */
+    fun menuFade(): OxygenMotionSpec = menuFadeSpec
+
     private val switchToggleSpec: OxygenMotionSpec by lazy {
         val spring = OxygenMotion.spring(
             dampingRatio = GeneratedTokens.SPRING_SNAPPY_DAMPING_RATIO,
@@ -78,6 +102,17 @@ object OxygenMotionDefaults {
 
     /** 开关拇指位移与状态切换（`spec.switch.toggle`）。 */
     fun switchToggle(): OxygenMotionSpec = switchToggleSpec
+
+    private val inputFocusSpec: OxygenMotionSpec by lazy {
+        OxygenMotionSpec(
+            specId = "MOT-STATE-006",
+            enter = switchToggleSpec.enter,
+            exit = switchToggleSpec.exit,
+        )
+    }
+
+    /** 输入框聚焦指示线的粗细与颜色过渡（`spec.input.focus`，E0 / draft）。 */
+    fun inputFocus(): OxygenMotionSpec = inputFocusSpec
 
     private val appBarCollapseSpec: OxygenMotionSpec by lazy {
         val spring = OxygenMotion.spring(

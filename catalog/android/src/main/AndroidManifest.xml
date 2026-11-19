@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- enableOnBackInvokedCallback：开启 Android 14+ 的预测式返回，底部面板靠它做跟手回退。 -->
     <application
         android:allowBackup="false"
+        android:enableOnBackInvokedCallback="true"
         android:label="OxygenX Catalog"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+        <profileable android:shell="true" />
 
         <activity
             android:name=".MainActivity"

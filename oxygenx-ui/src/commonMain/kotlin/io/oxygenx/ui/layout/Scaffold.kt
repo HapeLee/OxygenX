@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import io.oxygenx.theme.LocalContentColor
 import io.oxygenx.theme.OxygenTheme
 import io.oxygenx.theme.contentColorFor
+import io.oxygenx.ui.feedback.LocalRefreshTopAppBarState
 import io.oxygenx.ui.navigation.TopAppBarState
 
 /** 悬浮按钮的横向位置；纵向始终贴在内容区底部（底栏之上）。 */
@@ -83,8 +84,7 @@ fun Scaffold(
     val resolvedContentColor = if (contentColor.isSpecified) {
         contentColor
     } else {
-        val mapped = OxygenTheme.colorScheme.contentColorFor(containerColor)
-        if (mapped.isSpecified) mapped else OxygenTheme.colorScheme.onSurface
+        contentColorFor(containerColor)
     }
     val bottomInset = contentWindowInsets.asPaddingValues().calculateBottomPadding()
     val contentNestedScroll = if (topBarState != null) {
@@ -118,7 +118,10 @@ fun Scaffold(
                 .clipToBounds(),
         ) {
             // 页面内容统一拿到内容色：容器色换掉时，里面的文字 / 图标自动跟着换。
-            CompositionLocalProvider(LocalContentColor provides resolvedContentColor) {
+            CompositionLocalProvider(
+                LocalContentColor provides resolvedContentColor,
+                LocalRefreshTopAppBarState provides (topBarState ?: LocalRefreshTopAppBarState.current),
+            ) {
                 content(PaddingValues(bottom = contentBottomInset))
             }
             if (snackbarHost != null || floatingActionButton != null) {

@@ -2,3 +2,11 @@ public final class io/oxygenx/material3/Material3ColorSchemeKt {
 	public static final fun toOxygenColorScheme (Landroidx/compose/material3/ColorScheme;)Lio/oxygenx/theme/OxygenColorScheme;
 }
 
+public final class io/oxygenx/material3/Material3ContentKt {
+	public static final fun ProvideMaterial3Content (Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class io/oxygenx/material3/TypographyInteropKt {
+	public static final fun toOxygenTypography (Landroidx/compose/material3/Typography;)Lio/oxygenx/theme/OxygenTypography;
+}
+

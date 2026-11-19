@@ -6,6 +6,15 @@ public final class io/oxygenx/theme/ColorSchemeKt {
 	public static synthetic fun lightColorScheme--OWjLjI$default (JJILjava/lang/Object;)Lio/oxygenx/theme/OxygenColorScheme;
 }
 
+public final class io/oxygenx/theme/ContentStyleKt {
+	public static final fun ProvideContentStyle-KTwxG1Y (JLandroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun contentColorFor-ek8zF_U (JLandroidx/compose/runtime/Composer;I)J
+}
+
+public final class io/oxygenx/theme/DesignSystemKt {
+	public static final fun getCornerMenu (Lio/oxygenx/theme/OxygenShapes;)Landroidx/compose/foundation/shape/RoundedCornerShape;
+}
+
 public final class io/oxygenx/theme/OverscrollKt {
 	public static final fun OverscrollProvider (Lio/oxygenx/theme/OxygenSpacing;Lio/oxygenx/theme/OxygenInteraction;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
@@ -160,7 +169,7 @@ public final class io/oxygenx/theme/OxygenShapes {
 
 public final class io/oxygenx/theme/OxygenSpacing {
 	public static final field $stable I
-	public synthetic fun <init> (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-D9Ej5fM ()F
 	public final fun component10-D9Ej5fM ()F
 	public final fun component11-D9Ej5fM ()F
@@ -237,11 +246,10 @@ public final class io/oxygenx/theme/OxygenSpacing {
 	public final fun component76-D9Ej5fM ()F
 	public final fun component77-D9Ej5fM ()F
 	public final fun component78-D9Ej5fM ()F
-	public final fun component79-D9Ej5fM ()F
 	public final fun component8-D9Ej5fM ()F
 	public final fun component9-D9Ej5fM ()F
-	public final fun copy-nib15kg (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)Lio/oxygenx/theme/OxygenSpacing;
-	public static synthetic fun copy-nib15kg$default (Lio/oxygenx/theme/OxygenSpacing;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIIILjava/lang/Object;)Lio/oxygenx/theme/OxygenSpacing;
+	public final fun copy-o03rcAo (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)Lio/oxygenx/theme/OxygenSpacing;
+	public static synthetic fun copy-o03rcAo$default (Lio/oxygenx/theme/OxygenSpacing;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIIILjava/lang/Object;)Lio/oxygenx/theme/OxygenSpacing;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppBarActionRippleRadius-D9Ej5fM ()F
 	public final fun getAppBarCollapseDistance-D9Ej5fM ()F
@@ -256,7 +264,6 @@ public final class io/oxygenx/theme/OxygenSpacing {
 	public final fun getBadgeDot-D9Ej5fM ()F
 	public final fun getBadgeHeight-D9Ej5fM ()F
 	public final fun getBadgePaddingHorizontal-D9Ej5fM ()F
-	public final fun getBottomBarHeight-D9Ej5fM ()F
 	public final fun getButtonHeight-D9Ej5fM ()F
 	public final fun getButtonHorizontalPadding-D9Ej5fM ()F
 	public final fun getCardPadding-D9Ej5fM ()F
@@ -271,7 +278,6 @@ public final class io/oxygenx/theme/OxygenSpacing {
 	public final fun getDialogInset-D9Ej5fM ()F
 	public final fun getDialogPadding-D9Ej5fM ()F
 	public final fun getDividerThickness-D9Ej5fM ()F
-	public final fun getDrawerWidth-D9Ej5fM ()F
 	public final fun getFabLarge-D9Ej5fM ()F
 	public final fun getFabSize-D9Ej5fM ()F
 	public final fun getFabSmall-D9Ej5fM ()F
@@ -290,6 +296,7 @@ public final class io/oxygenx/theme/OxygenSpacing {
 	public final fun getMenuItemPaddingHorizontal-D9Ej5fM ()F
 	public final fun getMenuMinWidth-D9Ej5fM ()F
 	public final fun getMenuPaddingVertical-D9Ej5fM ()F
+	public final fun getNavigationBarHeight-D9Ej5fM ()F
 	public final fun getOverscrollMax-D9Ej5fM ()F
 	public final fun getProgressCircularSize-D9Ej5fM ()F
 	public final fun getProgressCircularStroke-D9Ej5fM ()F
@@ -341,7 +348,7 @@ public final class io/oxygenx/theme/OxygenTheme {
 }
 
 public final class io/oxygenx/theme/OxygenThemeKt {
-	public static final fun OxygenTheme (ZLio/oxygenx/theme/OxygenColorScheme;Lio/oxygenx/theme/OxygenSpacing;Lio/oxygenx/theme/OxygenShapes;Lio/oxygenx/theme/OxygenTypography;Lio/oxygenx/theme/OxygenIconMetrics;Lio/oxygenx/theme/OxygenLayout;Lio/oxygenx/theme/OxygenInteraction;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun OxygenTheme (Ljava/lang/Boolean;Lio/oxygenx/theme/OxygenColorScheme;Lio/oxygenx/theme/OxygenSpacing;Lio/oxygenx/theme/OxygenShapes;Lio/oxygenx/theme/OxygenTypography;Lio/oxygenx/theme/OxygenIconMetrics;Lio/oxygenx/theme/OxygenLayout;Lio/oxygenx/theme/OxygenInteraction;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProvideTextStyle (Landroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
 	public static final fun getLocalContentColor ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun getLocalTextStyle ()Landroidx/compose/runtime/ProvidableCompositionLocal;
@@ -350,11 +357,14 @@ public final class io/oxygenx/theme/OxygenThemeKt {
 public final class io/oxygenx/theme/OxygenTypography {
 	public static final field $stable I
 	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V
+	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/oxygenx/theme/OxygenTypographyExtras;)V
+	public synthetic fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/oxygenx/theme/OxygenTypographyExtras;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component10 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component11 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component12 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component13 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component14 ()Lio/oxygenx/theme/OxygenTypographyExtras;
 	public final fun component2 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component3 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component4 ()Landroidx/compose/ui/text/TextStyle;
@@ -363,24 +373,62 @@ public final class io/oxygenx/theme/OxygenTypography {
 	public final fun component7 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component8 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component9 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Lio/oxygenx/theme/OxygenTypography;
+	public final synthetic fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Lio/oxygenx/theme/OxygenTypography;
+	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/oxygenx/theme/OxygenTypographyExtras;)Lio/oxygenx/theme/OxygenTypography;
 	public static synthetic fun copy$default (Lio/oxygenx/theme/OxygenTypography;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Lio/oxygenx/theme/OxygenTypography;
+	public static synthetic fun copy$default (Lio/oxygenx/theme/OxygenTypography;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/oxygenx/theme/OxygenTypographyExtras;ILjava/lang/Object;)Lio/oxygenx/theme/OxygenTypography;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppBarSubtitle ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getAppbarTitle ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getBodyLarge ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getBodyMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getBodySmall ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getCaption ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getClockTime ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getDialogAction ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getDialogTitle ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getDisplayLarge ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getDisplayMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getDisplaySmall ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getExtras ()Lio/oxygenx/theme/OxygenTypographyExtras;
+	public final fun getHeadlineLarge ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getHeadlineMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getHeadlineSmall ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getInputText ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getLabelLarge ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getLabelMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getLabelSmall ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getListItemTitle ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getTitleLarge ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getTitleMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getTitleSmall ()Landroidx/compose/ui/text/TextStyle;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/OxygenTypographyExtras {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V
+	public final fun component1 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component2 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component3 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component4 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun component5 ()Landroidx/compose/ui/text/TextStyle;
+	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Lio/oxygenx/theme/OxygenTypographyExtras;
+	public static synthetic fun copy$default (Lio/oxygenx/theme/OxygenTypographyExtras;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Lio/oxygenx/theme/OxygenTypographyExtras;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDisplayMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getDisplaySmall ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getHeadlineMedium ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getLabelSmall ()Landroidx/compose/ui/text/TextStyle;
+	public final fun getTitleSmall ()Landroidx/compose/ui/text/TextStyle;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/oxygenx/theme/TypographyKt {
+	public static final fun OxygenTypography (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Lio/oxygenx/theme/OxygenTypography;
+	public static synthetic fun OxygenTypography$default (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Lio/oxygenx/theme/OxygenTypography;
 }
 
 public final class io/oxygenx/theme/generated/GeneratedTokens {
@@ -465,8 +513,11 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field DURATION_SHORT_MILLIS J
 	public static final field EASING_STANDARD_CURVE Ljava/lang/String;
 	public static final field EFFECT_DISMISS_THRESHOLD F
+	public static final field EFFECT_MENU_CLOSED_SCALE F
 	public static final field EFFECT_OVERSCROLL_DRAG_SCALE F
 	public static final field EFFECT_REFRESH_DRAG_SCALE F
+	public static final field ELEVATION_MENU F
+	public static final field ICON_SIZE_APPBAR_NAVIGATION_COMPACT F
 	public static final field ICON_SIZE_LARGE F
 	public static final field ICON_SIZE_MEDIUM F
 	public static final field ICON_SIZE_SMALL F
@@ -474,6 +525,7 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SHAPE_CORNER_BUTTON F
 	public static final field SHAPE_CORNER_CARD F
 	public static final field SHAPE_CORNER_INPUT F
+	public static final field SHAPE_CORNER_MENU F
 	public static final field SIZE_APPBAR_ACTION_RIPPLE F
 	public static final field SIZE_APPBAR_COLLAPSED_HEIGHT F
 	public static final field SIZE_APPBAR_COLLAPSE_DISTANCE F
@@ -483,7 +535,6 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SIZE_APPBAR_PAGER_INDICATOR_HEIGHT F
 	public static final field SIZE_BADGE_DOT F
 	public static final field SIZE_BADGE_HEIGHT F
-	public static final field SIZE_BOTTOM_BAR_HEIGHT F
 	public static final field SIZE_BUTTON_HEIGHT F
 	public static final field SIZE_BUTTON_PADDING_HORIZONTAL F
 	public static final field SIZE_CHIP_BORDER_WIDTH F
@@ -496,7 +547,6 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SIZE_DIALOG_INSET F
 	public static final field SIZE_DIALOG_PADDING F
 	public static final field SIZE_DIVIDER_THICKNESS F
-	public static final field SIZE_DRAWER_WIDTH F
 	public static final field SIZE_FAB F
 	public static final field SIZE_FAB_LARGE F
 	public static final field SIZE_FAB_SMALL F
@@ -505,7 +555,9 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SIZE_INPUT_INDICATOR_THICKNESS_FOCUSED F
 	public static final field SIZE_LIST_ROW_MIN_HEIGHT F
 	public static final field SIZE_MENU_ITEM_HEIGHT F
+	public static final field SIZE_MENU_MAX_WIDTH F
 	public static final field SIZE_MENU_MIN_WIDTH F
+	public static final field SIZE_NAVIGATION_BAR_HEIGHT F
 	public static final field SIZE_PROGRESS_CIRCULAR_SIZE F
 	public static final field SIZE_PROGRESS_CIRCULAR_STROKE F
 	public static final field SIZE_PROGRESS_LINEAR_HEIGHT F
@@ -528,6 +580,7 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SIZE_TAB_MIN_WIDTH F
 	public static final field SIZE_TAB_ROW_HEIGHT F
 	public static final field SIZE_TOOLTIP_MAX_WIDTH F
+	public static final field SPACE_APPBAR_COMPACT_CONTENT_OFFSET F
 	public static final field SPACE_APPBAR_PAGER_TITLE_GAP F
 	public static final field SPACE_APPBAR_PAGER_TOP F
 	public static final field SPACE_APPBAR_SUBTITLE_TIGHTEN F
@@ -542,11 +595,14 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SPACE_LIST_GROUP_GAP F
 	public static final field SPACE_LIST_ITEM_INSET F
 	public static final field SPACE_LIST_TOP F
+	public static final field SPACE_MENU_ICON_GAP F
 	public static final field SPACE_MENU_ITEM_PADDING_HORIZONTAL F
 	public static final field SPACE_MENU_PADDING_VERTICAL F
+	public static final field SPACE_MENU_WINDOW_MARGIN F
 	public static final field SPACE_OVERSCROLL_MAX F
 	public static final field SPACE_REFRESH_MAX F
 	public static final field SPACE_REFRESH_THRESHOLD F
+	public static final field SPACE_SEARCH_BAR_PADDING_HORIZONTAL F
 	public static final field SPACE_SETTINGS_DIVIDER_GAP F
 	public static final field SPACE_SETTINGS_SWITCH_INSET F
 	public static final field SPACE_SHEET_HANDLE_INSET F
@@ -558,6 +614,12 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SPEC_APPBAR_COLLAPSE_EXIT Ljava/lang/String;
 	public static final field SPEC_DIALOG_SLIDE_ENTER Ljava/lang/String;
 	public static final field SPEC_DIALOG_SLIDE_EXIT Ljava/lang/String;
+	public static final field SPEC_INPUT_FOCUS_ENTER Ljava/lang/String;
+	public static final field SPEC_INPUT_FOCUS_EXIT Ljava/lang/String;
+	public static final field SPEC_MENU_EFFECTS_ENTER Ljava/lang/String;
+	public static final field SPEC_MENU_EFFECTS_EXIT Ljava/lang/String;
+	public static final field SPEC_MENU_SPATIAL_ENTER Ljava/lang/String;
+	public static final field SPEC_MENU_SPATIAL_EXIT Ljava/lang/String;
 	public static final field SPEC_SCROLL_OVERSCROLL_ENTER Ljava/lang/String;
 	public static final field SPEC_SCROLL_OVERSCROLL_EXIT Ljava/lang/String;
 	public static final field SPEC_SWITCH_TOGGLE_ENTER Ljava/lang/String;
@@ -567,6 +629,12 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SPRING_DIALOG_DAMPING_RATIO F
 	public static final field SPRING_DIALOG_STIFFNESS F
 	public static final field SPRING_DIALOG_VISIBILITY_THRESHOLD F
+	public static final field SPRING_MENU_EFFECTS_DAMPING_RATIO F
+	public static final field SPRING_MENU_EFFECTS_STIFFNESS F
+	public static final field SPRING_MENU_EFFECTS_VISIBILITY_THRESHOLD F
+	public static final field SPRING_MENU_SPATIAL_DAMPING_RATIO F
+	public static final field SPRING_MENU_SPATIAL_STIFFNESS F
+	public static final field SPRING_MENU_SPATIAL_VISIBILITY_THRESHOLD F
 	public static final field SPRING_OVERSCROLL_DAMPING_RATIO F
 	public static final field SPRING_OVERSCROLL_STIFFNESS F
 	public static final field SPRING_OVERSCROLL_VISIBILITY_THRESHOLD F
@@ -594,6 +662,11 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field TYPE_BODY_MEDIUM_LINE_HEIGHT F
 	public static final field TYPE_BODY_MEDIUM_SIZE F
 	public static final field TYPE_BODY_MEDIUM_WEIGHT I
+	public static final field TYPE_BODY_SMALL_FAMILY Ljava/lang/String;
+	public static final field TYPE_BODY_SMALL_LETTER_SPACING F
+	public static final field TYPE_BODY_SMALL_LINE_HEIGHT F
+	public static final field TYPE_BODY_SMALL_SIZE F
+	public static final field TYPE_BODY_SMALL_WEIGHT I
 	public static final field TYPE_CAPTION_FAMILY Ljava/lang/String;
 	public static final field TYPE_CAPTION_LETTER_SPACING F
 	public static final field TYPE_CAPTION_LINE_HEIGHT F
@@ -619,25 +692,70 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field TYPE_DISPLAY_LARGE_LINE_HEIGHT F
 	public static final field TYPE_DISPLAY_LARGE_SIZE F
 	public static final field TYPE_DISPLAY_LARGE_WEIGHT I
+	public static final field TYPE_DISPLAY_MEDIUM_FAMILY Ljava/lang/String;
+	public static final field TYPE_DISPLAY_MEDIUM_LETTER_SPACING F
+	public static final field TYPE_DISPLAY_MEDIUM_LINE_HEIGHT F
+	public static final field TYPE_DISPLAY_MEDIUM_SIZE F
+	public static final field TYPE_DISPLAY_MEDIUM_WEIGHT I
+	public static final field TYPE_DISPLAY_SMALL_FAMILY Ljava/lang/String;
+	public static final field TYPE_DISPLAY_SMALL_LETTER_SPACING F
+	public static final field TYPE_DISPLAY_SMALL_LINE_HEIGHT F
+	public static final field TYPE_DISPLAY_SMALL_SIZE F
+	public static final field TYPE_DISPLAY_SMALL_WEIGHT I
+	public static final field TYPE_HEADLINE_LARGE_FAMILY Ljava/lang/String;
+	public static final field TYPE_HEADLINE_LARGE_LETTER_SPACING F
+	public static final field TYPE_HEADLINE_LARGE_LINE_HEIGHT F
+	public static final field TYPE_HEADLINE_LARGE_SIZE F
+	public static final field TYPE_HEADLINE_LARGE_WEIGHT I
+	public static final field TYPE_HEADLINE_MEDIUM_FAMILY Ljava/lang/String;
+	public static final field TYPE_HEADLINE_MEDIUM_LETTER_SPACING F
+	public static final field TYPE_HEADLINE_MEDIUM_LINE_HEIGHT F
+	public static final field TYPE_HEADLINE_MEDIUM_SIZE F
+	public static final field TYPE_HEADLINE_MEDIUM_WEIGHT I
+	public static final field TYPE_HEADLINE_SMALL_FAMILY Ljava/lang/String;
+	public static final field TYPE_HEADLINE_SMALL_LETTER_SPACING F
+	public static final field TYPE_HEADLINE_SMALL_LINE_HEIGHT F
+	public static final field TYPE_HEADLINE_SMALL_SIZE F
+	public static final field TYPE_HEADLINE_SMALL_WEIGHT I
 	public static final field TYPE_INPUT_TEXT_FAMILY Ljava/lang/String;
 	public static final field TYPE_INPUT_TEXT_LETTER_SPACING F
 	public static final field TYPE_INPUT_TEXT_LINE_HEIGHT F
 	public static final field TYPE_INPUT_TEXT_SIZE F
 	public static final field TYPE_INPUT_TEXT_WEIGHT I
+	public static final field TYPE_LABEL_LARGE_FAMILY Ljava/lang/String;
+	public static final field TYPE_LABEL_LARGE_LETTER_SPACING F
+	public static final field TYPE_LABEL_LARGE_LINE_HEIGHT F
+	public static final field TYPE_LABEL_LARGE_SIZE F
+	public static final field TYPE_LABEL_LARGE_WEIGHT I
 	public static final field TYPE_LABEL_MEDIUM_FAMILY Ljava/lang/String;
 	public static final field TYPE_LABEL_MEDIUM_LETTER_SPACING F
 	public static final field TYPE_LABEL_MEDIUM_LINE_HEIGHT F
 	public static final field TYPE_LABEL_MEDIUM_SIZE F
 	public static final field TYPE_LABEL_MEDIUM_WEIGHT I
+	public static final field TYPE_LABEL_SMALL_FAMILY Ljava/lang/String;
+	public static final field TYPE_LABEL_SMALL_LETTER_SPACING F
+	public static final field TYPE_LABEL_SMALL_LINE_HEIGHT F
+	public static final field TYPE_LABEL_SMALL_SIZE F
+	public static final field TYPE_LABEL_SMALL_WEIGHT I
 	public static final field TYPE_LIST_ITEM_TITLE_FAMILY Ljava/lang/String;
 	public static final field TYPE_LIST_ITEM_TITLE_LETTER_SPACING F
 	public static final field TYPE_LIST_ITEM_TITLE_LINE_HEIGHT F
 	public static final field TYPE_LIST_ITEM_TITLE_SIZE F
 	public static final field TYPE_LIST_ITEM_TITLE_WEIGHT I
+	public static final field TYPE_TITLE_LARGE_FAMILY Ljava/lang/String;
+	public static final field TYPE_TITLE_LARGE_LETTER_SPACING F
+	public static final field TYPE_TITLE_LARGE_LINE_HEIGHT F
+	public static final field TYPE_TITLE_LARGE_SIZE F
+	public static final field TYPE_TITLE_LARGE_WEIGHT I
 	public static final field TYPE_TITLE_MEDIUM_FAMILY Ljava/lang/String;
 	public static final field TYPE_TITLE_MEDIUM_LETTER_SPACING F
 	public static final field TYPE_TITLE_MEDIUM_LINE_HEIGHT F
 	public static final field TYPE_TITLE_MEDIUM_SIZE F
 	public static final field TYPE_TITLE_MEDIUM_WEIGHT I
+	public static final field TYPE_TITLE_SMALL_FAMILY Ljava/lang/String;
+	public static final field TYPE_TITLE_SMALL_LETTER_SPACING F
+	public static final field TYPE_TITLE_SMALL_LINE_HEIGHT F
+	public static final field TYPE_TITLE_SMALL_SIZE F
+	public static final field TYPE_TITLE_SMALL_WEIGHT I
 }
 

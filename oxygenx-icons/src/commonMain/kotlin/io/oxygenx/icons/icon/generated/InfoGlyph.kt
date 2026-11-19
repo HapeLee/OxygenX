@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/info.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/info.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -43,17 +43,11 @@ internal val InfoGlyph: ImageVector
             strokeLineMiter = 1f,
             pathFillType = PathFillType.Companion.NonZero,
           ) {
-            moveTo(12.53f, 16.53f)
-            quadTo(12.75f, 16.32f, 12.75f, 16f)
-            verticalLineTo(11.75f)
-            quadToRelative(0f, -0.32f, -0.22f, -0.53f)
-            reflectiveQuadTo(12f, 11f)
-            reflectiveQuadToRelative(-0.53f, 0.22f)
-            reflectiveQuadToRelative(-0.22f, 0.53f)
-            verticalLineTo(16f)
-            quadToRelative(0f, 0.32f, 0.22f, 0.53f)
-            reflectiveQuadTo(12f, 16.75f)
-            reflectiveQuadToRelative(0.53f, -0.22f)
+            moveTo(11.25f, 16.75f)
+            horizontalLineToRelative(1.5f)
+            verticalLineTo(11f)
+            horizontalLineToRelative(-1.5f)
+            verticalLineToRelative(5.75f)
             close()
             moveTo(12.57f, 9.06f)
             quadTo(12.81f, 8.82f, 12.81f, 8.48f)

@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.OutputTransformation
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,10 +21,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import io.oxygenx.catalog.ui.DemoCard
 import io.oxygenx.catalog.ui.SmallTitle
 import io.oxygenx.icons.icon.OxygenIcons
+import io.oxygenx.material3.ProvideMaterial3Content
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.ui.basic.Button
 import io.oxygenx.ui.basic.Icon
+import io.oxygenx.ui.basic.Text
 import io.oxygenx.ui.basic.TextField
 import io.oxygenx.ui.basic.TextFieldDefaults
+import androidx.compose.material3.Text as MaterialText
 
 fun LazyListScope.textFieldSection() {
     item(key = "cmp-textfield") {
@@ -46,9 +54,38 @@ private fun TextFieldVariants() {
     var query by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
     val emailError = email.isNotEmpty() && !email.contains("@")
+    val state = rememberTextFieldState(initialText = "123")
+    val digitsOnly = remember { InputTransformation { if (asCharSequence().any { !it.isDigit() }) revertAllChanges() } }
+    val bracketed = remember {
+        OutputTransformation {
+            replace(0, 0, "[")
+            append("]")
+        }
+    }
 
     DemoCard {
         Column(verticalArrangement = Arrangement.spacedBy(spacing.gapLarge)) {
+            DemoLabeledField(title = "State-based / 仅数字输入，括号只改变显示") {
+                TextField(
+                    state = state,
+                    inputTransformation = digitsOnly,
+                    outputTransformation = bracketed,
+                    lineLimits = TextFieldLineLimits.SingleLine,
+                    label = { Text("编号") },
+                    supportingText = { Text("原始值：${state.text}；通过 state.edit 编辑不经过用户输入过滤") },
+                )
+                ProvideMaterial3Content {
+                    Button(onClick = { state.edit { replace(0, length, "456") } }) {
+                        MaterialText("M3 Text 继承 Oxygen 按钮样式 / 重置为 456")
+                    }
+                }
+            }
+            DemoLabeledField(title = "主题继承 / 样式颜色回归") {
+                OxygenTheme(typography = typography) {
+                    Text("仅覆盖排版后，仍应继承当前主题", style = typography.bodyMedium)
+                    Text("此行应为强调色", style = typography.bodyMedium.copy(color = colors.primary))
+                }
+            }
             DemoLabeledField(title = "已填值 · 对照一加「设备名称」编辑框") {
                 TextField(
                     value = name,

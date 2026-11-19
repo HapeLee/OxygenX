@@ -13,16 +13,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalAccessibilityManager
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.dismiss
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import io.oxygenx.icons.icon.OxygenIcons
 import io.oxygenx.theme.OxygenTheme
@@ -72,13 +79,14 @@ class SnackbarData internal constructor(
 /**
  * Snackbar 宿主状态：`suspend fun showSnackbar(…)` 排队显示，返回用户是点了 action 还是让它超时消失。
  *
- * 与 M3 `SnackbarHostState` 同口径，但只保留 `showSnackbar` 一条路径（M3 的 `currentSnackbarData`
- * 可写版本没有暴露）。配合 `Scaffold(snackbarHost = { SnackbarHost(state) })` 使用。
+ * 当前消息只读，通过 `showSnackbar` 排队、`dismiss` 关闭。调用协程取消会移除对应消息，
+ * 包括队列中的等待项。配合 `Scaffold(snackbarHost = { SnackbarHost(state) })` 使用。
  */
 @Stable
 class SnackbarHostState {
     private var entry by mutableStateOf<Entry?>(null)
     private val mutex = Mutex()
+    internal var recommendedTimeoutMillis: ((Long, Boolean) -> Long)? = null
 
     /** 当前正在显示的数据；没有时是 `null`。 */
     val currentSnackbarData: SnackbarData?
@@ -108,14 +116,21 @@ class SnackbarHostState {
             onDismiss = { deferred.complete(SnackbarResult.Dismissed) },
         )
         entry = Entry(data, deferred)
-        val timeout = duration.timeoutMillis
-        val result = if (timeout == null) {
-            deferred.await()
-        } else {
-            withTimeoutOrNull(timeout) { deferred.await() }
+        try {
+            val timeout = duration.timeoutMillis?.let {
+                recommendedTimeoutMillis?.invoke(it, actionLabel != null || withDismissAction) ?: it
+            }
+            val result = if (timeout == null) {
+                deferred.await()
+            } else {
+                withTimeoutOrNull(timeout) { deferred.await() }
+            }
+            result ?: SnackbarResult.Dismissed
+        } finally {
+            // 外层协程取消也必须清理；withLock 会在清理完成后才放行下一条消息。
+            entry = null
+            deferred.cancel()
         }
-        entry = null
-        result ?: SnackbarResult.Dismissed
     }
 
     /** 立即关闭当前这条（等价于点关闭图标）。 */
@@ -143,8 +158,32 @@ fun SnackbarHost(
     state: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
+    val accessibilityManager by rememberUpdatedState(LocalAccessibilityManager.current)
+    DisposableEffect(state) {
+        val timeout: (Long, Boolean) -> Long = { original, controls ->
+            accessibilityManager?.calculateRecommendedTimeoutMillis(
+                originalTimeoutMillis = original,
+                containsIcons = true,
+                containsText = true,
+                containsControls = controls,
+            ) ?: original
+        }
+        state.recommendedTimeoutMillis = timeout
+        onDispose {
+            if (state.recommendedTimeoutMillis === timeout) state.recommendedTimeoutMillis = null
+        }
+    }
     state.currentSnackbarData?.let { data ->
-        Snackbar(data = data, modifier = modifier.fillMaxWidth())
+        Snackbar(
+            data = data,
+            modifier = modifier.fillMaxWidth().semantics {
+                liveRegion = LiveRegionMode.Polite
+                dismiss {
+                    data.onDismiss()
+                    true
+                }
+            },
+        )
     }
 }
 
@@ -202,7 +241,7 @@ fun Snackbar(
                         onClick = data.onAction,
                     )
                     .padding(horizontal = spacing.gapSmall, vertical = spacing.gapXs),
-                style = OxygenTheme.typography.labelMedium,
+                style = OxygenTheme.typography.labelLarge,
                 color = actionColor,
                 maxLines = 1,
             )

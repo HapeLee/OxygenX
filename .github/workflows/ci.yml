@@ -1,0 +1,66 @@
+name: Verify library
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Resolve isolated verification version
+        id: version
+        run: python tools/release.py resolve --mode ci --github-output "$env:GITHUB_OUTPUT"
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Prepare Android SDK and browser
+        run: |
+          & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'platforms;android-37.0' 'build-tools;37.0.0'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          'CHROME_BIN=C:/Program Files/Google/Chrome/Application/chrome.exe' >> $env:GITHUB_ENV
+      - name: Validate bilingual documentation
+        run: python tools/check_docs.py
+      - name: Verify pinned icon sources and generator
+        run: |
+          python tools/material_symbols.py --check
+          python -m unittest discover -s tools -p test_material_symbols.py -v
+      - name: Verify release version and bundle contracts
+        run: python -m unittest discover -s tools -p test_release.py -v
+      - name: Verify generated tokens
+        run: |
+          .\gradlew.bat :oxygenx-theme:generateTokens
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git diff --exit-code -- oxygenx-theme/src/commonMain/kotlin/io/oxygenx/theme/generated
+      - name: Check formatting
+        run: .\gradlew.bat spotlessCheck
+      - name: Compile Desktop, Android catalog and benchmark test APK
+        run: .\gradlew.bat compileKotlinDesktop :catalog:android:assembleDebug :benchmark:assemble
+      - name: Check ABI, tests and Desktop UI goldens
+        run: .\gradlew.bat check
+      - name: Verify local publication
+        env:
+          OXYGENX_CI_VERSION: ${{ steps.version.outputs.name }}
+        run: .\gradlew.bat publishAllPublicationsToLocalRepoRepository "-PoxygenxVersion=$env:OXYGENX_CI_VERSION"
+      - name: Build an isolated Android consumer using published coordinates
+        env:
+          OXYGENX_CI_VERSION: ${{ steps.version.outputs.name }}
+        run: .\gradlew.bat -p tools/consumer-smoke assembleDebug "-PoxygenxVersion=$env:OXYGENX_CI_VERSION"

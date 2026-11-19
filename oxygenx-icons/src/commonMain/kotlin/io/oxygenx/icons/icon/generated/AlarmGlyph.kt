@@ -2,9 +2,9 @@
 // Copyright 2026 Google LLC
 // SPDX-License-Identifier: Apache-2.0
 //
-// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Rounded/24dp/alarm.kt
-// Axes: opsz=24, wght=300, FILL=0, GRAD=0, ROND=50
-// Do not edit by hand; re-download from the URL above.
+// Generated: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/alarm.kt?var=opsz,wght,FILL,GRAD@24,300,0,0
+// Axes: opsz=24, wght=300, FILL=0, GRAD=0 (Outlined style)
+// Do not edit by hand; run python tools/material_symbols.py --fetch.
 
 package io.oxygenx.icons.icon.generated
 
@@ -43,22 +43,6 @@ internal val AlarmGlyph: ImageVector
             strokeLineMiter = 1f,
             pathFillType = PathFillType.Companion.NonZero,
           ) {
-            moveTo(12.75f, 12.7f)
-            verticalLineTo(8.75f)
-            quadToRelative(0f, -0.32f, -0.22f, -0.53f)
-            reflectiveQuadTo(12f, 8f)
-            reflectiveQuadTo(11.47f, 8.22f)
-            reflectiveQuadTo(11.25f, 8.75f)
-            verticalLineToRelative(4.18f)
-            quadToRelative(0f, 0.18f, 0.07f, 0.34f)
-            reflectiveQuadToRelative(0.21f, 0.3f)
-            lineToRelative(2.93f, 2.93f)
-            quadToRelative(0.21f, 0.21f, 0.52f, 0.21f)
-            reflectiveQuadTo(15.5f, 16.5f)
-            reflectiveQuadToRelative(0.22f, -0.53f)
-            reflectiveQuadTo(15.5f, 15.45f)
-            lineTo(12.75f, 12.7f)
-            close()
             moveTo(8.68f, 20.83f)
             quadTo(7.14f, 20.16f, 5.99f, 19.01f)
             reflectiveQuadTo(4.17f, 16.32f)
@@ -79,29 +63,25 @@ internal val AlarmGlyph: ImageVector
             close()
             moveTo(12f, 13f)
             close()
-            moveTo(2.42f, 7.28f)
-            quadTo(2.2f, 7.06f, 2.2f, 6.75f)
-            reflectiveQuadTo(2.42f, 6.23f)
-            lineTo(5.23f, 3.42f)
-            quadTo(5.43f, 3.21f, 5.75f, 3.2f)
-            reflectiveQuadTo(6.28f, 3.42f)
-            reflectiveQuadTo(6.5f, 3.94f)
-            reflectiveQuadTo(6.28f, 4.47f)
-            lineTo(3.47f, 7.28f)
-            quadTo(3.26f, 7.49f, 2.95f, 7.49f)
-            reflectiveQuadTo(2.42f, 7.28f)
+            moveToRelative(2.97f, 4.03f)
+            lineToRelative(1.05f, -1.05f)
+            lineTo(12.75f, 12.7f)
+            verticalLineTo(8f)
+            horizontalLineToRelative(-1.5f)
+            verticalLineToRelative(5.3f)
+            lineToRelative(3.72f, 3.72f)
             close()
-            moveToRelative(19.17f, 0f)
-            quadTo(21.37f, 7.5f, 21.06f, 7.5f)
-            reflectiveQuadTo(20.53f, 7.28f)
-            lineTo(17.72f, 4.47f)
-            quadTo(17.51f, 4.26f, 17.51f, 3.95f)
-            reflectiveQuadTo(17.72f, 3.42f)
-            reflectiveQuadTo(18.25f, 3.2f)
-            reflectiveQuadToRelative(0.53f, 0.22f)
-            lineToRelative(2.81f, 2.81f)
-            quadToRelative(0.21f, 0.21f, 0.21f, 0.52f)
-            reflectiveQuadTo(21.58f, 7.28f)
+            moveTo(5.75f, 2.89f)
+            lineTo(6.81f, 3.94f)
+            lineTo(2.94f, 7.81f)
+            lineTo(1.89f, 6.75f)
+            lineTo(5.75f, 2.89f)
+            close()
+            moveToRelative(12.49f, 0f)
+            lineToRelative(3.87f, 3.87f)
+            lineTo(21.06f, 7.81f)
+            lineTo(17.19f, 3.94f)
+            lineTo(18.25f, 2.89f)
             close()
             moveTo(12f, 20f)
             quadToRelative(2.92f, 0f, 4.96f, -2.04f)

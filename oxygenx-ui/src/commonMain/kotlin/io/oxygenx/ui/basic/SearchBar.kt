@@ -4,6 +4,7 @@ package io.oxygenx.ui.basic
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,20 +17,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import io.oxygenx.icons.icon.OxygenIcons
 import io.oxygenx.theme.LocalContentColor
-import io.oxygenx.theme.LocalTextStyle
 import io.oxygenx.theme.OxygenTheme
+import io.oxygenx.theme.ProvideContentStyle
+import io.oxygenx.theme.generated.GeneratedTokens
 
 /**
  * 搜索栏：药丸容器里的单行输入，左侧搜索图标、右侧动作槽，回车触发 [onSearch]。
  *
  * 与 [TextField] 的分工：`TextField` 是一加设置页的「下划线输入行」，用于表单；
- * 搜索栏是独立的药丸容器（`size.search.bar.height`、底色 `surfaceContainerHighest`），
+ * 搜索栏是独立的紧凑药丸容器（48dp 高、两侧内边距 12dp、底色 `surfaceContainerLow`），
  * 用于列表页顶部。它不持有状态，`value` / `onValueChange` 由调用方传入。
  *
  * - Spec ID: `CMP-SEARCH-BAR`
- * - Baseline: `Material 3 search bar / OnePlus 9R (LE2100) / 2026-11-16`
+ * - Baseline: `Legado Material 3 紧凑搜索输入框`
  * - Reference: `catalog/reference/CMP-SEARCH-BAR/`
  * - Motion: 无（展开 / 收起由宿主页面决定，本组件只画一行）。
  * - Status: `draft`
@@ -63,11 +66,13 @@ fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .height(spacing.searchBarHeight),
-        color = colors.surfaceContainerHighest,
+        color = colors.surfaceContainerLow,
         shape = OxygenTheme.shapes.pill,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = spacing.cardPadding),
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(horizontal = GeneratedTokens.SPACE_SEARCH_BAR_PADDING_HORIZONTAL.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             CompositionLocalProvider(LocalContentColor provides iconColor) {
@@ -84,15 +89,16 @@ fun SearchBar(
                 contentAlignment = Alignment.CenterStart,
             ) {
                 if (value.isEmpty()) {
-                    CompositionLocalProvider(
-                        LocalContentColor provides colors.onSurfaceVariant,
+                    ProvideContentStyle(
+                        contentColor = iconColor,
+                        textStyle = OxygenTheme.typography.bodyLarge,
                     ) {
                         Text(text = placeholder, maxLines = 1)
                     }
                 }
-                CompositionLocalProvider(
-                    LocalContentColor provides contentColor,
-                    LocalTextStyle provides OxygenTheme.typography.inputText,
+                ProvideContentStyle(
+                    contentColor = contentColor,
+                    textStyle = OxygenTheme.typography.bodyLarge,
                 ) {
                     BasicTextField(
                         value = value,
@@ -100,7 +106,7 @@ fun SearchBar(
                         modifier = Modifier.fillMaxWidth(),
                         enabled = enabled,
                         singleLine = true,
-                        textStyle = OxygenTheme.typography.inputText.copy(
+                        textStyle = OxygenTheme.typography.bodyLarge.copy(
                             color = resolveContentColor(contentColor),
                         ),
                         cursorBrush = SolidColor(colors.primary),

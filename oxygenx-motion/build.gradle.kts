@@ -14,8 +14,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":oxygenx-theme"))
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.animation)
+            api(libs.compose.runtime)
+            api(libs.compose.animation)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

@@ -121,22 +121,40 @@ tokens:
     description: 列表分组之间的间距（APK 资源 dump：op_control_margin_list_top4 / bottom4 21dp）
   - id: size.appbar.height
     kind: dimension
-    value: 72
+    value: 74
     unit: dp
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
-    source: catalog/reference/README.md
+    baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    source: docs/spec/le2100-appbar-calibration.md
     evidence: E2
     status: draft
-    description: 标准顶栏在状态栏下方的高度（真机 206px @450dpi = 73.2dp；按 4dp 网格取 72dp，等于 20dp 上边距 + 52dp 内容）
+    description: 标准顶栏在状态栏下方的高度，真机为 208px @450dpi
   - id: size.appbar.collapsed.height
     kind: dimension
-    value: 72
+    value: 74
     unit: dp
-    baseline: OnePlus 9R (LE2100) / ColorOS 11 / Settings / 2026-11-14
-    source: catalog/reference/README.md
+    baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    source: docs/spec/le2100-appbar-calibration.md
     evidence: E2
     status: draft
-    description: 大顶栏收拢后的高度（收拢态与标准顶栏等高；真机收拢后标题圆心距状态栏 40.4dp，按 4dp 网格与 `size.appbar.height` 同步取 72dp）
+    description: 收拢栏在状态栏下方的高度，与标准栏一致
+  - id: space.appbar.compact.content.offset
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    source: docs/spec/le2100-appbar-calibration.md
+    evidence: E2
+    status: draft
+    description: 标准及收拢栏内容中心相对几何中点的下移量
+  - id: icon.size.appbar.navigation.compact
+    kind: dimension
+    value: 16
+    unit: dp
+    baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
+    source: docs/spec/le2100-appbar-calibration.md
+    evidence: E0
+    status: draft
+    description: 按真机可见尺寸折算的紧凑导航图标画布，不影响触摸目标
   - id: size.appbar.pager.collapsed.height
     kind: dimension
     value: 96
@@ -146,7 +164,7 @@ tokens:
     evidence: E2
     status: draft
     description: 横划顶栏收拢后的高度（真机图库上滑收拢后底部分割线在 379px、状态栏下沿 104px @450dpi，差 275px = 97.8dp；按 4dp 网格取 96dp，比标准顶栏高 24dp，因为收拢态仍保留指示器与小副标题）
-  - id: size.bottom.bar.height
+  - id: size.navigation.bar.height
     kind: dimension
     value: 55
     unit: dp
@@ -154,7 +172,7 @@ tokens:
     source: catalog/reference/README.md
     evidence: E2
     status: draft
-    description: 底栏内容高度（真机量得 55dp，不含系统导航条；顶部分割线另算）
+    description: 底栏导航（NavigationBar）的内容高度（真机量得时钟应用底栏 55dp，不含系统导航条；顶部分割线另算）
   - id: size.fab
     kind: dimension
     value: 56
@@ -697,6 +715,51 @@ tokens:
     evidence: E0
     status: draft
     description: 文字提示的上下内距（反白底 + 4dp 内距，单行为主）
+  - id: shape.corner.menu
+    kind: dimension
+    value: 4
+    unit: dp
+    baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    source: docs/spec/dropdown-m3-plan.md
+    evidence: E3
+    status: draft
+    description: 经典 M3 菜单圆角，与 Card 分离
+  - id: elevation.menu
+    kind: dimension
+    value: 3
+    unit: dp
+    baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    source: docs/spec/dropdown-m3-plan.md
+    evidence: E3
+    status: draft
+    description: 经典 M3 菜单浮层投影，仅菜单例外
+  - id: size.menu.max.width
+    kind: dimension
+    value: 280
+    unit: dp
+    baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    source: docs/spec/dropdown-m3-plan.md
+    evidence: E3
+    status: draft
+    description: 菜单默认最大宽度，长文字换行
+  - id: space.menu.icon.gap
+    kind: dimension
+    value: 12
+    unit: dp
+    baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    source: docs/spec/dropdown-m3-plan.md
+    evidence: E3
+    status: draft
+    description: 菜单图标与文字间距
+  - id: space.menu.window.margin
+    kind: dimension
+    value: 48
+    unit: dp
+    baseline: Material3 1.5.0-beta01 classic DropdownMenu（用户指定 M3 样式）
+    source: docs/spec/dropdown-m3-plan.md
+    evidence: E3
+    status: draft
+    description: 菜单上下窗口安全边距，极小窗口自适应
   - id: size.menu.min.width
     kind: dimension
     value: 112
@@ -762,22 +825,22 @@ tokens:
     description: 手柄所在顶部区域的高度（手柄垂直居中其中，M3 22dp）
   - id: size.search.bar.height
     kind: dimension
-    value: 56
+    value: 48
     unit: dp
-    baseline: Material 3 search bar（外部规范类比，非 OxygenOS 实测）
+    baseline: Legado Material 3 紧凑搜索输入框（非 OxygenOS 实测）
     source: catalog/reference/README.md
     evidence: E0
     status: draft
-    description: 搜索栏高度（56dp 药丸容器，编辑态仍是同一高度）
-  - id: size.drawer.width
+    description: 搜索栏高度（48dp 药丸容器，编辑态保持同一高度）
+  - id: space.search.bar.padding.horizontal
     kind: dimension
-    value: 320
+    value: 12
     unit: dp
-    baseline: Material 3 navigation drawer（外部规范类比，非 OxygenOS 实测）
+    baseline: Legado Material 3 紧凑搜索输入框（非 OxygenOS 实测）
     source: catalog/reference/README.md
     evidence: E0
     status: draft
-    description: 侧边抽屉宽度；窄屏取 min(该值, 屏宽 - 56dp)
+    description: 搜索栏容器两侧到内容的内边距
   - id: size.rail.width
     kind: dimension
     value: 80
@@ -805,3 +868,12 @@ tokens:
     evidence: E0
     status: draft
     description: 滑动删除的位移阈值比例（占条目宽度的 40%，越过即触发删除；未越过回弹）
+  - id: effect.menu.closed.scale
+    kind: dimension
+    value: 0.8
+    unit: ratio
+    baseline: Material3 1.5.0-beta01 Menu ClosedScaleTarget
+    source: docs/spec/material-type-menu-motion-plan.md
+    evidence: E3
+    status: draft
+    description: 菜单关闭端缩放比例

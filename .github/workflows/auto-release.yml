@@ -1,0 +1,159 @@
+name: Auto Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Create version tag and GitHub Release
+        type: boolean
+        required: false
+        default: false
+  workflow_call:
+    inputs:
+      publish:
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oxygenx-distribution
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.actor == github.repository_owner && github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    outputs:
+      name: ${{ steps.version.outputs.name }}
+      code: ${{ steps.version.outputs.code }}
+      tag: ${{ steps.version.outputs.tag }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Resolve immutable release version
+        id: version
+        shell: pwsh
+        run: python tools/release.py resolve --mode release --github-output "$env:GITHUB_OUTPUT"
+
+  build:
+    needs: prepare
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      RELEASE_VERSION: ${{ needs.prepare.outputs.name }}
+      RELEASE_CODE: ${{ needs.prepare.outputs.code }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+      - name: Prepare Android SDK and browser
+        run: |
+          & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'platforms;android-37.0' 'build-tools;37.0.0'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          'CHROME_BIN=C:/Program Files/Google/Chrome/Application/chrome.exe' >> $env:GITHUB_ENV
+      - name: Validate release logic and documentation
+        run: |
+          python -m unittest discover -s tools -p test_release.py -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/check_docs.py
+      - name: Check tokens and formatting
+        run: |
+          .\gradlew.bat :oxygenx-theme:generateTokens spotlessCheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git diff --exit-code -- oxygenx-theme/src/commonMain/kotlin/io/oxygenx/theme/generated
+      - name: Compile and verify all platforms
+        run: |
+          .\gradlew.bat compileKotlinDesktop :catalog:android:assembleDebug :benchmark:assemble check --console=plain
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build signed catalog and Maven publications
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          $keyPath = Join-Path $env:RUNNER_TEMP 'oxygenx-release.jks'
+          try {
+            if ([string]::IsNullOrWhiteSpace($env:KEYSTORE_BASE64)) { throw 'Missing ANDROID_KEYSTORE_BASE64' }
+            [IO.File]::WriteAllBytes($keyPath, [Convert]::FromBase64String($env:KEYSTORE_BASE64))
+            $env:RELEASE_STORE_FILE = $keyPath
+            .\gradlew.bat :catalog:android:assembleRelease publishAllPublicationsToLocalRepoRepository "-PoxygenxVersion=$env:RELEASE_VERSION" "-PoxygenxVersionCode=$env:RELEASE_CODE" --console=plain
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          } finally {
+            if (Test-Path -LiteralPath $keyPath) { Remove-Item -LiteralPath $keyPath }
+          }
+      - name: Verify published consumer and package distribution
+        run: |
+          python tools/release.py package --version "$env:RELEASE_VERSION" --code "$env:RELEASE_CODE" --sdk "$env:ANDROID_HOME" --require-clean
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $repository = Join-Path $env:RUNNER_TEMP 'oxygenx-distribution-maven'
+          Expand-Archive -LiteralPath "build/distribution/$env:RELEASE_VERSION/OxygenX-$env:RELEASE_VERSION-maven.zip" -DestinationPath $repository
+          .\gradlew.bat -p tools/consumer-smoke assembleDebug "-PoxygenxVersion=$env:RELEASE_VERSION" "-PoxygenxRepository=$repository" --console=plain
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: oxygenx-release-${{ needs.prepare.outputs.name }}
+          if-no-files-found: error
+          path: build/distribution/${{ needs.prepare.outputs.name }}/*
+
+  create_release:
+    if: inputs.publish
+    needs: [prepare, build]
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_VERSION: ${{ needs.prepare.outputs.name }}
+      RELEASE_CODE: ${{ needs.prepare.outputs.code }}
+      RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+      IS_PRERELEASE: ${{ needs.prepare.outputs.prerelease }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v8
+        with:
+          name: oxygenx-release-${{ needs.prepare.outputs.name }}
+          path: build/distribution
+      - name: Refuse an existing remote version tag
+        run: |
+          git ls-remote --exit-code --tags origin "refs/tags/$env:RELEASE_TAG"
+          if ($LASTEXITCODE -eq 0) { throw 'Version tag already exists; bump version.properties' }
+          if ($LASTEXITCODE -ne 2) { throw 'Unable to check remote tags' }
+          exit 0
+      - name: Create release with verified assets
+        run: |
+          $notes = @(
+            'Unofficial / 非官方。0.x API is experimental; this is not an API stability guarantee.',
+            "Catalog versionCode: $env:RELEASE_CODE",
+            '',
+            'Assets: signed Android catalog APK, R8 mapping, Maven repository zip, build metadata and SHA256SUMS.',
+            'Extract the Maven zip and add its directory as a Maven repository to consume io.oxygenx coordinates.'
+          ) -join "`n"
+          $notesPath = Join-Path $env:RUNNER_TEMP 'oxygenx-release-notes.md'
+          [IO.File]::WriteAllText($notesPath, $notes)
+          $assets = @(Get-ChildItem build/distribution -File | ForEach-Object FullName)
+          $arguments = @('release', 'create', $env:RELEASE_TAG, '--target', $env:GITHUB_SHA, '--title', "OxygenX $env:RELEASE_VERSION", '--generate-notes', '--notes-file', $notesPath)
+          if ($env:IS_PRERELEASE -eq 'true') { $arguments += '--prerelease' }
+          $arguments += $assets
+          & gh @arguments
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
