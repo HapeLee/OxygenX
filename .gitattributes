@@ -1,3 +1,3 @@
 * text=auto
 
-oxygenx-theme/src/commonMain/kotlin/io/oxygenx/theme/generated/** linguist-generated=true
+oxygenx-theme/src/commonMain/kotlin/io/oxygenx/theme/generated/** text eol=lf linguist-generated=true
