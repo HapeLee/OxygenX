@@ -169,7 +169,7 @@ public final class io/oxygenx/theme/OxygenShapes {
 
 public final class io/oxygenx/theme/OxygenSpacing {
 	public static final field $stable I
-	public synthetic fun <init> (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-D9Ej5fM ()F
 	public final fun component10-D9Ej5fM ()F
 	public final fun component11-D9Ej5fM ()F
@@ -246,16 +246,20 @@ public final class io/oxygenx/theme/OxygenSpacing {
 	public final fun component76-D9Ej5fM ()F
 	public final fun component77-D9Ej5fM ()F
 	public final fun component78-D9Ej5fM ()F
+	public final fun component79-D9Ej5fM ()F
 	public final fun component8-D9Ej5fM ()F
+	public final fun component80-D9Ej5fM ()F
 	public final fun component9-D9Ej5fM ()F
-	public final fun copy-o03rcAo (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)Lio/oxygenx/theme/OxygenSpacing;
-	public static synthetic fun copy-o03rcAo$default (Lio/oxygenx/theme/OxygenSpacing;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIIILjava/lang/Object;)Lio/oxygenx/theme/OxygenSpacing;
+	public final fun copy-qL7BDLk (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)Lio/oxygenx/theme/OxygenSpacing;
+	public static synthetic fun copy-qL7BDLk$default (Lio/oxygenx/theme/OxygenSpacing;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIIILjava/lang/Object;)Lio/oxygenx/theme/OxygenSpacing;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppBarActionRippleRadius-D9Ej5fM ()F
 	public final fun getAppBarCollapseDistance-D9Ej5fM ()F
 	public final fun getAppBarCollapsedHeight-D9Ej5fM ()F
 	public final fun getAppBarHeight-D9Ej5fM ()F
+	public final fun getAppBarLargeTitleGap-D9Ej5fM ()F
 	public final fun getAppBarPagerCollapsedHeight-D9Ej5fM ()F
+	public final fun getAppBarPagerIndicatorBand-D9Ej5fM ()F
 	public final fun getAppBarPagerIndicatorHeight-D9Ej5fM ()F
 	public final fun getAppBarPagerTitleGap-D9Ej5fM ()F
 	public final fun getAppBarPagerTop-D9Ej5fM ()F
@@ -532,6 +536,7 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SIZE_APPBAR_HEIGHT F
 	public static final field SIZE_APPBAR_LARGE_HEIGHT F
 	public static final field SIZE_APPBAR_PAGER_COLLAPSED_HEIGHT F
+	public static final field SIZE_APPBAR_PAGER_INDICATOR_BAND F
 	public static final field SIZE_APPBAR_PAGER_INDICATOR_HEIGHT F
 	public static final field SIZE_BADGE_DOT F
 	public static final field SIZE_BADGE_HEIGHT F
@@ -581,6 +586,7 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SIZE_TAB_ROW_HEIGHT F
 	public static final field SIZE_TOOLTIP_MAX_WIDTH F
 	public static final field SPACE_APPBAR_COMPACT_CONTENT_OFFSET F
+	public static final field SPACE_APPBAR_LARGE_TITLE_GAP F
 	public static final field SPACE_APPBAR_PAGER_TITLE_GAP F
 	public static final field SPACE_APPBAR_PAGER_TOP F
 	public static final field SPACE_APPBAR_SUBTITLE_TIGHTEN F
@@ -642,6 +648,11 @@ public final class io/oxygenx/theme/generated/GeneratedTokens {
 	public static final field SPRING_SNAPPY_STIFFNESS F
 	public static final field SPRING_SNAPPY_VISIBILITY_THRESHOLD F
 	public static final field STAGGER_LIST_DELAY_MILLIS J
+	public static final field TYPE_APPBAR_EXPANDED_TITLE_FAMILY Ljava/lang/String;
+	public static final field TYPE_APPBAR_EXPANDED_TITLE_LETTER_SPACING F
+	public static final field TYPE_APPBAR_EXPANDED_TITLE_LINE_HEIGHT F
+	public static final field TYPE_APPBAR_EXPANDED_TITLE_SIZE F
+	public static final field TYPE_APPBAR_EXPANDED_TITLE_WEIGHT I
 	public static final field TYPE_APPBAR_SUBTITLE_FAMILY Ljava/lang/String;
 	public static final field TYPE_APPBAR_SUBTITLE_LETTER_SPACING F
 	public static final field TYPE_APPBAR_SUBTITLE_LINE_HEIGHT F

@@ -216,4 +216,4 @@ tokens:
 
 按用户要求，字体默认标准改为 M3 1.5.0-beta01 的 15 个基础角色；旧厂商测量值保留在历史记录，不再作为这些字体的默认值。类型中保留旧字段与二进制桥，新增 M3 命名工厂和 getter；完整迁移与源码映射见 material-type-menu-motion-plan.md。组件不再把 labelMedium 当成 14sp 按钮文字；对应角色为 labelLarge。
 
-顶栏排版：展开态使用 M3 displayMedium（45sp / 52sp），紧凑态按 type.appbar.title 校准字号与行高为 18sp / 24sp，字体和字重取主题的 titleLarge。尺寸证据见 le2100-appbar-calibration.md。
+顶栏排版：展开态使用 type.appbar.expanded.title（48sp / 52sp，参照包 op_app_bar_expand_text_size 96px，其余属性继承 displayMedium），紧凑态按 type.appbar.title 校准字号与行高为 18sp / 24sp，副标题走 type.appbar.subtitle（13sp），字体和字重取主题的 titleLarge / bodyMedium。尺寸证据见 le2100-appbar-calibration.md 与 catalog/reference/README.md。

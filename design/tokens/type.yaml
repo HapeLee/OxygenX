@@ -216,18 +216,30 @@ tokens:
     evidence: E3
     status: draft
     description: dialogAction（兼容别名，对应 labelLarge）
+  - id: type.appbar.expanded.title
+    kind: typography
+    size: 48
+    lineHeight: 52.0
+    weight: 400
+    letterSpacing: 0.0
+    family: sans-serif
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    source: catalog/reference/README.md
+    evidence: E2
+    status: draft
+    description: 大顶栏展开态大标题（资源 op_app_bar_expand_text_size = 96px ÷ 2 = 48sp，经 expandedTitleTextAppearance → op_appbar_title_style_h1；行高沿用 displayMedium 的 52sp）
   - id: type.appbar.subtitle
     kind: typography
-    size: 14
+    size: 13
     lineHeight: 20.0
     weight: 400
     letterSpacing: 0.2
     family: sans-serif
-    baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
-    source: docs/spec/material-type-menu-motion-plan.md
-    evidence: E3
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    source: catalog/reference/README.md
+    evidence: E2
     status: draft
-    description: appBarSubtitle（兼容别名，对应 bodyMedium）
+    description: 顶栏副标题（资源 expandedSubtitleTextAppearance → op_control_text_style_body1 → op_text_size_body1 = 13sp；行高参考包未给，沿用 bodyMedium 的 20sp）
   - id: type.list.item.title
     kind: typography
     size: 16

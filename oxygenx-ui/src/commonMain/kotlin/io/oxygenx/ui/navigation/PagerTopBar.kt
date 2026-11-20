@@ -8,12 +8,11 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
@@ -104,15 +103,39 @@ internal fun pagerDragSettlePage(
  */
 internal fun pagerTitleAlpha(index: Int, pagePosition: Float): Float = (1f - 2f * abs(index - pagePosition)).coerceIn(0f, 1f)
 
+/** 横划顶栏，沿用收拢时淡出副标题的默认行为。 */
+@Composable
+fun PagerTopBar(
+    pagerState: PagerState,
+    title: @Composable (page: Int) -> Unit,
+    modifier: Modifier = Modifier,
+    subtitle: (@Composable (page: Int) -> Unit)? = null,
+    showSubtitle: Boolean = true,
+    onNavigateBack: (() -> Unit)? = null,
+    navigationContentDescription: String? = null,
+    state: TopAppBarState? = null,
+    actions: @Composable RowScope.(page: Int) -> Unit = {},
+) = PagerTopBar(
+    pagerState = pagerState,
+    title = title,
+    modifier = modifier,
+    subtitle = subtitle,
+    showSubtitle = showSubtitle,
+    hideSubtitleOnCollapse = true,
+    onNavigateBack = onNavigateBack,
+    navigationContentDescription = navigationContentDescription,
+    state = state,
+    actions = actions,
+)
+
 /**
  * 横划顶栏：配合 [androidx.compose.foundation.pager.HorizontalPager] 使用，复刻一加图库首页。
  *
- * 本质是「大顶栏 + 横划指示器」，不是另一套顶栏：栏头由分段指示器占据（N 段等宽、2dp 高、
- * 8dp 间隔、两端圆角，上沿走 `space.appbar.pager.top`），栏头之下的大标题
- * （`type.display.medium`，与大顶栏同一个令牌）与副标题（`type.appbar.subtitle`）沿用
- * [LargeTopAppBar] 的展开态落位参数（[LargeTopBarMetrics]）；展开高度、收拢高度、
- * 标题字号插值、操作区从右下到右中、底部分割线淡入也都与大顶栏同构，只是收拢高度更高
- * （`size.appbar.pager.collapsed.height`，因为收拢态仍保留指示器与副标题）。
+ * 本质是「大顶栏 + 上方一条横划指示器」，不是另一套顶栏：栏顶先是一条由分段指示器占据的
+ * `size.appbar.pager.indicator.band`（20dp，参照包 TabBarView 独立成行的高度；N 段等宽、
+ * 2dp 高、8dp 间隔、两端圆角，上沿走 `space.appbar.pager.top`），栏头之下的内容区里是与大顶栏
+ * 同一条令牌的大标题（`type.appbar.expanded.title`）与副标题。操作区随收拢从右下移到右中，
+ * 底部分割线淡入。收拢态用横划栏自己的栏高令牌，指示器始终留在栏顶那一条里。
  *
  * 指示器是一条 `color.on.surface` 的长条矩形压在 `color.surface.container.highest` 的底轨上，
  * 位置随 `pagePosition` 连续推进：拖动时跟着手指从当前段滑向目标段；标题同样随 pager
@@ -125,13 +148,23 @@ internal fun pagerTitleAlpha(index: Int, pagePosition: Float): Float = (1f - 2f 
  * 仍与大顶栏对齐（不会在半个屏的位置提前被切断）。
  *
  * 有导航图标时（[onNavigateBack] 非空）栏头从「只有指示器」变成与大顶栏同高的
- * `size.appbar.height`（74dp）：指示器仍贴在最上沿，返回键停在栏头垂直中线上，大标题整块
- * 下移到栏头下方（与大顶栏有返回键时同一个落位）。收拢过程中标题升回无导航图标时的位置、
- * 同时右移到「返回键 + 触摸目标」之后让开箭头，因此带不带导航图标的收拢态是同一套几何，
- * 差别只在最左侧多一个返回箭头。
+ * `size.appbar.height`（74dp）：指示器仍贴在最上沿，展开时返回键停在栏头垂直中线上，
+ * 标题块让开栏头。收拢时返回键与操作区移到栏内中心，标题块右移让开返回键。
+ *
+ * 纵向是**固定高度 + 垂直居中**：栏高只由令牌决定（展开 `size.appbar.large.height` 265dp，
+ * 与大顶栏同一个值；收拢 `size.appbar.pager.collapsed.height` 98dp），不随文字内容伸缩。栏顶
+ * 那条栏头（只有指示器时是 20dp 的指示器带，有返回键时是一整行 `size.appbar.height` 74dp）
+ * 先占掉固定高度，剩下的内容区里把「标题 + 副标题」整块**垂直居中**。
+ *
+ * 对齐单位是这一**整块**，不是标题行：块高固定为「标题行盒 + 一行副标题行盒」，这一页有没有
+ * 副标题都一样，所以换页时块中心、标题与右侧操作区都不会上下跳。块内再按实际画出来的内容
+ * 居中：有副标题时标题贴块顶，没有副标题时标题落在块正中，预留出来的空行上下均分。
+ * `space.appbar.pager.title.gap` 只当「指示器带下沿 → 块顶」的最小间距兜底——真机图库的收拢态
+ * 正好落在这个下限上（块顶 42dp = 20dp 带 + 22dp 间距 @450dpi），栏更高时按内容区中心居中。
+ * 副标题可以在收拢前半程淡出。
  *
  * - Spec ID: `CMP-APPBAR-PAGER`
- * - Baseline: `OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14`
+ * - Baseline: `OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 & com.oneplus.gallery 4.0.182 / 2026-11-20`
  * - Reference: `catalog/reference/CMP-APPBAR/`
  * - Motion: `MOT-STATE-003`（与大顶栏共用收拢动画）
  * - Status: `draft`
@@ -139,8 +172,11 @@ internal fun pagerTitleAlpha(index: Int, pagePosition: Float): Float = (1f - 2f 
  * @param pagerState 横划容器的状态，指示器与标题都从它取滚动位置；段数 = `pagerState.pageCount`。
  * @param title 每页的大标题内容槽，形参是页下标；槽位内下发的排版与大顶栏同一条按
  *   `collapsedFraction` 插值的样式，所以写 `Text("照片", maxLines = 1)` 即得逐像素验证过的形态。
+ * @param hideSubtitleOnCollapse 收拢时是否淡出副标题；传 `true` 时收拢栏里只显示一行标题
+ *   （与 [LargeTopAppBar] 同名同义，副标题行盒仍预留，标题与操作区落位不变）。传 `false`
+ *   时副标题保留在两行块里。
  * @param modifier 外部 Modifier。
- * @param subtitle 每页的副标题内容槽，形参是页下标；已下发 `type.appbar.subtitle`。
+ * @param subtitle 每页的副标题内容槽，形参是页下标；已下发 `type.body.medium`。
  * @param showSubtitle 是否显示副标题；默认显示，传 `false` 时只留标题（与标准 / 大顶栏同名同义）。
  * @param onNavigateBack 传入非空时显示导航图标（返回），语义与标准 / 大顶栏一致。
  * @param navigationContentDescription 返回按钮的无障碍描述；为空则按钮不可被朗读定位。
@@ -158,6 +194,7 @@ internal fun pagerTitleAlpha(index: Int, pagePosition: Float): Float = (1f - 2f 
 fun PagerTopBar(
     pagerState: PagerState,
     title: @Composable (page: Int) -> Unit,
+    hideSubtitleOnCollapse: Boolean,
     modifier: Modifier = Modifier,
     subtitle: (@Composable (page: Int) -> Unit)? = null,
     showSubtitle: Boolean = true,
@@ -181,21 +218,21 @@ fun PagerTopBar(
         SideEffect { state.collapseRangePx = rangePx }
     }
 
-    // 横划顶栏 = 大顶栏 + 横划指示器：栏头高 = 指示器上沿 + 指示器高度，标题从栏头下沿
-    // 再让 `space.appbar.pager.title.gap`。**指示器**左右仍用大顶栏的内距（真机量的 20dp），
-    // 标题则贴屏幕边缘、不吃内距——横划时要能一路滑出屏幕。
-    // 有导航图标时栏头撑到标准顶栏高度（74dp），指示器仍贴最上沿、返回键居中于栏头，
-    // 标题整块下移到栏头下方——与大顶栏有返回键时同一条规则。
+    // 有返回键时展开栏头占一整行，收拢时只为指示器带留出顶部空间。
+    // 指示器带高度取参照包 design_tab_bar_height（20dp）：大顶栏内容区相应让出这一段，总高不变。
+    val indicatorHeaderHeight = spacing.appBarPagerIndicatorBand
     val metrics = largeTopBarMetrics(
-        headerHeight = if (onNavigateBack != null) {
-            spacing.appBarHeight
-        } else {
-            spacing.appBarPagerTop + spacing.appBarPagerIndicatorHeight
-        },
-        titleGap = if (onNavigateBack != null) 0.dp else spacing.appBarPagerTitleGap,
+        headerHeight = if (onNavigateBack != null) spacing.appBarHeight else indicatorHeaderHeight,
+        titleGap = 0.dp,
     )
-    // 无导航图标时的标题落位，也是带导航图标收拢完成的落位（两种形态收拢后必须一致）。
-    val collapsedTitleTop = spacing.appBarPagerTop + spacing.appBarPagerIndicatorHeight + spacing.appBarPagerTitleGap
+    // 栏头下沿：横划指示器（有返回键时还要再加上它那一行）先占住栏顶这一段固定高度，
+    // 内容区从这条线往下算。指示器因此永远在标题上方，而不会和标题抢位置。
+    val headerBottomPx = with(density) { lerp(metrics.headerHeight, indicatorHeaderHeight, fraction).toPx() }
+    // `space.appbar.pager.title.gap` 只当「栏头下沿 → 标题块顶」的最小间距兜底：
+    // 真机图库收拢态正好落在这个下限上（指示器下沿 139px、块顶 42dp @450dpi），
+    // 栏更高时块按内容区中心居中，不受这个下限影响。
+    val titleGapPx = with(density) { spacing.appBarPagerTitleGap.toPx() }
+    val compactOffsetPx = with(density) { CompactAppBarContentOffset.toPx() }
     val collapsedStartInset = if (onNavigateBack != null) {
         spacing.touchTargetMin
     } else {
@@ -214,7 +251,7 @@ fun PagerTopBar(
     // 标题只有一条：展开态复用大顶栏的 displayMedium 角色，按收拢进度连续缩到
     // 标准顶栏标题（与大顶栏同一条插值、同一个样式）。
     val titleStyle = lerpAppBarTitleStyle(
-        expanded = typography.displayMedium.copy(color = colors.onSurface),
+        expanded = typography.displayMedium.expandedAppBarTitle().copy(color = colors.onSurface),
         collapsed = typography.titleLarge.compactAppBarTitle().copy(color = colors.onSurface),
         fraction = fraction,
     )
@@ -241,9 +278,18 @@ fun PagerTopBar(
             layout.appBarLargeHeight
         } else {
             minOf(layout.appBarLargeHeight, maxHeight)
-                .coerceAtLeast(spacing.appBarPagerCollapsedHeight)
+                .coerceAtLeast(spacing.appBarHeight)
         }
+        // 收拢高度用横划栏自己的令牌（100dp）：收拢后仍留指示器 + 一小段标题，
+        // 所以比标准顶栏（74dp）高，与真机图库 275px @450dpi 对齐。
         val barHeight = lerp(expandedHeight, spacing.appBarPagerCollapsedHeight, fraction)
+        val barHeightPx = with(density) { barHeight.toPx() }
+        // 固定的对齐框架：栏高扣掉栏头那一段之后是内容区，内容中心是它唯一的位置依据——
+        // 标题块按自己的高度（标题行盒 + 预留的一行副标题）在上面居中，栏高与中心都不会被
+        // 文字撑开或压偏。
+        val contentCenterPx = (headerBottomPx + barHeightPx) / 2f + compactOffsetPx * fraction
+        // 居中值低于「栏头下沿 + 最小间距」时取后者：栏被压得很矮时先保住标题不贴到指示器上。
+        val blockTopFloorPx = headerBottomPx + titleGapPx
         Layout(
             modifier = Modifier
                 .fillMaxWidth()
@@ -294,22 +340,21 @@ fun PagerTopBar(
                             .padding(horizontal = metrics.titleInset),
                     )
                 }
-                // 1: 标题块（大标题 + 副标题），跟手横移。容器本身不裁切、不摆内距：
-                // 内距写进每个标题内部，横划时文字能一路滑出屏幕，静止时边距照样在。
-                Box {
-                    PagerTitles(
-                        pageCount = pagerState.pageCount,
-                        title = title,
-                        subtitle = subtitle,
-                        showSubtitle = showSubtitle,
-                        pagePosition = pagePosition,
-                        pageWidthPx = pageWidthPx,
-                        titleStyle = titleStyle,
-                        subtitleTighten = spacing.appBarSubtitleTighten * fraction,
-                        startInset = titleStartInset,
-                        endInset = titleEndInset,
-                    )
-                }
+                // 1: 各页标题占完整栏高，横划淡出时图层仍覆盖标题和副标题的实际位置。
+                PagerTitles(
+                    pageCount = pagerState.pageCount,
+                    title = title,
+                    subtitle = subtitle?.takeIf { showSubtitle },
+                    pagePosition = pagePosition,
+                    pageWidthPx = pageWidthPx,
+                    titleStyle = titleStyle,
+                    subtitleTighten = spacing.appBarSubtitleTighten * fraction,
+                    startInset = titleStartInset,
+                    endInset = titleEndInset,
+                    contentCenterPx = contentCenterPx,
+                    blockTopFloorPx = blockTopFloorPx,
+                    subtitleAlpha = if (hideSubtitleOnCollapse) (1f - fraction * 2f).coerceAtLeast(0f) else 1f,
+                )
                 // 2 / 3: 操作区。同时挂「当前页」与「相邻页」两套，按 `pagePosition` 跟手平移、
                 // 过半淡出——与标题同一套位移 / 透明度口径，换页不再是图标硬切。
                 // 只有一页时第二套传 `null`（不画内容，但保留槽位，Layout 的子项下标才稳定）。
@@ -338,37 +383,26 @@ fun PagerTopBar(
             val widthPx = constraints.maxWidth
             val heightPx = constraints.maxHeight
             val headerPlaceable = measurables[0].measure(Constraints(maxWidth = widthPx))
-            // 标题容器按整栏宽测量、摆在 x = 0：内距已经写进标题内部，
-            // 横移量又以页宽为基准，容器必须是整栏宽，否则文字会在容器右缘被截断。
-            val titlesPlaceable = measurables[1].measure(Constraints(maxWidth = widthPx))
+            val titlesPlaceable = measurables[1].measure(Constraints.fixed(widthPx, heightPx))
             val lowerActionsPlaceable = measurables[2].measure(Constraints())
             val upperActionsPlaceable = measurables[3].measure(Constraints())
             // 两套操作区宽度可能不同（图标数量不一样），对齐用的高度取高的那一套。
             val actionsHeight = maxOf(lowerActionsPlaceable.height, upperActionsPlaceable.height)
-            // 导航图标属于栏头：始终停在 74dp 栏头的垂直中线上，不随展开高度浮动。
             val backPlaceable = measurables.getOrNull(4)?.measure(Constraints())
-            // 标题块的位置展开 / 收拢一致（真机收拢后标题仍在栏头下沿 + 间距处），
-            // 变的只是字号与顶栏高度；带导航图标时展开态要先让出 74dp 栏头，
-            // 收拢后再升回无导航图标时的同一落位。
-            val titleTopPx = with(density) { lerp(metrics.titleTop, collapsedTitleTop, fraction).toPx() }
-            val expandedActionsTopPx = with(density) {
-                (barHeight - spacing.gapLarge).toPx() - actionsHeight
-            }
-            // 收拢态操作区与标题块**整体对齐**：两者垂直中心相同，而不是各自在栏里居中。
-            val collapsedActionsTopPx = titleTopPx + titlesPlaceable.height / 2f - actionsHeight / 2f
+            val expandedActionsTopPx = heightPx - with(density) { spacing.gapLarge.toPx() } - actionsHeight
+            // 收拢态操作区对齐的是「标题 + 副标题」这一整块的中心，不是栏心、也不是标题行心：
+            // 真机图库图标中心 286px、标题块中心 280px @450dpi，两者同一口径。
+            val collapsedActionsTopPx = (contentCenterPx - actionsHeight / 2f).coerceAtLeast(0f)
             val actionsTopPx = lerp(expandedActionsTopPx.coerceAtLeast(0f), collapsedActionsTopPx, fraction)
             val actionsEndPx = with(density) { metrics.endInset.toPx() }
-            // 导航图标：展开态停在 74dp 栏头的垂直中线上（与大顶栏一致）；收拢后 98dp 的
-            // 窄栏里标题块本来就偏下（真机实测如此，不是居中），所以箭头要跟着标题块整体
-            // 对齐，否则会出现「箭头在上、标题在下」的两行错觉。
             val backHeightPx = backPlaceable?.height ?: 0
             val expandedBackTopPx = (with(density) { spacing.appBarHeight.toPx() } - backHeightPx) / 2f
-            val collapsedBackTopPx = with(density) { collapsedTitleTop.toPx() } +
-                titlesPlaceable.height / 2f - backHeightPx / 2f
+            // 收拢态返回键与操作区同一口径：跟着内容中心走，而不是栏心。
+            val collapsedBackTopPx = contentCenterPx - backHeightPx / 2f
             val backTopPx = lerp(expandedBackTopPx, collapsedBackTopPx, fraction)
             layout(widthPx, heightPx) {
                 headerPlaceable.place(0, 0)
-                titlesPlaceable.place(0, titleTopPx.roundToInt())
+                titlesPlaceable.place(0, 0)
                 // 两套操作区都贴右边摆；跟手位移由各自的 graphicsLayer 负责，
                 // 相邻页那套因此从右边缘外面滑进来。
                 lowerActionsPlaceable.place(
@@ -451,47 +485,130 @@ private fun PagerTitles(
     pageCount: Int,
     title: @Composable (page: Int) -> Unit,
     subtitle: (@Composable (page: Int) -> Unit)?,
-    showSubtitle: Boolean,
     pagePosition: Float,
     pageWidthPx: Float,
     titleStyle: TextStyle,
     subtitleTighten: Dp,
     startInset: Dp,
     endInset: Dp,
+    contentCenterPx: Float,
+    blockTopFloorPx: Float,
+    subtitleAlpha: Float,
 ) {
-    val typography = OxygenTheme.typography
-    val colors = OxygenTheme.colorScheme
-    val subtitleSlot = subtitle?.takeIf { showSubtitle }
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         for (index in 0 until pageCount) {
             // 只画当前页与相邻页，远处的不进组合。
             if (abs(index - pagePosition) >= 1f) continue
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    // 内距在标题内部：整块（含边距）一起平移，边距不会变成裁切边界。
-                    .padding(start = startInset, end = endInset)
-                    .graphicsLayer {
-                        translationX = pagerTitleTranslation(index, pagePosition, pageWidthPx)
-                        alpha = pagerTitleAlpha(index, pagePosition)
-                    },
-            ) {
-                ProvideContentStyle(
-                    contentColor = colors.onSurface,
-                    textStyle = titleStyle,
-                ) {
-                    title(index)
+            PagerTitleBlock(
+                page = index,
+                pagePosition = pagePosition,
+                pageWidthPx = pageWidthPx,
+                titleStyle = titleStyle,
+                subtitleTighten = subtitleTighten,
+                startInset = startInset,
+                endInset = endInset,
+                contentCenterPx = contentCenterPx,
+                blockTopFloorPx = blockTopFloorPx,
+                subtitleAlpha = subtitleAlpha,
+                title = title,
+                subtitle = subtitle,
+            )
+        }
+    }
+}
+
+/**
+ * 一页的标题块，随页面横移、淡出。
+ *
+ * 纵向落位由调用方给的固定框架决定：[contentCenterPx] 是内容区中心，整块以它为中心摆；
+ * [blockTopFloorPx] 是「栏头下沿 + 最小间距」的兜底，栏比内容还矮时才会用到。块高始终按
+ * 「标题行盒 + 一行副标题行盒」算——这一页没有副标题也照样预留，所以换页时看不到标题或
+ * 按钮上下跳；块内只做一次「实际画出来的内容居中」，缺副标题时把预留的那一行上下均分掉。
+ */
+@Composable
+private fun PagerTitleBlock(
+    page: Int,
+    pagePosition: Float,
+    pageWidthPx: Float,
+    titleStyle: TextStyle,
+    subtitleTighten: Dp,
+    startInset: Dp,
+    endInset: Dp,
+    contentCenterPx: Float,
+    blockTopFloorPx: Float,
+    subtitleAlpha: Float,
+    title: @Composable (page: Int) -> Unit,
+    subtitle: (@Composable (page: Int) -> Unit)?,
+) {
+    val colors = OxygenTheme.colorScheme
+    val tightenPx = with(LocalDensity.current) { subtitleTighten.toPx() }
+    // 这一页没有副标题（或整个关掉）时，块里仍按同一档位的行盒预留一行。
+    val reservedSubtitleLinePx = with(LocalDensity.current) { CompactAppBarSubtitleLineHeight.toPx() }
+    Layout(
+        modifier = Modifier
+            .fillMaxSize()
+            // 内距在标题内部：整块（含边距）一起平移，边距不会变成裁切边界。
+            .padding(start = startInset, end = endInset)
+            .graphicsLayer {
+                translationX = pagerTitleTranslation(page, pagePosition, pageWidthPx)
+                alpha = pagerTitleAlpha(page, pagePosition)
+            },
+        content = {
+            // 两个槽位各自成块，才量得到「这一页到底有没有副标题」。
+            TitleBlockSlot {
+                ProvideContentStyle(contentColor = colors.onSurface, textStyle = titleStyle) {
+                    title(page)
                 }
-                if (subtitleSlot != null) {
-                    Box(modifier = Modifier.offset(y = -subtitleTighten)) {
-                        ProvideContentStyle(
-                            contentColor = colors.onSurfaceVariant,
-                            textStyle = typography.bodyMedium,
-                        ) {
-                            subtitleSlot(index)
-                        }
+            }
+            if (subtitle != null) {
+                TitleBlockSlot(modifier = Modifier.graphicsLayer { alpha = subtitleAlpha }) {
+                    val subtitleStyle = OxygenTheme.typography.bodyMedium.compactAppBarSubtitle()
+                    ProvideContentStyle(contentColor = colors.onSurfaceVariant, textStyle = subtitleStyle) {
+                        subtitle(page)
                     }
                 }
+            }
+        },
+    ) { measurables, constraints ->
+        val titlePlaceable = measurables[0].measure(Constraints(maxWidth = constraints.maxWidth))
+        val subtitlePlaceable = measurables.getOrNull(1)?.measure(Constraints(maxWidth = constraints.maxWidth))
+        // 槽位存在但这一页没有副标题文字时高度是 0，按「没有副标题」处理、补一行预留。
+        val measuredSubtitlePx = subtitlePlaceable?.height?.toFloat() ?: 0f
+        val hasSubtitleText = measuredSubtitlePx > 0f
+        val contentSubtitle = measuredSubtitlePx * subtitleAlpha
+        // 块高固定为「标题行盒 + 一行副标题行盒」：这一页有没有副标题都一样，块心不跳。
+        val blockHeightPx = titlePlaceable.height +
+            if (hasSubtitleText) measuredSubtitlePx else reservedSubtitleLinePx
+        // 整块在内容区里垂直居中；栏太矮时才退回「栏头下沿 + 最小间距」。
+        val blockTopPx = (contentCenterPx - blockHeightPx / 2f).coerceAtLeast(blockTopFloorPx)
+        // 块内居中：把真正画出来的内容（标题 + 可见副标题）在这块里居中。有副标题时标题
+        // 落在块顶；这页没有副标题（或副标题已淡出）时，预留的那一行上下均分。
+        val drawnHeightPx = titlePlaceable.height + contentSubtitle -
+            if (hasSubtitleText) tightenPx * subtitleAlpha else 0f
+        val inBlockOffsetPx = ((blockHeightPx - drawnHeightPx) / 2f).coerceAtLeast(0f)
+        val titleTopPx = blockTopPx + inBlockOffsetPx
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            titlePlaceable.place(0, titleTopPx.roundToInt())
+            subtitlePlaceable?.place(0, (titleTopPx + titlePlaceable.height - tightenPx).roundToInt())
+        }
+    }
+}
+
+/**
+ * 标题块里的一个槽位：多根节点按纵向依次排列，与原先 `Column` 的堆叠行为一致，
+ * 同时保证外层一次 `measure` 就能拿到该槽位的整体高度（用来判断有没有副标题）。
+ */
+@Composable
+private fun TitleBlockSlot(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    Layout(modifier = modifier, content = content) { measurables, constraints ->
+        val placeables = measurables.map { it.measure(constraints) }
+        val width = placeables.maxOfOrNull { it.width } ?: 0
+        val height = placeables.sumOf { it.height }
+        layout(width, height) {
+            var top = 0
+            placeables.forEach { placeable ->
+                placeable.place(0, top)
+                top += placeable.height
             }
         }
     }

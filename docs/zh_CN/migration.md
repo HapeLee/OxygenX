@@ -34,4 +34,8 @@ Text 的 onTextLayout 仍在参数末尾；若旧代码以完整位置参数列�
 
 2026-11-18 M3 排版与菜单动效：基础排版角色改用 M3 15 角色，labelMedium 现在为 12sp；按钮 / 菜单用 labelLarge 14sp。原字段、13 样式构造和 JVM copy 入口保留，完整配置优先使用 M3 命名工厂或 Typography.toOxygenTypography()。菜单现在默认带锚点缩放 / 淡入淡出，关闭后会保留至退出完成。旧调用无需改参数；自定义时使用 motion / fadeMotion 重载。宿主保留自身 M3 / Legado 角色，不能以旧别名重写 titleSmall 等字段。
 
-普通与折叠顶栏标题校准为 18sp / 24sp，字体与字重沿用 titleLarge。展开大标题使用 displayMedium（45sp / 52sp）。自定义导航图标可通过 LocalTopAppBarNavigationIconSize 读取槽位尺寸。
+普通与折叠顶栏标题校准为 18sp / 24sp，字体与字重沿用 titleLarge。展开大标题使用 `type.appbar.expanded.title`（48sp / 52sp，其余属性继承 displayMedium）；副标题使用 `type.appbar.subtitle`（13sp）。自定义导航图标可通过 LocalTopAppBarNavigationIconSize 读取槽位尺寸。
+
+2026-11-20 顶栏精确对档。按参照包资源链修正令牌：`size.appbar.large.height` 264 → **265dp**（`op_app_bar_collapsing_height` 245 + 顶部留白 20）、`space.appbar.pager.top` 12 → **10.5dp**、`size.appbar.pager.collapsed.height` 100 → **98dp**、`space.appbar.pager.title.gap` 28 → **22dp**（改为「指示器带下沿 → 块顶」口径）；新增 `size.appbar.pager.indicator.band` 20dp（`design_tab_bar_height`）、`space.appbar.large.title.gap` 20dp（`expandedTitleMarginTop`）、`type.appbar.expanded.title` 48sp/52sp；`type.appbar.subtitle` 14 → **13sp**（`op_text_size_body1`）。大顶栏展开标题改用 `expandedAppBarTitle()`、副标题改用 `compactAppBarSubtitle()`，横划顶栏的栏头改为 20dp 指示器带。`OxygenSpacing` 因此新增 `appBarLargeTitleGap` 与 `appBarPagerIndicatorBand` 两个字段。
+
+2026-11-20 横划顶栏纵向布局。`PagerTopBar` 改为固定高度 + 垂直居中：栏高只由令牌决定（展开 `size.appbar.large.height`，与大顶栏同高；收拢 `size.appbar.pager.collapsed.height`），栏顶的横划指示器先占掉一段固定高度（有返回键时是一整行 `size.appbar.height`），「标题 + 副标题」这一整块在剩下的内容区里居中。块高始终按「标题行盒 + 一行副标题行盒」预留，这一页有没有副标题都不变，所以换页时标题与右侧操作区都不会上下跳。原有调用在收拢前半程淡出副标题；使用带 `hideSubtitleOnCollapse` 的重载并传入 `false`，可让两行在整个收拢过程保持可见。Catalog 示例包含有副标题和无副标题的页。

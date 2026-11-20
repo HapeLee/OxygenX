@@ -165,7 +165,7 @@ fun TopAppBar(
             if (subtitleSlot != null) {
                 ProvideContentStyle(
                     contentColor = colors.onSurfaceVariant,
-                    textStyle = OxygenTheme.typography.bodyMedium,
+                    textStyle = OxygenTheme.typography.bodyMedium.compactAppBarSubtitle(),
                 ) {
                     Box(
                         // 行盒上下余量会把副标题推离标题，上提 `space.appbar.subtitle.tighten`
@@ -185,7 +185,9 @@ fun TopAppBar(
 }
 
 /**
- * 大顶栏：展开时占据约三分之一屏高，标题使用 `type.display.medium`，操作区贴右下；
+ * 大顶栏：展开时占据约三分之一屏高（`size.appbar.large.height` 265dp），标题取
+ * `type.appbar.expanded.title`（参照包 `op_app_bar_expand_text_size` 的 48sp，其余属性继承
+ * displayMedium），操作区贴右下；
  * 随内容滚动收拢为标准单行顶栏：标题始终是同一条文本，字号按进度连续缩到
  * `type.appbar.title` 并移到收拢位，副标题在收拢前半程淡出，高度收到
  * `size.appbar.collapsed.height`。有返回键时，展开态顶部是一段与标准顶栏同高
@@ -200,8 +202,8 @@ fun TopAppBar(
  * - Status: `draft`
  *
  * @param title 标题内容槽：槽位内下发的排版是按 `collapsedFraction` 从
- *   `type.display.medium` 连续插值到 `type.appbar.title` 的那一条，所以槽位里写
- *   `Text("设置", maxLines = 1, overflow = Ellipsis)` 就是逐像素验证过的连续过渡；
+ *   `type.appbar.expanded.title`（48sp）连续插值到 `type.appbar.title`（18sp）的那一条，
+ *   所以槽位里写 `Text("设置", maxLines = 1, overflow = Ellipsis)` 就是逐像素验证过的连续过渡；
  *   需要图形标题时槽位接受任意内容，但不再有字号插值。
  * @param modifier 外部 Modifier。
  * @param subtitle 标题下方的副标题内容槽（例如城市与时间），已下发 `type.appbar.subtitle`。
@@ -272,13 +274,13 @@ fun LargeTopAppBar(
         // 标题只有一条：按收拢进度从 displayMedium 连插值到标准顶栏标题，
         // 位置同步从展开位挪到收拢位，全程不交叉淡入，两态之间是同一个字形在缩小。
         val titleStyle = lerpAppBarTitleStyle(
-            expanded = typography.displayMedium.copy(color = colors.onSurface),
+            expanded = typography.displayMedium.expandedAppBarTitle().copy(color = colors.onSurface),
             collapsed = typography.titleLarge.compactAppBarTitle().copy(color = colors.onSurface),
             fraction = fraction,
         )
         // [showSubtitle] 为 false 时整段不画，后续索引与居中计算都按「没有副标题」走。
         val subtitleSlot = subtitle?.takeIf { showSubtitle }
-        val subtitleStyle = typography.bodyMedium.copy(color = colors.onSurfaceVariant)
+        val subtitleStyle = typography.bodyMedium.compactAppBarSubtitle().copy(color = colors.onSurfaceVariant)
         // 副标题跟着标题下沿走：默认在收拢前半程淡出，避免和标题缩放抢视觉；
         // [hideSubtitleOnCollapse] 为 false 时整段保留，与标题一起在收拢栏里整体居中。
         val subtitleAlpha = if (hideSubtitleOnCollapse) {
@@ -295,10 +297,10 @@ fun LargeTopAppBar(
             spacing.appBarTitleInset
         }
         // 有导航键时，顶部 74dp 是和标准顶栏同高、只有返回键的独立栏头，
-        // 大标题/副标题整体排在栏头下方；没有导航键时沿用真机的 24dp 上边距（时钟主页）。
+        // 大标题/副标题整体排在栏头下方；没有导航键时用参照包的 `expandedTitleMarginTop`（20dp）。
         val metrics = largeTopBarMetrics(
             headerHeight = if (navigation != null) spacing.appBarHeight else 0.dp,
-            titleGap = if (navigation != null) 0.dp else spacing.gapLarge,
+            titleGap = if (navigation != null) 0.dp else spacing.appBarLargeTitleGap,
         )
 
         Layout(
@@ -602,7 +604,10 @@ internal fun largeTopBarMetrics(headerHeight: Dp, titleGap: Dp): LargeTopBarMetr
     )
 }
 
-private val CompactAppBarContentOffset = GeneratedTokens.SPACE_APPBAR_COMPACT_CONTENT_OFFSET.dp
+internal val CompactAppBarContentOffset = GeneratedTokens.SPACE_APPBAR_COMPACT_CONTENT_OFFSET.dp
+
+/** 顶栏副标题的行盒高度；横划顶栏用它预留「这一页没有副标题」的那一行。 */
+internal val CompactAppBarSubtitleLineHeight = GeneratedTokens.TYPE_APPBAR_SUBTITLE_LINE_HEIGHT.dp
 private val CompactAppBarNavigationIconSize = GeneratedTokens.ICON_SIZE_APPBAR_NAVIGATION_COMPACT.dp
 
 /** 顶栏导航槽的默认图标画布尺寸；槽位之外为 null。触摸目标由按钮组件决定。 */
@@ -614,6 +619,18 @@ internal fun appBarNavigationIconSize(fraction: Float): Dp = lerp(OxygenTheme.ic
 internal fun TextStyle.compactAppBarTitle(): TextStyle = copy(
     fontSize = GeneratedTokens.TYPE_APPBAR_TITLE_SIZE.sp,
     lineHeight = GeneratedTokens.TYPE_APPBAR_TITLE_LINE_HEIGHT.sp,
+)
+
+/** 展开态大标题：字号取参照包 `op_app_bar_expand_text_size`（96px ÷ 2 = 48sp），其余继承 displayMedium。 */
+internal fun TextStyle.expandedAppBarTitle(): TextStyle = copy(
+    fontSize = GeneratedTokens.TYPE_APPBAR_EXPANDED_TITLE_SIZE.sp,
+    lineHeight = GeneratedTokens.TYPE_APPBAR_EXPANDED_TITLE_LINE_HEIGHT.sp,
+)
+
+/** 顶栏副标题：字号取参照包 `op_text_size_body1`（13sp），其余继承 bodyMedium。 */
+internal fun TextStyle.compactAppBarSubtitle(): TextStyle = copy(
+    fontSize = GeneratedTokens.TYPE_APPBAR_SUBTITLE_SIZE.sp,
+    lineHeight = GeneratedTokens.TYPE_APPBAR_SUBTITLE_LINE_HEIGHT.sp,
 )
 
 /** 两个主题角色之间按 Compose TextStyle 规则插值，端点保留各自完整的字体属性。 */

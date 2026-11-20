@@ -25,7 +25,7 @@ OxygenTheme(colorScheme = customColors) {
 
 ## Material 字体体系
 
-默认值对齐 Material3 1.5.0-beta01 的 15 个基础角色，包括字号、行高、字重和字距。Display（57/45/36）、headline（32/28/24）、title（22/16/14）、body（16/14/12）、label（14/12/11）保持独立语义。LabelMedium 为 12sp；按钮与菜单使用 14sp 的 LabelLarge。大顶栏展开态使用 45sp 的 DisplayMedium，列表标题使用宿主选定的对应角色。
+默认值对齐 Material3 1.5.0-beta01 的 15 个基础角色，包括字号、行高、字重和字距。Display（57/45/36）、headline（32/28/24）、title（22/16/14）、body（16/14/12）、label（14/12/11）保持独立语义。LabelMedium 为 12sp；按钮与菜单使用 14sp 的 LabelLarge。大顶栏展开态使用 `type.appbar.expanded.title`（48sp，其余属性继承 DisplayMedium），列表标题使用宿主选定的对应角色。
 
 ```kotlin
 val typography = OxygenTypography(
@@ -38,7 +38,7 @@ M3 命名工厂与 getter 和旧语义字段共存。原 13 样式构造、JVM c
 
 ## 顶栏标题角色
 
-普通与收拢标题使用校准后的 18sp / 24sp，从 titleLarge 继承字体和字重。LargeTopAppBar 与 PagerTopBar 展开时使用 displayMedium（45sp / 52sp），随进度插值到紧凑标题。普通与折叠栏高 74dp，紧凑导航图标画布为 16dp，点击目标为 48dp。自定义导航图标可读取 LocalTopAppBarNavigationIconSize。
+普通与收拢标题使用校准后的 18sp / 24sp，从 titleLarge 继承字体和字重。LargeTopAppBar 与 PagerTopBar 展开时使用 `type.appbar.expanded.title`（48sp / 52sp），随进度插值到紧凑标题；副标题使用 `type.appbar.subtitle`（13sp）。普通与折叠栏高 74dp，紧凑导航图标画布为 16dp，点击目标为 48dp。自定义导航图标可读取 LocalTopAppBarNavigationIconSize。
 
 TopAppBar、LargeTopAppBar、PagerTopBar 的 actions 槽将按钮紧邻排列，默认图标操作的中心距为 48dp。图标操作可以使用 TopAppBarAction，默认触摸目标为 48dp，无边界波纹半径为 36dp。需要次要操作时传入 onLongClick，并可用 onLongClickLabel 指定无障碍操作名称。
 

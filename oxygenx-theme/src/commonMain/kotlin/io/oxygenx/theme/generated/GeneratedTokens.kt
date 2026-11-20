@@ -254,6 +254,10 @@ public object GeneratedTokens {
     // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
     public const val SIZE_APPBAR_COLLAPSED_HEIGHT: Float = 74f
 
+    // space.appbar.large.title.gap | E3 | draft
+    // baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    public const val SPACE_APPBAR_LARGE_TITLE_GAP: Float = 20f
+
     // space.appbar.compact.content.offset | E2 | draft
     // baseline: OnePlus 9R (LE2100) / OxygenOS 11 / Settings / 2026-11-19
     public const val SPACE_APPBAR_COMPACT_CONTENT_OFFSET: Float = 4f
@@ -264,7 +268,7 @@ public object GeneratedTokens {
 
     // size.appbar.pager.collapsed.height | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
-    public const val SIZE_APPBAR_PAGER_COLLAPSED_HEIGHT: Float = 96f
+    public const val SIZE_APPBAR_PAGER_COLLAPSED_HEIGHT: Float = 98f
 
     // size.navigation.bar.height | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Clock 5.3.0 / 2026-11-13
@@ -283,8 +287,8 @@ public object GeneratedTokens {
     public const val SIZE_FAB_LARGE: Float = 96f
 
     // size.appbar.large.height | E3 | draft
-    // baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
-    public const val SIZE_APPBAR_LARGE_HEIGHT: Float = 264f
+    // baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    public const val SIZE_APPBAR_LARGE_HEIGHT: Float = 265f
 
     // size.appbar.collapse.distance | E3 | draft
     // baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
@@ -426,6 +430,10 @@ public object GeneratedTokens {
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
     public const val SIZE_APPBAR_PAGER_INDICATOR_HEIGHT: Float = 2f
 
+    // size.appbar.pager.indicator.band | E3 | draft
+    // baseline: Gallery 4.0.182 (com.oneplus.gallery) / 2026-11-20
+    public const val SIZE_APPBAR_PAGER_INDICATOR_BAND: Float = 20f
+
     // space.appbar.subtitle.tighten | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
     public const val SPACE_APPBAR_SUBTITLE_TIGHTEN: Float = 1.5f
@@ -436,7 +444,7 @@ public object GeneratedTokens {
 
     // space.appbar.pager.title.gap | E2 | draft
     // baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
-    public const val SPACE_APPBAR_PAGER_TITLE_GAP: Float = 29f
+    public const val SPACE_APPBAR_PAGER_TITLE_GAP: Float = 22f
 
     // size.progress.linear.height | E1 | draft
     // baseline: OxygenX P3 细条基线 / OnePlus 9R (LE2100) / 2026-11-14
@@ -820,9 +828,17 @@ public object GeneratedTokens {
     public const val TYPE_DIALOG_ACTION_LETTER_SPACING: Float = 0.1f
     public const val TYPE_DIALOG_ACTION_FAMILY: String = "sans-serif"
 
-    // type.appbar.subtitle | E3 | draft
-    // baseline: Material3 1.5.0-beta01 TypeScaleTokens / 2026-11-18
-    public const val TYPE_APPBAR_SUBTITLE_SIZE: Float = 14f
+    // type.appbar.expanded.title | E2 | draft
+    // baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    public const val TYPE_APPBAR_EXPANDED_TITLE_SIZE: Float = 48f
+    public const val TYPE_APPBAR_EXPANDED_TITLE_LINE_HEIGHT: Float = 52f
+    public const val TYPE_APPBAR_EXPANDED_TITLE_WEIGHT: Int = 400
+    public const val TYPE_APPBAR_EXPANDED_TITLE_LETTER_SPACING: Float = 0f
+    public const val TYPE_APPBAR_EXPANDED_TITLE_FAMILY: String = "sans-serif"
+
+    // type.appbar.subtitle | E2 | draft
+    // baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    public const val TYPE_APPBAR_SUBTITLE_SIZE: Float = 13f
     public const val TYPE_APPBAR_SUBTITLE_LINE_HEIGHT: Float = 20f
     public const val TYPE_APPBAR_SUBTITLE_WEIGHT: Int = 400
     public const val TYPE_APPBAR_SUBTITLE_LETTER_SPACING: Float = 0.2f

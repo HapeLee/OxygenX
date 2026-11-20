@@ -523,6 +523,7 @@ public final class io/oxygenx/ui/layout/ScaffoldKt {
 public final class io/oxygenx/ui/navigation/ComposableSingletons$PagerTopBarKt {
 	public static final field INSTANCE Lio/oxygenx/ui/navigation/ComposableSingletons$PagerTopBarKt;
 	public fun <init> ()V
+	public final fun getLambda$-494972799$io_oxygenx_oxygenx_ui ()Lkotlin/jvm/functions/Function4;
 	public final fun getLambda$451865437$io_oxygenx_oxygenx_ui ()Lkotlin/jvm/functions/Function4;
 }
 
@@ -598,6 +599,7 @@ public final class io/oxygenx/ui/navigation/NavigationRailKt {
 
 public final class io/oxygenx/ui/navigation/PagerTopBarKt {
 	public static final fun PagerTopBar (Landroidx/compose/foundation/pager/PagerState;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Lio/oxygenx/ui/navigation/TopAppBarState;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
+	public static final fun PagerTopBar (Landroidx/compose/foundation/pager/PagerState;Lkotlin/jvm/functions/Function3;ZLandroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;ZLkotlin/jvm/functions/Function0;Ljava/lang/String;Lio/oxygenx/ui/navigation/TopAppBarState;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/oxygenx/ui/navigation/TabRowColors {

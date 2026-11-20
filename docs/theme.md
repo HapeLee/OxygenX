@@ -25,7 +25,7 @@ OxygenTheme(colorScheme = customColors) {
 
 ## Material type scale
 
-Defaults follow all 15 basic roles in Material3 1.5.0-beta01, including size, line height, weight and tracking. Display (57/45/36), headline (32/28/24), title (22/16/14), body (16/14/12) and label (14/12/11) remain separate semantic families. LabelMedium is 12sp; buttons and menus use LabelLarge at 14sp. Expanded top bars use DisplayMedium at 45sp and list titles use the role selected by the host.
+Defaults follow all 15 basic roles in Material3 1.5.0-beta01, including size, line height, weight and tracking. Display (57/45/36), headline (32/28/24), title (22/16/14), body (16/14/12) and label (14/12/11) remain separate semantic families. LabelMedium is 12sp; buttons and menus use LabelLarge at 14sp. Expanded top bars use `type.appbar.expanded.title` (48sp, every other attribute inherited from DisplayMedium) and list titles use the role selected by the host.
 
 ```kotlin
 val typography = OxygenTypography(
@@ -38,7 +38,7 @@ The M3-named factory and getters coexist with legacy semantic fields. The old 13
 
 ## App bar title roles
 
-Standard and collapsed titles use 18sp / 24sp calibrated metrics and inherit the font and weight of titleLarge. Expanded LargeTopAppBar and PagerTopBar titles use displayMedium (45sp / 52sp) and interpolate to the compact title during collapse. The standard and collapsed bars are 74dp tall. The compact navigation icon uses a 16dp drawing size inside a 48dp touch target. Custom navigation icons can read LocalTopAppBarNavigationIconSize.
+Standard and collapsed titles use 18sp / 24sp calibrated metrics and inherit the font and weight of titleLarge. Expanded LargeTopAppBar and PagerTopBar titles use `type.appbar.expanded.title` (48sp / 52sp) and interpolate to the compact title during collapse. App bar subtitles use `type.appbar.subtitle` (13sp). The standard and collapsed bars are 74dp tall. The compact navigation icon uses a 16dp drawing size inside a 48dp touch target. Custom navigation icons can read LocalTopAppBarNavigationIconSize.
 
 TopAppBar, LargeTopAppBar and PagerTopBar place adjacent action buttons together, giving default icon actions a center-to-center distance of 48dp. Use TopAppBarAction for an icon action, including actions with a long press. The button applies the theme's 48dp default touch target and 36dp default unbounded ripple radius. Supply onLongClick and an optional onLongClickLabel for a secondary action.
 

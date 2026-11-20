@@ -74,7 +74,7 @@ class AppBarTypographyTest {
             assertEquals(18.sp, standard.fontSize)
             assertEquals(24.sp, standard.lineHeight)
             assertEquals(FontWeight.Normal, standard.fontWeight)
-            assertEquals(45.sp, expanded.fontSize)
+            assertEquals(48.sp, expanded.fontSize)
             assertEquals(52.sp, expanded.lineHeight)
             assertEquals(18.sp, collapsed.fontSize)
             assertEquals(24.sp, collapsed.lineHeight)
@@ -85,7 +85,9 @@ class AppBarTypographyTest {
             fun attributes(style: TextStyle) = listOf(style.fontSize, style.lineHeight, style.fontFamily, style.fontWeight, style.letterSpacing)
             val calibrated = compact.copy(fontSize = 18.sp, lineHeight = 24.sp)
             assertEquals(attributes(calibrated), attributes(standard))
-            assertEquals(attributes(typography.displayMedium), attributes(expanded))
+            // 展开端字号来自参照包（48sp / 52sp），字体族、字重、字距仍继承主题的 displayMedium。
+            val expandedCalibrated = typography.displayMedium.copy(fontSize = 48.sp, lineHeight = 52.sp)
+            assertEquals(attributes(expandedCalibrated), attributes(expanded))
             assertEquals(attributes(calibrated), attributes(collapsed))
         }
     }
@@ -109,7 +111,7 @@ class AppBarTypographyTest {
             }
         }
         runOnIdle {
-            assertEquals(45.sp, actual.fontSize)
+            assertEquals(48.sp, actual.fontSize)
             collapse.value = true
         }
         runOnIdle { assertEquals(18.sp, actual.fontSize) }

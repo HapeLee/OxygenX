@@ -40,7 +40,7 @@ import io.oxygenx.ui.navigation.TopAppBarAction
 import io.oxygenx.ui.navigation.rememberTopAppBarState
 
 private val PagerTitles = listOf("照片", "相册", "发现")
-private val PagerSubtitles = listOf("共 24 项 · 已同步", "5 本相册", "智能分类")
+private val PagerSubtitles = listOf("共 24 项 · 已同步", "5 本相册", null)
 
 private val NoOp: () -> Unit = {}
 
@@ -53,7 +53,7 @@ private val NoOp: () -> Unit = {}
 @Composable
 fun PagerTopBarDemoScreen(onBack: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = { PagerTitles.size })
-    // 与大顶栏同一套滚动联动：上滑收拢成 98dp 的窄栏，下滑到顶再展开。
+    // 共用大顶栏的滚动联动，上滑收拢，下滑到顶再展开。
     val topBarState = rememberTopAppBarState()
     Scaffold(
         topBarState = topBarState,
@@ -62,8 +62,9 @@ fun PagerTopBarDemoScreen(onBack: () -> Unit) {
                 pagerState = pagerState,
                 title = { page -> Text(PagerTitles[page], maxLines = 1) },
                 subtitle = { page ->
-                    Text(PagerSubtitles[page], maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    PagerSubtitles[page]?.let { Text(it, maxLines = 1, overflow = TextOverflow.Ellipsis) }
                 },
+                hideSubtitleOnCollapse = false,
                 state = topBarState,
                 // 操作区按页重组：照片页「搜索 / 设置」、相册页「新建相册 / 搜索」、发现页只有「设置」。
                 actions = { page ->

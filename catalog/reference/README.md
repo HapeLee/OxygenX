@@ -28,6 +28,14 @@ P1 阶段这里是**占位索引**，尚无实际录屏或测量数据。所有 
 - 顶栏与文字：`op_app_bar_collapsing_height` 245dp、`op_app_bar_distance` 171dp、`op_app_bar_margin_top_without_tab` 40px（2x → 20dp）、`op_app_bar_expand_text_size` 96px / zh 86px（2x → 48sp / 43sp）、`op_app_bar_collapsed_text_size` 42px、`op_text_size_h6` 16sp、`op_text_size_body1` 13sp。
   实测交叉验证（450dpi）：标准顶栏在状态栏下方 206px = 73.2dp（≈20 + 54），大顶栏展开 747px = 265.6dp（≈20 + 245），折叠标题 18sp、大标题 43sp。
 
+### 2026-11-20 顶栏复核（Settings 11 + 图库 4.0.182）
+
+把顶栏的样式链完整展开后，几处旧记录需要更正 / 补充：
+
+- 标准顶栏：`op_control_appbar_size_standard` = **74dp**；标题 `OnePlus.TextAppearance.Toolbar.Title` → `op_control_text_style_h5` → `op_text_size_h5` = **18sp**（此前记的 `op_app_bar_collapsed_text_size` 42px 并不在这条链上，别按 21sp 理解）；副标题 `expandedSubtitleTextAppearance` → `op_control_text_style_body1` → `op_text_size_body1` = **13sp**；标题左内距 `op_control_margin_screen_left3` = **20dp**；操作图标 `op_control_icon_size_button` = **21dp**。
+- 大顶栏：`Widget.Design.CollapsingAppbarLayout.WithoutTab` 的 `android:height` = `op_app_bar_collapsing_height` 245dp、`collapsedAppbarHeight` = `op_control_appbar_size_standard` 74dp、`expandedTitleMarginTop` = `op_app_bar_margin_top_without_tab` 40px（÷2 = **20dp**）；展开标题 `expandedTitleTextAppearance` → `op_appbar_title_style_h1` → `op_app_bar_expand_text_size` = 96px（÷2 = **48sp**，该 dimen 没有 zh 变体）。
+- 横划顶栏（`com.oneplus.gallery` 4.0.182）：`design_tab_bar_height` = **20dp** 是 TabBarView 独立成行的高度，`op_app_bar_collapsing_height_with_tab` = 225dp = 245 − 20，即**指示器带从大顶栏里扣、总高不变**；`design_tab_bar_indicator_height` = 4px（÷2 = **2dp**）。
+
 复现方式：`aapt2 dump resources <apk> > resources.txt` 后按资源名检索；颜色选择器与 drawable 用 `aapt2 dump xmltree --file res/color|drawable/<name>.xml` 展开。
 
 ## 目录约定（P2 起生效）

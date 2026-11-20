@@ -137,6 +137,15 @@ tokens:
     evidence: E2
     status: draft
     description: 收拢栏在状态栏下方的高度，与标准栏一致
+  - id: space.appbar.large.title.gap
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 大顶栏展开态大标题行盒顶距栏顶的间距（资源 expandedTitleMarginTop = op_app_bar_margin_top_without_tab 40px ÷ 2 = 20dp；有返回键时改由 74dp 栏头让位，这个间距不再叠加）
   - id: space.appbar.compact.content.offset
     kind: dimension
     value: 4
@@ -157,13 +166,13 @@ tokens:
     description: 按真机可见尺寸折算的紧凑导航图标画布，不影响触摸目标
   - id: size.appbar.pager.collapsed.height
     kind: dimension
-    value: 96
+    value: 98
     unit: dp
     baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
     source: catalog/reference/README.md
     evidence: E2
     status: draft
-    description: 横划顶栏收拢后的高度（真机图库上滑收拢后底部分割线在 379px、状态栏下沿 104px @450dpi，差 275px = 97.8dp；按 4dp 网格取 96dp，比标准顶栏高 24dp，因为收拢态仍保留指示器与小副标题）
+    description: 横划顶栏收拢后的高度（真机图库上滑收拢后底部分割线在 379px、状态栏下沿 104px @450dpi，差 275px = 97.8dp，取 98dp；栏内是 20dp 指示器带 + 44dp「标题 + 副标题」块居中，块顶落在 42dp，与真机一致，比标准顶栏 74dp 高是因为收拢态仍保留指示器与小副标题）
   - id: size.navigation.bar.height
     kind: dimension
     value: 55
@@ -202,13 +211,13 @@ tokens:
     description: 大号悬浮按钮直径（对齐 M3 large FAB 96dp；尚未在本机量取）
   - id: size.appbar.large.height
     kind: dimension
-    value: 264
+    value: 265
     unit: dp
-    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-14
+    baseline: Settings 11 (com.android.settings) / OnePlus 9R (LE2100) / ColorOS 11 / 2026-11-20
     source: catalog/reference/README.md
     evidence: E3
     status: draft
-    description: 大顶栏展开高度（真机 747px @450dpi = 265.6dp、资源值 op_app_bar_collapsing_height 245dp + 20dp 上边距；按 4dp 网格取 264dp），窗口更矮时收敛到可用高度
+    description: 大顶栏展开高度（资源值 op_app_bar_collapsing_height 245dp + op_app_bar_margin_top_without_tab 40px ÷ 2 = 20dp 顶部留白 = 265dp；真机实测 747px @450dpi = 265.6dp），窗口更矮时收敛到可用高度
 
   - id: size.appbar.collapse.distance
     kind: dimension
@@ -524,7 +533,16 @@ tokens:
     source: catalog/reference/README.md
     evidence: E2
     status: draft
-    description: 横划顶栏分段指示器的高度（真机图库指示器 6px @450dpi = 2.1dp，取 2dp；三段各 310px 宽、间隔 24px、圆角端头）
+    description: 横划顶栏分段指示器的高度（真机图库指示器 6px @450dpi = 2.1dp，取 2dp；三段各 310px 宽、间隔 24px、圆角端头；参照包 design_tab_bar_indicator_height = 4px ÷ 2 = 2dp 一致）
+  - id: size.appbar.pager.indicator.band
+    kind: dimension
+    value: 20
+    unit: dp
+    baseline: Gallery 4.0.182 (com.oneplus.gallery) / 2026-11-20
+    source: catalog/reference/README.md
+    evidence: E3
+    status: draft
+    description: 横划顶栏分段指示器所在的栏头高度（参照包 design_tab_bar_height = 20dp，TabBarView 占一条独立行，大顶栏内容区相应收到 op_app_bar_collapsing_height_with_tab = 225dp = 245 − 20，总高不变；指示器画在这条带内、上沿仍走 space.appbar.pager.top）
   - id: space.appbar.subtitle.tighten
     kind: dimension
     value: 1.5
@@ -542,16 +560,16 @@ tokens:
     source: catalog/reference/README.md
     evidence: E2
     status: draft
-    description: 横划顶栏分段指示器距状态栏下沿（真机状态栏 inset 104px、指示器上沿 134px @450dpi，差 30px = 10.7dp，取 10.5dp）
+    description: 横划顶栏分段指示器距状态栏下沿（真机状态栏 inset 104px、指示器上沿 134px @450dpi，差 30px = 10.7dp，取 10.5dp；落在 20dp 的指示器带内，带内下方余 7.5dp）
   - id: space.appbar.pager.title.gap
     kind: dimension
-    value: 29
+    value: 22
     unit: dp
     baseline: OnePlus 9R (LE2100) / ColorOS 11 / Gallery 3.6 / 2026-11-14
     source: catalog/reference/README.md
     evidence: E2
     status: draft
-    description: 横划顶栏「分段指示器 → 大标题」的间距（按墨迹复测：真机指示器下沿 139px 到大标题墨迹顶 255px = 116px；减去 46sp 字号在 54sp 行盒里的墨迹偏移 34.6px，得行盒间距 81.4px = 28.9dp，取 29dp；旧值 36dp 误把墨迹顶当成行盒顶）
+    description: 横划顶栏「指示器带下沿 → 标题块顶」的最小间距（真机收拢态标题块顶 42dp − 20dp 指示器带 = 22dp；栏更高时块按内容区居中，只有栏被压矮时才落到这条下限上）
   - id: size.progress.linear.height
     kind: dimension
     value: 2
